@@ -1,0 +1,18 @@
+/* =========================================================
+   GeoProcess Consulting — Compact Scale
+   Visual scale only. Does not alter colors, fonts, motion,
+   content, interactions, or page structure.
+   ========================================================= */
+
+/* Desktop: approximately 92% of the existing visual scale. */
+@media (min-width: 901px) {
+  html { zoom: .92; }
+}
+
+/* Tablet: a gentler reduction so the existing responsive layout
+   continues to have comfortable touch targets. */
+@media (min-width: 561px) and (max-width: 900px) {
+  html { zoom: .96; }
+}
+
+/* Mobile keeps its existing scale and responsive behavior. */
