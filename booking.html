@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/png" sizes="128x128" href="assets/brand/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Book a consultation with GeoProcess Consulting for LiDAR, GIS, photogrammetry, DTM/DSM, BIM and geospatial analytics.">
+  <meta name="theme-color" content="#050b12">
+  <title>Book a Consultation | GeoProcess Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/pages/booking.css">
+  <link rel="stylesheet" href="css/modern.css">
+  <link rel="stylesheet" href="css/compact.css">
+</head>
+<body>
+<header class="site-nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html" aria-label="GeoProcess Consulting home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
+        <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
+        <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
+      </svg>
+      <span class="brand-copy"><span class="brand-name">GeoProcess Consulting</span><span class="brand-sub">Spatial Data · Processed With Precision</span></span>
+    </a>
+    <div class="nav-right">
+      <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="study.html">Study</a></li>
+          <li><a href="index.html#faqs">FAQs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a class="nav-cta active" href="booking.html" aria-current="page">Book Consultation <span aria-hidden="true">↗</span></a></li>
+</ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="booking-page">
+  <section class="booking-hero">
+    <div class="container">
+      <div class="booking-hero-grid">
+        <div>
+          <div class="eyebrow">ONLINE CONSULTATION · IST</div>
+          <h1>Pick a date.<br><span>Pick a time.</span><br>Confirm the discussion.</h1>
+          <p>Choose an available consultation slot, then share the project details we need to make the conversation useful from the first minute.</p>
+          <div class="booking-hero-meta"><span>01 DATE</span><i></i><span>02 TIME</span><i></i><span>03 DETAILS</span></div>
+        </div>
+        <div class="booking-radar" aria-hidden="true">
+          <div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-ring r3"></div>
+          <div class="radar-cross x"></div><div class="radar-cross y"></div><div class="radar-core"></div>
+          <span class="radar-label top">BOOKING NODE / 01</span><span class="radar-label bottom">LIVE SLOT SELECTION</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="booking-section">
+    <div class="container booking-container">
+      <div class="booking-intro">
+        <div class="eyebrow">GEOPROCESS CONSULTING</div>
+        <h2>Schedule Your Consultation</h2>
+        <p>Select a date to load the available consultation times. Then complete your details and confirm the request.</p>
+      </div>
+
+      <div class="booking-card">
+        <div class="booking-step step-date">
+          <div class="step-heading"><span class="step-number">01</span><div><span class="step-kicker">CALENDAR</span><h3>Choose a Date</h3></div></div>
+          <label for="booking-date">Consultation date</label>
+          <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
+          <small id="date-help">Available dates are loaded from the booking calendar.</small>
+        </div>
+
+        <div class="booking-step step-time">
+          <div class="step-heading"><span class="step-number">02</span><div><span class="step-kicker">AVAILABILITY</span><h3>Choose a Time</h3></div></div>
+          <div id="time-slots" class="time-slots" aria-live="polite"><p>Select a date to see available times.</p></div>
+          <div id="selected-slot" class="selected-slot" aria-live="polite"><span>SELECTED SLOT</span><strong>No time selected</strong></div>
+        </div>
+
+        <div class="booking-step step-details">
+          <div class="step-heading"><span class="step-number">03</span><div><span class="step-kicker">PROJECT PROFILE</span><h3>Your Details</h3></div></div>
+          <form id="booking-form">
+            <div class="field"><label for="customer-name">Full Name <b>*</b></label><input type="text" id="customer-name" placeholder="Your full name" required></div>
+            <div class="field"><label for="customer-email">Email Address <b>*</b></label><input type="email" id="customer-email" placeholder="you@company.com" required></div>
+            <div class="field"><label for="customer-phone">Phone / WhatsApp</label><input type="tel" id="customer-phone" placeholder="+91 ..."></div>
+            <div class="field"><label for="customer-company">Company</label><input type="text" id="customer-company" placeholder="Company / organization"></div>
+            <div class="field field-wide"><label for="customer-service">Service <b>*</b></label><select id="customer-service" required>
+              <option value="">Select the service you want to discuss</option>
+              <option>LiDAR Data Processing &amp; Classification</option><option>GIS &amp; Spatial Data Management</option><option>3D Mapping &amp; 3D Geospatial Modeling</option><option>Photogrammetry &amp; Aerial Mapping</option><option>Point Cloud Processing &amp; Quality Assurance</option><option>DTM, DSM &amp; DEM Generation</option><option>BIM Modeling — LOD 400 &amp; LOD 500</option><option>Geospatial Data Automation &amp; Analysis</option><option>Powerline Vegetation Danger-Zone Analytics</option>
+            </select></div>
+            <div class="field field-wide"><label for="customer-details">Project Brief</label><textarea id="customer-details" rows="5" placeholder="Tell us about your data, area, deliverables, software or project requirement..."></textarea></div>
+            <div class="form-footer"><span>By confirming, your selected date/time and project details are sent securely to the booking service.</span><button type="submit" class="booking-submit">Confirm Booking <span>↗</span></button></div>
+          </form>
+        </div>
+        <div id="booking-message" class="booking-message" aria-live="polite"></div>
+      </div>
+
+      <div class="booking-info-grid">
+        <div class="booking-info-card"><div class="booking-icon">01</div><strong>Choose a Service</strong><span>Tell us which GeoProcess capability you want to discuss.</span></div>
+        <div class="booking-info-card"><div class="booking-icon">02</div><strong>Choose a Time</strong><span>Select an available consultation slot for your chosen date.</span></div>
+        <div class="booking-info-card"><div class="booking-icon">03</div><strong>Confirm Booking</strong><span>Submit your details and receive the booking confirmation through the connected booking service.</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand"><svg class="brand-mark footer-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
+        <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
+        <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
+      </svg><div><div class="footer-title">GeoProcess Consulting</div><div class="footer-sub">Spatial Data · Processed With Precision</div></div></div>
+      <p class="footer-intro">Precision geospatial processing for LiDAR, GIS, photogrammetry, terrain, 3D, CAD, BIM and spatial analytics. From raw spatial data to structured, engineering-ready information.</p>
+      <div class="footer-signal"><span></span> SPATIAL DATA · PROCESSED WITH PRECISION</div>
+    </div>
+    <div><div class="footer-title">Explore</div><ul class="footer-list"><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="projects.html">Projects</a></li><li><a href="videos.html">Videos</a></li><li><a href="study.html">Study Hub</a></li><li><a href="index.html#faqs">FAQs</a></li></ul></div>
+    <div><div class="footer-title">Connect</div><ul class="footer-list"><li><a href="mailto:contact@geoprocessconsulting.site">contact@geoprocessconsulting.site</a></li><li><a href="https://wa.me/917205666324" target="_blank" rel="noopener">WhatsApp · +91 72056 66324</a></li><li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank" rel="noopener">LinkedIn · GeoProcess Consulting</a></li><li><a href="booking.html">Schedule a consultation ↗</a></li></ul></div>
+  </div>
+  <div class="container footer-bottom"><span>© <span data-year>2026</span> GeoProcess Consulting</span><span>LiDAR · GIS · UAV · BIM · AI/ML</span></div>
+</footer>
+<button class="back-top" type="button" aria-label="Back to top">↑</button>
+<script src="js/booking-config.js?v=9"></script>
+<script src="js/pages/booking.js?v=9"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
