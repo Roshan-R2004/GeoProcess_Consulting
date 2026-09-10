@@ -1,4 +1,4 @@
 /* GeoProcess Consulting — public booking endpoint */
 window.GEOPROCESS_BOOKING = {
-  apiUrl: "https://script.google.com/macros/s/AKfycbzsMxwMMyOey_Nqe783GViWusNQU1U-hLY2CEDYPsbEEEFqXhFd9mJikizDLIp1z5nk/exec"
+  apiUrl: "https://script.google.com/macros/s/AKfycbzVSoIyLwVIO8qA0nYH_981tmQXNLDY-aRKAe08x7_4u077ZmUHQ_QDHPYvUKkwxMtT/exec"
 };

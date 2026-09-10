@@ -19,6 +19,33 @@
     });
   };
 
+  const initDefaultMailFallback = () => {
+    document.querySelectorAll('a[data-default-mail="true"]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const email = 'contact@geoprocessconsulting.in';
+        const subject = 'Project Enquiry - GeoProcess Consulting';
+        const body = 'Hello GeoProcess Consulting,\n\nI would like to discuss a project with your team.\n\nProject details:\n';
+        const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const fallback = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Use the browser's normal mail-handler first. If no handler exists,
+        // fall back to Gmail Web rather than leaving the user with no response.
+        event.preventDefault();
+        const fallbackTimer = window.setTimeout(() => {
+          if (!document.hidden) window.open(fallback, '_blank', 'noopener,noreferrer');
+        }, 900);
+
+        const cancelFallback = () => {
+          window.clearTimeout(fallbackTimer);
+          document.removeEventListener('visibilitychange', cancelFallback);
+        };
+        document.addEventListener('visibilitychange', cancelFallback, { once: true });
+
+        window.location.href = mailto;
+      });
+    });
+  };
+
   const initEmailMenus = () => {
     document.querySelectorAll('.nav-email, .email-dropdown-wrapper, .contact-mail-wrap').forEach((wrap) => {
       const button = wrap.querySelector('button');
@@ -86,7 +113,8 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
-    initEmailMenus();
+    initDefaultMailFallback();
+  initEmailMenus();
     initReveal();
     initBackTop();
     setYear();
