@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   const email =
-    "contact@geoprocessconsulting.site";
+    "contact@geoprocessconsulting.in";
 
   const subject =
     "Project Enquiry - GeoProcess Consulting";
@@ -312,15 +312,6 @@ document.addEventListener("DOMContentLoaded", function () {
         "noopener,noreferrer"
       );
 
-    } else {
-
-      window.location.href =
-        "mailto:" +
-        email +
-        "?subject=" +
-        enc(subject) +
-        "&body=" +
-        enc(body);
     }
 
 
