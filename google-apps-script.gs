@@ -13,7 +13,7 @@ const CONFIG = {
   WORKING_DAYS: [1, 2, 3, 4, 5, 6], // 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
 
   // ACTIVE Web App URL
-  WEB_APP_URL: "https://script.google.com/macros/s/AKfycbwcakUv1XPjz3HGfxyJHRsYDj7BA6jdV0vIUOBmnaYzwa6sRL_g-taxBOmvJIbLi0ON/exec",
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzVSoIyLwVIO8qA0nYH_981tmQXNLDY-aRKAe08x7_4u077ZmUHQ_QDHPYvUKkwxMtT/exec",
 };
 
 /* =========================================================
