@@ -301,26 +301,132 @@ function escapeHTML(value) {
    ========================================================= */
 
 function getSupportedTimeZones() {
-  try {
-    if (typeof Intl !== "undefined" && typeof Intl.supportedValuesOf === "function") {
-      return Intl.supportedValuesOf("timeZone");
-    }
-  } catch (error) {
-    console.warn("Unable to read browser timezone list:", error);
-  }
-
+  // Keep this list intentionally small and stable. Every timezone below is
+  // supported by the booking backend and is a practical choice for visitors.
   return [
-    "Africa/Cairo","Africa/Casablanca","Africa/Johannesburg","Africa/Lagos","Africa/Nairobi",
-    "America/Anchorage","America/Argentina/Buenos_Aires","America/Chicago","America/Denver",
-    "America/Los_Angeles","America/Mexico_City","America/New_York","America/Sao_Paulo",
-    "America/Toronto","America/Vancouver",
-    "Asia/Bangkok","Asia/Dhaka","Asia/Dubai","Asia/Hong_Kong","Asia/Jakarta","Asia/Kolkata",
-    "Asia/Manila","Asia/Riyadh","Asia/Seoul","Asia/Shanghai","Asia/Singapore","Asia/Tokyo",
-    "Australia/Brisbane","Australia/Melbourne","Australia/Perth","Australia/Sydney",
-    "Europe/Amsterdam","Europe/Berlin","Europe/Dublin","Europe/London","Europe/Madrid",
-    "Europe/Moscow","Europe/Paris","Europe/Rome","Europe/Stockholm","Europe/Zurich",
-    "Pacific/Auckland","Pacific/Fiji","Pacific/Honolulu","UTC"
+    "Asia/Kolkata",
+    "Asia/Dhaka",
+    "Asia/Kathmandu",
+    "Asia/Dubai",
+    "Asia/Riyadh",
+    "Asia/Jerusalem",
+    "Europe/London",
+    "Europe/Amsterdam",
+    "Europe/Berlin",
+    "Europe/Paris",
+    "Europe/Moscow",
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Los_Angeles",
+    "America/Anchorage",
+    "Pacific/Honolulu",
+    "America/Toronto",
+    "America/Vancouver",
+    "America/Mexico_City",
+    "America/Sao_Paulo",
+    "America/Argentina/Buenos_Aires",
+    "Africa/Cairo",
+    "Africa/Johannesburg",
+    "Africa/Nairobi",
+    "Africa/Lagos",
+    "Asia/Singapore",
+    "Asia/Hong_Kong",
+    "Asia/Tokyo",
+    "Asia/Seoul",
+    "Asia/Bangkok",
+    "Asia/Jakarta",
+    "Australia/Perth",
+    "Australia/Sydney",
+    "Australia/Melbourne",
+    "Pacific/Auckland",
+    "UTC"
   ];
+}
+
+function getTimeZoneGroups() {
+  return [
+    {
+      label: "India & South Asia",
+      zones: ["Asia/Kolkata", "Asia/Dhaka", "Asia/Kathmandu"]
+    },
+    {
+      label: "Middle East",
+      zones: ["Asia/Dubai", "Asia/Riyadh", "Asia/Jerusalem"]
+    },
+    {
+      label: "Europe",
+      zones: ["Europe/London", "Europe/Amsterdam", "Europe/Berlin", "Europe/Paris", "Europe/Moscow"]
+    },
+    {
+      label: "USA",
+      zones: ["America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "America/Anchorage", "Pacific/Honolulu"]
+    },
+    {
+      label: "Canada",
+      zones: ["America/Toronto", "America/Vancouver"]
+    },
+    {
+      label: "Latin America",
+      zones: ["America/Mexico_City", "America/Sao_Paulo", "America/Argentina/Buenos_Aires"]
+    },
+    {
+      label: "Africa",
+      zones: ["Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Africa/Lagos"]
+    },
+    {
+      label: "Asia-Pacific",
+      zones: ["Asia/Singapore", "Asia/Hong_Kong", "Asia/Tokyo", "Asia/Seoul", "Asia/Bangkok", "Asia/Jakarta"]
+    },
+    {
+      label: "Australia & New Zealand",
+      zones: ["Australia/Perth", "Australia/Sydney", "Australia/Melbourne", "Pacific/Auckland"]
+    },
+    {
+      label: "Other",
+      zones: ["UTC"]
+    }
+  ];
+}
+
+function mapBrowserTimeZoneToSupported(zone) {
+  const zones = getSupportedTimeZones();
+  if (zones.includes(zone)) return zone;
+
+  // Common browser timezone names mapped to the closest curated option.
+  const aliases = {
+    "Europe/Brussels": "Europe/Amsterdam",
+    "Europe/Copenhagen": "Europe/Berlin",
+    "Europe/Oslo": "Europe/Berlin",
+    "Europe/Stockholm": "Europe/Berlin",
+    "Europe/Zurich": "Europe/Berlin",
+    "Europe/Rome": "Europe/Paris",
+    "Europe/Madrid": "Europe/Paris",
+    "Europe/Lisbon": "Europe/London",
+    "America/Detroit": "America/New_York",
+    "America/Indiana/Indianapolis": "America/New_York",
+    "America/Kentucky/Louisville": "America/New_York",
+    "America/Phoenix": "America/Denver",
+    "America/Edmonton": "America/Denver",
+    "America/Winnipeg": "America/Chicago",
+    "America/Halifax": "America/New_York",
+    "America/St_Johns": "America/New_York",
+    "Asia/Muscat": "Asia/Dubai",
+    "Asia/Qatar": "Asia/Riyadh",
+    "Asia/Kuwait": "Asia/Riyadh",
+    "Asia/Bahrain": "Asia/Riyadh",
+    "Asia/Aden": "Asia/Riyadh",
+    "Asia/Calcutta": "Asia/Kolkata",
+    "Asia/Colombo": "Asia/Kolkata",
+    "Asia/Rangoon": "Asia/Bangkok",
+    "Asia/Ho_Chi_Minh": "Asia/Bangkok",
+    "Australia/Brisbane": "Australia/Sydney",
+    "Australia/Hobart": "Australia/Sydney",
+    "Australia/Adelaide": "Australia/Melbourne",
+    "Pacific/Fiji": "Pacific/Auckland"
+  };
+
+  return aliases[zone] || "Asia/Kolkata";
 }
 
 function timeZoneLabel(timeZone) {
@@ -340,16 +446,24 @@ function setupTimeZone() {
   const select = document.getElementById("booking-timezone");
   if (!select) return;
 
-  const zones = getSupportedTimeZones().slice().sort(function (a, b) {
-    return a.localeCompare(b);
-  });
+  const zones = getSupportedTimeZones();
+  const groups = getTimeZoneGroups();
+  selectedTimeZone = mapBrowserTimeZoneToSupported(selectedTimeZone);
 
   select.innerHTML = "";
-  zones.forEach(function (zone) {
-    const option = document.createElement("option");
-    option.value = zone;
-    option.textContent = timeZoneLabel(zone);
-    select.appendChild(option);
+
+  groups.forEach(function (group) {
+    const optgroup = document.createElement("optgroup");
+    optgroup.label = group.label;
+
+    group.zones.forEach(function (zone) {
+      const option = document.createElement("option");
+      option.value = zone;
+      option.textContent = timeZoneLabel(zone);
+      optgroup.appendChild(option);
+    });
+
+    select.appendChild(optgroup);
   });
 
   if (!zones.includes(selectedTimeZone)) {
