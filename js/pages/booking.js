@@ -13,6 +13,8 @@ const BOOKING_API_URL = window.GEOPROCESS_BOOKING?.apiUrl || "https://script.goo
 
 let selectedBookingTime = null;
 let currentRequestId = 0;
+let selectedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Kolkata";
+let selectedSlotMeta = null;
 
 /* =========================================================
    AVAILABILITY - JSONP (Bypasses Browser CORS)
@@ -58,6 +60,8 @@ function getAvailability(date) {
       "?action=availability" +
       "&date=" +
       encodeURIComponent(date) +
+      "&timezone=" +
+      encodeURIComponent(selectedTimeZone) +
       "&callback=" +
       callbackName;
 
@@ -120,6 +124,8 @@ async function loadTimeSlots(date) {
 
         button.classList.add("selected");
         selectedBookingTime = slot.start;
+        selectedSlotMeta = slot;
+        updateSelectedSlotDisplay(slot);
         showMessage("", "");
       });
 
@@ -186,6 +192,11 @@ async function submitBooking(event) {
     service: serviceInput ? serviceInput.value : "",
     date: dateInput.value,
     time: selectedBookingTime,
+    timezone: selectedTimeZone,
+    localDate: dateInput.value,
+    localTime: selectedBookingTime,
+    businessDate: selectedSlotMeta?.businessDate || dateInput.value,
+    businessTime: selectedSlotMeta?.businessTime || selectedBookingTime,
     details: detailsInput ? detailsInput.value.trim() : ""
   };
 
@@ -227,6 +238,8 @@ async function submitBooking(event) {
     }
 
     selectedBookingTime = null;
+    selectedSlotMeta = null;
+    updateSelectedSlotDisplay(null);
 
     document.querySelectorAll(".time-slot").forEach(function (btn) {
       btn.classList.remove("selected");
@@ -281,6 +294,101 @@ function escapeHTML(value) {
     .replace(/'/g, "&#039;");
 }
 
+
+
+/* =========================================================
+   TIME ZONE
+   ========================================================= */
+
+function getSupportedTimeZones() {
+  try {
+    if (typeof Intl !== "undefined" && typeof Intl.supportedValuesOf === "function") {
+      return Intl.supportedValuesOf("timeZone");
+    }
+  } catch (error) {
+    console.warn("Unable to read browser timezone list:", error);
+  }
+
+  return [
+    "Africa/Cairo","Africa/Casablanca","Africa/Johannesburg","Africa/Lagos","Africa/Nairobi",
+    "America/Anchorage","America/Argentina/Buenos_Aires","America/Chicago","America/Denver",
+    "America/Los_Angeles","America/Mexico_City","America/New_York","America/Sao_Paulo",
+    "America/Toronto","America/Vancouver",
+    "Asia/Bangkok","Asia/Dhaka","Asia/Dubai","Asia/Hong_Kong","Asia/Jakarta","Asia/Kolkata",
+    "Asia/Manila","Asia/Riyadh","Asia/Seoul","Asia/Shanghai","Asia/Singapore","Asia/Tokyo",
+    "Australia/Brisbane","Australia/Melbourne","Australia/Perth","Australia/Sydney",
+    "Europe/Amsterdam","Europe/Berlin","Europe/Dublin","Europe/London","Europe/Madrid",
+    "Europe/Moscow","Europe/Paris","Europe/Rome","Europe/Stockholm","Europe/Zurich",
+    "Pacific/Auckland","Pacific/Fiji","Pacific/Honolulu","UTC"
+  ];
+}
+
+function timeZoneLabel(timeZone) {
+  try {
+    const now = new Date();
+    const short = new Intl.DateTimeFormat(undefined, {
+      timeZone: timeZone,
+      timeZoneName: "short"
+    }).formatToParts(now).find(function (part) { return part.type === "timeZoneName"; });
+    return timeZone.replace(/_/g, " ").replace(/\//g, " / ") + (short?.value ? " (" + short.value + ")" : "");
+  } catch (error) {
+    return timeZone.replace(/_/g, " ").replace(/\//g, " / ");
+  }
+}
+
+function setupTimeZone() {
+  const select = document.getElementById("booking-timezone");
+  if (!select) return;
+
+  const zones = getSupportedTimeZones().slice().sort(function (a, b) {
+    return a.localeCompare(b);
+  });
+
+  select.innerHTML = "";
+  zones.forEach(function (zone) {
+    const option = document.createElement("option");
+    option.value = zone;
+    option.textContent = timeZoneLabel(zone);
+    select.appendChild(option);
+  });
+
+  if (!zones.includes(selectedTimeZone)) {
+    selectedTimeZone = "Asia/Kolkata";
+  }
+
+  select.value = selectedTimeZone;
+
+  select.addEventListener("change", function () {
+    selectedTimeZone = select.value;
+    selectedBookingTime = null;
+    selectedSlotMeta = null;
+    updateSelectedSlotDisplay(null);
+
+    const dateInput = document.getElementById("booking-date");
+    if (dateInput && dateInput.value) {
+      loadTimeSlots(dateInput.value);
+    } else {
+      const container = document.getElementById("time-slots");
+      if (container) container.innerHTML = "<p>Select a date to see available times.</p>";
+    }
+  });
+}
+
+function updateSelectedSlotDisplay(slot) {
+  const selected = document.getElementById("selected-slot");
+  if (!selected) return;
+
+  const strong = selected.querySelector("strong");
+  if (!strong) return;
+
+  if (!slot) {
+    strong.textContent = "No time selected";
+    return;
+  }
+
+  strong.textContent = slot.start + " - " + slot.end + " (" + selectedTimeZone + ")";
+}
+
 /* =========================================================
    DATE PICKER INITIALIZATION
    ========================================================= */
@@ -316,6 +424,7 @@ function setupBookingDate() {
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
+  setupTimeZone();
   setupBookingDate();
 
   const form = document.getElementById("booking-form");
