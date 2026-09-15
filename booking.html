@@ -76,9 +76,12 @@
       <div class="booking-card">
         <div class="booking-step step-date">
           <div class="step-heading"><span class="step-number">01</span><div><span class="step-kicker">CALENDAR</span><h3>Choose a Date</h3></div></div>
-          <label for="booking-date">Consultation date</label>
+          <label for="booking-timezone">Your time zone</label>
+          <select id="booking-timezone" class="booking-input" aria-describedby="timezone-help"></select>
+          <small id="timezone-help">Times are shown in your selected local time. Your appointment is stored on the business calendar in India Standard Time (IST).</small>
+          <label for="booking-date" style="margin-top:14px;">Consultation date</label>
           <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
-          <small id="date-help">Available dates are loaded from the booking calendar.</small>
+          <small id="date-help">Available dates are loaded in your selected time zone.</small>
         </div>
 
         <div class="booking-step step-time">
