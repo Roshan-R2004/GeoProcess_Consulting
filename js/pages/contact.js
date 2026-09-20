@@ -144,23 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
 
-
-  /* -------------------------------------------------------
-     LOAD AI ASSISTANT CONTEXT
-     ------------------------------------------------------- */
-  try {
-    const rawLead = sessionStorage.getItem("geoprocessAiLead");
-    if (rawLead) {
-      const lead = JSON.parse(rawLead);
-      const messageInput = document.getElementById("contact-message");
-      if (messageInput && !messageInput.value.trim() && lead.projectDetails) {
-        messageInput.value = lead.projectDetails;
-      }
-    }
-  } catch (error) {
-    console.warn("Unable to load AI lead context.", error);
-  }
-
   /* -------------------------------------------------------
      FORM SUBMISSION
      ------------------------------------------------------- */
