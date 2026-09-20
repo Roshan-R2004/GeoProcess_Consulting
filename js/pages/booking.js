@@ -172,8 +172,40 @@ async function submitBooking(event) {
     return;
   }
 
-  if (!emailInput || !emailInput.value.trim()) {
-    showMessage("Please enter your email.", "error");
+  const emailValue = emailInput ? emailInput.value.trim() : "";
+  const phoneValue = phoneInput ? phoneInput.value.trim() : "";
+  const phoneDigits = phoneValue.replace(/\D/g, "");
+
+  if (!emailValue) {
+    showMessage("Please enter your company/work email.", "error");
+    if (emailInput) emailInput.focus();
+    return;
+  }
+
+  if (emailInput && !emailInput.checkValidity()) {
+    showMessage("Please enter a valid company/work email address.", "error");
+    emailInput.focus();
+    return;
+  }
+
+  if (!companyInput || !companyInput.value.trim()) {
+    showMessage("Please enter your company / organization.", "error");
+    return;
+  }
+
+  if (!serviceInput || !serviceInput.value.trim()) {
+    showMessage("Please select the service you want to discuss.", "error");
+    return;
+  }
+
+  if (!detailsInput || !detailsInput.value.trim()) {
+    showMessage("Please provide a project brief.", "error");
+    return;
+  }
+
+  if (phoneValue && phoneDigits.length < 7) {
+    showMessage("Please enter a valid Phone / WhatsApp number.", "error");
+    if (phoneInput) phoneInput.focus();
     return;
   }
 
@@ -538,6 +570,23 @@ function setupBookingDate() {
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* -------------------------------------------------------
+     LOAD AI ASSISTANT CONTEXT
+     ------------------------------------------------------- */
+  try {
+    const rawLead = sessionStorage.getItem("geoprocessAiLead");
+    if (rawLead) {
+      const lead = JSON.parse(rawLead);
+      const detailsInput = document.getElementById("customer-details");
+      if (detailsInput && !detailsInput.value.trim() && lead.projectDetails) {
+        detailsInput.value = lead.projectDetails;
+      }
+    }
+  } catch (error) {
+    console.warn("Unable to load AI lead context.", error);
+  }
+
   setupTimeZone();
   setupBookingDate();
 

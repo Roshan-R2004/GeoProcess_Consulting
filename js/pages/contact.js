@@ -144,18 +144,78 @@ document.addEventListener("DOMContentLoaded", function () {
   );
 
 
+
+  /* -------------------------------------------------------
+     LOAD AI ASSISTANT CONTEXT
+     ------------------------------------------------------- */
+  try {
+    const rawLead = sessionStorage.getItem("geoprocessAiLead");
+    if (rawLead) {
+      const lead = JSON.parse(rawLead);
+      const messageInput = document.getElementById("contact-message");
+      if (messageInput && !messageInput.value.trim() && lead.projectDetails) {
+        messageInput.value = lead.projectDetails;
+      }
+    }
+  } catch (error) {
+    console.warn("Unable to load AI lead context.", error);
+  }
+
   /* -------------------------------------------------------
      FORM SUBMISSION
      ------------------------------------------------------- */
 
   form.addEventListener(
     "submit",
-    function () {
+    function (event) {
 
       if (submitting) {
         return;
       }
 
+      const nameInput = document.getElementById("contact-name");
+      const emailInput = document.getElementById("contact-email");
+      const phoneInput = document.getElementById("contact-phone");
+      const companyInput = document.getElementById("contact-company");
+      const serviceInput = document.getElementById("contact-service");
+      const scopeInput = document.getElementById("contact-scope");
+      const deliverableInput = document.getElementById("contact-deliverable");
+      const messageInput = document.getElementById("contact-message");
+
+      const requiredFields = [
+        [nameInput, "Please enter your name."],
+        [emailInput, "Please enter your company/work email."],
+        [companyInput, "Please enter your company / organization."],
+        [serviceInput, "Please select the primary requirement."],
+        [messageInput, "Please provide the project details."]
+      ];
+
+      for (const [field, message] of requiredFields) {
+        if (!field || !String(field.value || "").trim()) {
+          event.preventDefault();
+          showStatus(message, "error");
+          if (field) field.focus();
+          return;
+        }
+      }
+
+      const email = emailInput ? emailInput.value.trim() : "";
+      const phone = phoneInput ? phoneInput.value.trim() : "";
+      const phoneDigits = phone.replace(/\D/g, "");
+
+      if (email && emailInput && !emailInput.checkValidity()) {
+        event.preventDefault();
+        showStatus("Please enter a valid company/work email address.", "error");
+        emailInput.focus();
+        return;
+      }
+
+      if (phone && phoneDigits.length < 7) {
+        event.preventDefault();
+        showStatus("Please enter a valid Phone / WhatsApp number.", "error");
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
 
       submitting = true;
 
