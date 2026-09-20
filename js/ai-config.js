@@ -1,6 +1,6 @@
 // GeoProcess AI Assistant configuration
-// Leave workerUrl empty to use the local demo assistant.
-// After deploying the Cloudflare Worker, paste its URL here.
+// Paste the public Cloudflare Worker URL below after deployment.
+// No AI secret/API key belongs in this file.
 window.GEOPROCESS_AI = {
   workerUrl: "https://geoprocess.rohitrohit-12jan.workers.dev/",
   companyName: "GeoProcess Consulting",
