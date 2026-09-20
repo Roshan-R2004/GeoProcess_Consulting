@@ -28,3 +28,8 @@ This version keeps the supplied website content and assets while separating the 
 ## Booking
 
 The Google Calendar booking component still needs the real Google booking URL/embed configuration. No private or guessed credentials were inserted.
+
+
+## AI Assistant
+
+The latest build includes a floating GeoProcess AI Assistant. See `cloudflare/README.md` for connecting the chat to a Cloudflare Workers AI Worker.
