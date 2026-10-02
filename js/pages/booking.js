@@ -3,18 +3,279 @@
    ========================================================= */
 
 /*
- * IMPORTANT:
- * Replace this with your ACTIVE Google Apps Script /exec URL.
+ * The API/calendar uses a canonical timezone (IST by default).
+ * The browser converts those slots to the visitor's local timezone.
  */
-const BOOKING_API_URL = window.GEOPROCESS_BOOKING?.apiUrl || "https://script.google.com/macros/s/AKfycbzVSoIyLwVIO8qA0nYH_981tmQXNLDY-aRKAe08x7_4u077ZmUHQ_QDHPYvUKkwxMtT/exec"
+const BOOKING_CONFIG = window.GEOPROCESS_BOOKING || {};
+const BOOKING_API_URL =
+  BOOKING_CONFIG.apiUrl ||
+  "https://script.google.com/macros/s/AKfycbzVSoIyLwVIO8qA0nYH_981tmQXNLDY-aRKAe08x7_4u077ZmUHQ_QDHPYvUKkwxMtT/exec";
+
+const BOOKING_TIME_ZONE = BOOKING_CONFIG.timeZone || "Asia/Kolkata";
+const USER_TIME_ZONE =
+  Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+
 /* =========================================================
    GLOBAL STATE
    ========================================================= */
 
 let selectedBookingTime = null;
 let currentRequestId = 0;
-let selectedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Kolkata";
-let selectedSlotMeta = null;
+
+/* =========================================================
+   DATE / TIMEZONE HELPERS
+   ========================================================= */
+
+/**
+ * Treat a date-only value as a calendar date. This avoids the browser
+ * interpreting "YYYY-MM-DD" in UTC and accidentally shifting the day.
+ */
+function parseDateKey(dateKey) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateKey || ""));
+  if (!match) return null;
+
+  return {
+    year: Number(match[1]),
+    month: Number(match[2]),
+    day: Number(match[3])
+  };
+}
+
+function formatDateKey(year, month, day) {
+  return [
+    String(year).padStart(4, "0"),
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0")
+  ].join("-");
+}
+
+function addDaysToDateKey(dateKey, amount) {
+  const parts = parseDateKey(dateKey);
+  if (!parts) return null;
+
+  const date = new Date(Date.UTC(parts.year, parts.month - 1, parts.day));
+  date.setUTCDate(date.getUTCDate() + amount);
+
+  return formatDateKey(
+    date.getUTCFullYear(),
+    date.getUTCMonth() + 1,
+    date.getUTCDate()
+  );
+}
+
+function getDateKeyForTimeZone(date, timeZone) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(date);
+
+  const values = {};
+  parts.forEach(function (part) {
+    if (part.type !== "literal") values[part.type] = part.value;
+  });
+
+  return formatDateKey(values.year, values.month, values.day);
+}
+
+function getTimeZoneOffsetMinutes(date, timeZone) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+
+  const values = {};
+  parts.forEach(function (part) {
+    if (part.type !== "literal") values[part.type] = part.value;
+  });
+
+  const asUTC = Date.UTC(
+    Number(values.year),
+    Number(values.month) - 1,
+    Number(values.day),
+    Number(values.hour),
+    Number(values.minute),
+    Number(values.second)
+  );
+
+  return Math.round((asUTC - date.getTime()) / 60000);
+}
+
+/**
+ * Convert a wall-clock date/time in a named timezone to an actual Date.
+ * This is used when the API gives us a booking-calendar date plus a time
+ * such as 10:30 or 10:30 AM.
+ */
+function zonedDateTimeToDate(dateKey, timeValue, timeZone) {
+  const dateParts = parseDateKey(dateKey);
+  if (!dateParts || timeValue == null) return null;
+
+  const raw = String(timeValue).trim();
+
+  // If the API already returns an ISO timestamp with a timezone/offset,
+  // use it directly instead of guessing.
+  if (/^\d{4}-\d{2}-\d{2}T/.test(raw)) {
+    const parsedISO = new Date(raw);
+    if (!Number.isNaN(parsedISO.getTime())) return parsedISO;
+  }
+
+  // Support "HH:mm", "HH:mm:ss", "h:mm AM", "h:mm:ss PM".
+  const match = /^(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i.exec(raw);
+  if (!match) return null;
+
+  let hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const second = Number(match[3] || 0);
+  const meridiem = match[4] ? match[4].toUpperCase() : "";
+
+  if (meridiem === "AM" && hour === 12) hour = 0;
+  if (meridiem === "PM" && hour !== 12) hour += 12;
+
+  if (
+    hour < 0 ||
+    hour > 23 ||
+    minute < 0 ||
+    minute > 59 ||
+    second < 0 ||
+    second > 59
+  ) {
+    return null;
+  }
+
+  // Start with the requested wall-clock values as if they were UTC,
+  // then remove the actual timezone offset. A second pass handles
+  // daylight-saving transitions around the selected date.
+  let guess = Date.UTC(
+    dateParts.year,
+    dateParts.month - 1,
+    dateParts.day,
+    hour,
+    minute,
+    second
+  );
+
+  for (let i = 0; i < 3; i += 1) {
+    const offsetMinutes = getTimeZoneOffsetMinutes(
+      new Date(guess),
+      timeZone
+    );
+    guess =
+      Date.UTC(
+        dateParts.year,
+        dateParts.month - 1,
+        dateParts.day,
+        hour,
+        minute,
+        second
+      ) -
+      offsetMinutes * 60000;
+  }
+
+  return new Date(guess);
+}
+
+function formatLocalTime(date) {
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: USER_TIME_ZONE,
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  }).format(date);
+}
+
+function formatLocalDate(date) {
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: USER_TIME_ZONE,
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  }).format(date);
+}
+
+function getTimeZoneLabel(timeZone) {
+  try {
+    const parts = new Intl.DateTimeFormat(undefined, {
+      timeZone: timeZone,
+      timeZoneName: "long"
+    }).formatToParts(new Date());
+
+    const zoneNamePart = parts.find(function (part) {
+      return part.type === "timeZoneName";
+    });
+
+    return zoneNamePart?.value || timeZone;
+  } catch (error) {
+    return timeZone;
+  }
+}
+
+function formatSlotForUser(sourceDate, slot) {
+  const startDate = zonedDateTimeToDate(
+    sourceDate,
+    slot.start,
+    BOOKING_TIME_ZONE
+  );
+
+  if (!startDate) return null;
+
+  let endDate = zonedDateTimeToDate(
+    sourceDate,
+    slot.end,
+    BOOKING_TIME_ZONE
+  );
+
+  if (endDate && endDate.getTime() < startDate.getTime()) {
+    endDate = new Date(endDate.getTime() + 24 * 60 * 60 * 1000);
+  }
+
+  return {
+    sourceDate: sourceDate,
+    sourceStart: slot.start,
+    sourceEnd: slot.end,
+    startDate: startDate,
+    endDate: endDate,
+    localDate: getDateKeyForTimeZone(startDate, USER_TIME_ZONE),
+    localStart: formatLocalTime(startDate),
+    localEnd: endDate ? formatLocalTime(endDate) : "",
+    available: slot.available === true,
+    raw: slot
+  };
+}
+
+function getVisitorTodayKey() {
+  return getDateKeyForTimeZone(new Date(), USER_TIME_ZONE);
+}
+
+function updateTimezoneUI() {
+  const timezoneLabel = getTimeZoneLabel(USER_TIME_ZONE);
+
+  const timezoneBadge = document.getElementById("booking-timezone");
+  if (timezoneBadge) {
+    timezoneBadge.textContent =
+      "ONLINE CONSULTATION · " + timezoneLabel.toUpperCase();
+  }
+
+  const dateHelp = document.getElementById("date-help");
+  if (dateHelp) {
+    dateHelp.textContent =
+      "Available dates are shown in your local time. Time slots automatically adjust to " +
+      USER_TIME_ZONE +
+      ".";
+  }
+
+  const selectedSlot = document.getElementById("selected-slot");
+  if (selectedSlot) {
+    selectedSlot.dataset.timezone = USER_TIME_ZONE;
+  }
+}
 
 /* =========================================================
    AVAILABILITY - JSONP (Bypasses Browser CORS)
@@ -60,8 +321,6 @@ function getAvailability(date) {
       "?action=availability" +
       "&date=" +
       encodeURIComponent(date) +
-      "&timezone=" +
-      encodeURIComponent(selectedTimeZone) +
       "&callback=" +
       callbackName;
 
@@ -74,7 +333,7 @@ function getAvailability(date) {
    LOAD TIME SLOTS
    ========================================================= */
 
-async function loadTimeSlots(date) {
+async function loadTimeSlots(localDate) {
   const container = document.getElementById("time-slots");
   if (!container) return;
 
@@ -82,40 +341,120 @@ async function loadTimeSlots(date) {
   selectedBookingTime = null;
 
   container.innerHTML = "<p>Loading available times...</p>";
+  updateSelectedSlotUI(null);
+
+  // A user's local calendar date can overlap two different dates in IST.
+  // Fetch three surrounding booking dates so edge cases near midnight and
+  // unusual timezone offsets are covered safely.
+  const sourceDates = Array.from(
+    new Set([
+      addDaysToDateKey(localDate, -1),
+      localDate,
+      addDaysToDateKey(localDate, 1)
+    ].filter(Boolean))
+  );
 
   try {
-    const result = await getAvailability(date);
+    const responses = await Promise.allSettled(
+      sourceDates.map(function (sourceDate) {
+        return getAvailability(sourceDate).then(function (result) {
+          return {
+            sourceDate: sourceDate,
+            result: result
+          };
+        });
+      })
+    );
 
     if (requestId !== currentRequestId) return;
 
-    if (!result || !result.success) {
-      container.innerHTML =
-        "<p>" +
-        escapeHTML(result?.message || "Unable to load available times.") +
-        "</p>";
-      return;
-    }
-
-    const availableSlots = (result.slots || []).filter(function (slot) {
-      return slot.available === true;
+    const failures = responses.filter(function (response) {
+      return response.status === "rejected";
     });
 
-    if (availableSlots.length === 0) {
+    const successfulResults = responses
+      .filter(function (response) {
+        return response.status === "fulfilled";
+      })
+      .map(function (response) {
+        return response.value;
+      });
+
+    if (successfulResults.length === 0) {
+      throw failures[0]?.reason || new Error("Unable to load availability.");
+    }
+
+    const localSlots = [];
+
+    successfulResults.forEach(function (entry) {
+      const result = entry.result;
+
+      if (!result || !result.success) return;
+
+      (result.slots || []).forEach(function (slot) {
+        if (slot.available !== true) return;
+
+        const formatted = formatSlotForUser(entry.sourceDate, slot);
+        if (!formatted) return;
+
+        // Only show slots that actually fall on the visitor's selected date.
+        if (formatted.localDate !== localDate) return;
+
+        localSlots.push(formatted);
+      });
+    });
+
+    // Remove duplicates, sort by the real instant, then render.
+    const uniqueSlots = Array.from(
+      new Map(
+        localSlots.map(function (slot) {
+          return [
+            slot.sourceDate +
+              "|" +
+              String(slot.sourceStart) +
+              "|" +
+              String(slot.sourceEnd),
+            slot
+          ];
+        })
+      ).values()
+    );
+
+    uniqueSlots.sort(function (a, b) {
+      return a.startDate.getTime() - b.startDate.getTime();
+    });
+
+    if (uniqueSlots.length === 0) {
       container.innerHTML =
-        "<p>" +
-        escapeHTML(result.message || "No available times for this date.") +
-        "</p>";
+        "<p>No available consultation times for " +
+        escapeHTML(formatDateKeyForMessage(localDate)) +
+        " in " +
+        escapeHTML(USER_TIME_ZONE) +
+        ".</p>";
       return;
     }
 
     container.innerHTML = "";
 
-    availableSlots.forEach(function (slot) {
+    uniqueSlots.forEach(function (slot) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "time-slot";
-      button.textContent = slot.start + " - " + slot.end;
-      button.dataset.time = slot.start;
+      button.textContent =
+        slot.localStart +
+        (slot.localEnd ? " - " + slot.localEnd : "");
+      button.dataset.time = String(slot.sourceStart);
+      button.dataset.date = slot.sourceDate;
+      button.dataset.timezone = BOOKING_TIME_ZONE;
+      button.dataset.localStart = slot.localStart;
+      button.dataset.localEnd = slot.localEnd;
+
+      button.setAttribute(
+        "aria-label",
+        "Select " +
+          slot.localStart +
+          (slot.localEnd ? " to " + slot.localEnd : "")
+      );
 
       button.addEventListener("click", function () {
         document.querySelectorAll(".time-slot").forEach(function (btn) {
@@ -123,24 +462,81 @@ async function loadTimeSlots(date) {
         });
 
         button.classList.add("selected");
-        selectedBookingTime = slot.start;
-        selectedSlotMeta = slot;
-        updateSelectedSlotDisplay(slot);
+
+        // Preserve the exact API values from the booking calendar.
+        selectedBookingTime = {
+          date: slot.sourceDate,
+          time: slot.sourceStart,
+          end: slot.sourceEnd,
+          displayStart: slot.localStart,
+          displayEnd: slot.localEnd,
+          instant: slot.startDate
+        };
+
+        updateSelectedSlotUI(selectedBookingTime);
         showMessage("", "");
       });
 
       container.appendChild(button);
     });
+
+    if (failures.length > 0) {
+      console.warn(
+        "Some adjacent booking dates could not be loaded.",
+        failures.map(function (failure) {
+          return failure.reason;
+        })
+      );
+    }
   } catch (error) {
     if (requestId !== currentRequestId) return;
+
     console.error("Availability error:", error);
     container.innerHTML =
       "<p>Unable to load available times. Please try again.</p>";
   }
 }
 
+function formatDateKeyForMessage(dateKey) {
+  const parts = parseDateKey(dateKey);
+  if (!parts) return dateKey;
+
+  const utcDate = new Date(
+    Date.UTC(parts.year, parts.month - 1, parts.day, 12, 0, 0)
+  );
+
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  }).format(utcDate);
+}
+
+function updateSelectedSlotUI(slot) {
+  const selected = document.getElementById("selected-slot");
+  if (!selected) return;
+
+  if (!slot) {
+    selected.innerHTML =
+      "<span>SELECTED SLOT</span><strong>No time selected</strong>";
+    return;
+  }
+
+  const timeText =
+    slot.displayStart +
+    (slot.displayEnd ? " - " + slot.displayEnd : "");
+
+  selected.innerHTML =
+    "<span>SELECTED SLOT · " +
+    escapeHTML(USER_TIME_ZONE) +
+    "</span><strong>" +
+    escapeHTML(timeText) +
+    "</strong>";
+}
+
 /* =========================================================
-   SUBMIT BOOKING (CORS-Safe Async Fetch)
+   SUBMIT BOOKING
    ========================================================= */
 
 async function submitBooking(event) {
@@ -172,40 +568,8 @@ async function submitBooking(event) {
     return;
   }
 
-  const emailValue = emailInput ? emailInput.value.trim() : "";
-  const phoneValue = phoneInput ? phoneInput.value.trim() : "";
-  const phoneDigits = phoneValue.replace(/\D/g, "");
-
-  if (!emailValue) {
-    showMessage("Please enter your company/work email.", "error");
-    if (emailInput) emailInput.focus();
-    return;
-  }
-
-  if (emailInput && !emailInput.checkValidity()) {
-    showMessage("Please enter a valid company/work email address.", "error");
-    emailInput.focus();
-    return;
-  }
-
-  if (!companyInput || !companyInput.value.trim()) {
-    showMessage("Please enter your company / organization.", "error");
-    return;
-  }
-
-  if (!serviceInput || !serviceInput.value.trim()) {
-    showMessage("Please select the service you want to discuss.", "error");
-    return;
-  }
-
-  if (!detailsInput || !detailsInput.value.trim()) {
-    showMessage("Please provide a project brief.", "error");
-    return;
-  }
-
-  if (phoneValue && phoneDigits.length < 7) {
-    showMessage("Please enter a valid Phone / WhatsApp number.", "error");
-    if (phoneInput) phoneInput.focus();
+  if (!emailInput || !emailInput.value.trim()) {
+    showMessage("Please enter your email.", "error");
     return;
   }
 
@@ -216,19 +580,21 @@ async function submitBooking(event) {
 
   showMessage("Submitting your booking request...", "loading");
 
+  /*
+   * Keep the API's original date/time values exactly as returned by the
+   * booking calendar. The browser-local date/time is presentation only.
+   *
+   * timezone is extra context for the backend and does not change the
+   * existing contract. Existing backend fields remain unchanged.
+   */
   const payload = {
     name: nameInput.value.trim(),
     email: emailInput.value.trim(),
     phone: phoneInput ? phoneInput.value.trim() : "",
     company: companyInput ? companyInput.value.trim() : "",
     service: serviceInput ? serviceInput.value : "",
-    date: dateInput.value,
-    time: selectedBookingTime,
-    timezone: selectedTimeZone,
-    localDate: dateInput.value,
-    localTime: selectedBookingTime,
-    businessDate: selectedSlotMeta?.businessDate || dateInput.value,
-    businessTime: selectedSlotMeta?.businessTime || selectedBookingTime,
+    date: selectedBookingTime.date,
+    time: selectedBookingTime.time,
     details: detailsInput ? detailsInput.value.trim() : ""
   };
 
@@ -270,8 +636,7 @@ async function submitBooking(event) {
     }
 
     selectedBookingTime = null;
-    selectedSlotMeta = null;
-    updateSelectedSlotDisplay(null);
+    updateSelectedSlotUI(null);
 
     document.querySelectorAll(".time-slot").forEach(function (btn) {
       btn.classList.remove("selected");
@@ -326,215 +691,6 @@ function escapeHTML(value) {
     .replace(/'/g, "&#039;");
 }
 
-
-
-/* =========================================================
-   TIME ZONE
-   ========================================================= */
-
-function getSupportedTimeZones() {
-  // Keep this list intentionally small and stable. Every timezone below is
-  // supported by the booking backend and is a practical choice for visitors.
-  return [
-    "Asia/Kolkata",
-    "Asia/Dhaka",
-    "Asia/Kathmandu",
-    "Asia/Dubai",
-    "Asia/Riyadh",
-    "Asia/Jerusalem",
-    "Europe/London",
-    "Europe/Amsterdam",
-    "Europe/Berlin",
-    "Europe/Paris",
-    "Europe/Moscow",
-    "America/New_York",
-    "America/Chicago",
-    "America/Denver",
-    "America/Los_Angeles",
-    "America/Anchorage",
-    "Pacific/Honolulu",
-    "America/Toronto",
-    "America/Vancouver",
-    "America/Mexico_City",
-    "America/Sao_Paulo",
-    "America/Argentina/Buenos_Aires",
-    "Africa/Cairo",
-    "Africa/Johannesburg",
-    "Africa/Nairobi",
-    "Africa/Lagos",
-    "Asia/Singapore",
-    "Asia/Hong_Kong",
-    "Asia/Tokyo",
-    "Asia/Seoul",
-    "Asia/Bangkok",
-    "Asia/Jakarta",
-    "Australia/Perth",
-    "Australia/Sydney",
-    "Australia/Melbourne",
-    "Pacific/Auckland",
-    "UTC"
-  ];
-}
-
-function getTimeZoneGroups() {
-  return [
-    {
-      label: "India & South Asia",
-      zones: ["Asia/Kolkata", "Asia/Dhaka", "Asia/Kathmandu"]
-    },
-    {
-      label: "Middle East",
-      zones: ["Asia/Dubai", "Asia/Riyadh", "Asia/Jerusalem"]
-    },
-    {
-      label: "Europe",
-      zones: ["Europe/London", "Europe/Amsterdam", "Europe/Berlin", "Europe/Paris", "Europe/Moscow"]
-    },
-    {
-      label: "USA",
-      zones: ["America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles", "America/Anchorage", "Pacific/Honolulu"]
-    },
-    {
-      label: "Canada",
-      zones: ["America/Toronto", "America/Vancouver"]
-    },
-    {
-      label: "Latin America",
-      zones: ["America/Mexico_City", "America/Sao_Paulo", "America/Argentina/Buenos_Aires"]
-    },
-    {
-      label: "Africa",
-      zones: ["Africa/Cairo", "Africa/Johannesburg", "Africa/Nairobi", "Africa/Lagos"]
-    },
-    {
-      label: "Asia-Pacific",
-      zones: ["Asia/Singapore", "Asia/Hong_Kong", "Asia/Tokyo", "Asia/Seoul", "Asia/Bangkok", "Asia/Jakarta"]
-    },
-    {
-      label: "Australia & New Zealand",
-      zones: ["Australia/Perth", "Australia/Sydney", "Australia/Melbourne", "Pacific/Auckland"]
-    },
-    {
-      label: "Other",
-      zones: ["UTC"]
-    }
-  ];
-}
-
-function mapBrowserTimeZoneToSupported(zone) {
-  const zones = getSupportedTimeZones();
-  if (zones.includes(zone)) return zone;
-
-  // Common browser timezone names mapped to the closest curated option.
-  const aliases = {
-    "Europe/Brussels": "Europe/Amsterdam",
-    "Europe/Copenhagen": "Europe/Berlin",
-    "Europe/Oslo": "Europe/Berlin",
-    "Europe/Stockholm": "Europe/Berlin",
-    "Europe/Zurich": "Europe/Berlin",
-    "Europe/Rome": "Europe/Paris",
-    "Europe/Madrid": "Europe/Paris",
-    "Europe/Lisbon": "Europe/London",
-    "America/Detroit": "America/New_York",
-    "America/Indiana/Indianapolis": "America/New_York",
-    "America/Kentucky/Louisville": "America/New_York",
-    "America/Phoenix": "America/Denver",
-    "America/Edmonton": "America/Denver",
-    "America/Winnipeg": "America/Chicago",
-    "America/Halifax": "America/New_York",
-    "America/St_Johns": "America/New_York",
-    "Asia/Muscat": "Asia/Dubai",
-    "Asia/Qatar": "Asia/Riyadh",
-    "Asia/Kuwait": "Asia/Riyadh",
-    "Asia/Bahrain": "Asia/Riyadh",
-    "Asia/Aden": "Asia/Riyadh",
-    "Asia/Calcutta": "Asia/Kolkata",
-    "Asia/Colombo": "Asia/Kolkata",
-    "Asia/Rangoon": "Asia/Bangkok",
-    "Asia/Ho_Chi_Minh": "Asia/Bangkok",
-    "Australia/Brisbane": "Australia/Sydney",
-    "Australia/Hobart": "Australia/Sydney",
-    "Australia/Adelaide": "Australia/Melbourne",
-    "Pacific/Fiji": "Pacific/Auckland"
-  };
-
-  return aliases[zone] || "Asia/Kolkata";
-}
-
-function timeZoneLabel(timeZone) {
-  try {
-    const now = new Date();
-    const short = new Intl.DateTimeFormat(undefined, {
-      timeZone: timeZone,
-      timeZoneName: "short"
-    }).formatToParts(now).find(function (part) { return part.type === "timeZoneName"; });
-    return timeZone.replace(/_/g, " ").replace(/\//g, " / ") + (short?.value ? " (" + short.value + ")" : "");
-  } catch (error) {
-    return timeZone.replace(/_/g, " ").replace(/\//g, " / ");
-  }
-}
-
-function setupTimeZone() {
-  const select = document.getElementById("booking-timezone");
-  if (!select) return;
-
-  const zones = getSupportedTimeZones();
-  const groups = getTimeZoneGroups();
-  selectedTimeZone = mapBrowserTimeZoneToSupported(selectedTimeZone);
-
-  select.innerHTML = "";
-
-  groups.forEach(function (group) {
-    const optgroup = document.createElement("optgroup");
-    optgroup.label = group.label;
-
-    group.zones.forEach(function (zone) {
-      const option = document.createElement("option");
-      option.value = zone;
-      option.textContent = timeZoneLabel(zone);
-      optgroup.appendChild(option);
-    });
-
-    select.appendChild(optgroup);
-  });
-
-  if (!zones.includes(selectedTimeZone)) {
-    selectedTimeZone = "Asia/Kolkata";
-  }
-
-  select.value = selectedTimeZone;
-
-  select.addEventListener("change", function () {
-    selectedTimeZone = select.value;
-    selectedBookingTime = null;
-    selectedSlotMeta = null;
-    updateSelectedSlotDisplay(null);
-
-    const dateInput = document.getElementById("booking-date");
-    if (dateInput && dateInput.value) {
-      loadTimeSlots(dateInput.value);
-    } else {
-      const container = document.getElementById("time-slots");
-      if (container) container.innerHTML = "<p>Select a date to see available times.</p>";
-    }
-  });
-}
-
-function updateSelectedSlotDisplay(slot) {
-  const selected = document.getElementById("selected-slot");
-  if (!selected) return;
-
-  const strong = selected.querySelector("strong");
-  if (!strong) return;
-
-  if (!slot) {
-    strong.textContent = "No time selected";
-    return;
-  }
-
-  strong.textContent = slot.start + " - " + slot.end + " (" + selectedTimeZone + ")";
-}
-
 /* =========================================================
    DATE PICKER INITIALIZATION
    ========================================================= */
@@ -543,15 +699,12 @@ function setupBookingDate() {
   const dateInput = document.getElementById("booking-date");
   if (!dateInput) return;
 
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-
-  dateInput.min = year + "-" + month + "-" + day;
+  const todayKey = getVisitorTodayKey();
+  dateInput.min = todayKey;
 
   dateInput.addEventListener("change", function () {
     selectedBookingTime = null;
+    updateSelectedSlotUI(null);
 
     if (!dateInput.value) {
       const container = document.getElementById("time-slots");
@@ -570,7 +723,7 @@ function setupBookingDate() {
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
-  setupTimeZone();
+  updateTimezoneUI();
   setupBookingDate();
 
   const form = document.getElementById("booking-form");
