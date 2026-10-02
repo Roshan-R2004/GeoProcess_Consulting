@@ -21,6 +21,7 @@ const USER_TIME_ZONE =
 
 let selectedBookingTime = null;
 let currentRequestId = 0;
+let bookingClockTimer = null;
 
 /* =========================================================
    DATE / TIMEZONE HELPERS
@@ -217,6 +218,86 @@ function getTimeZoneLabel(timeZone) {
   }
 }
 
+
+function formatClockTime(date, timeZone) {
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: timeZone,
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  }).format(date);
+}
+
+function formatClockDate(date, timeZone) {
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: timeZone,
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+
+function formatDateKeyForDisplay(dateKey) {
+  const parts = parseDateKey(dateKey);
+  if (!parts) return "Choose a date";
+
+  const utcDate = new Date(
+    Date.UTC(parts.year, parts.month - 1, parts.day, 12, 0, 0)
+  );
+
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  }).format(utcDate);
+}
+
+function formatSourceTimeForIndia(dateKey, value) {
+  const date = zonedDateTimeToDate(dateKey, value, BOOKING_TIME_ZONE);
+  if (!date) return String(value || "");
+
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: BOOKING_TIME_ZONE,
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  }).format(date);
+}
+
+function updateBookingContextClock() {
+  const now = new Date();
+
+  const localClock = document.getElementById("local-time-clock");
+  if (localClock) localClock.textContent = formatClockTime(now, USER_TIME_ZONE);
+
+  const localZone = document.getElementById("local-time-zone");
+  if (localZone) {
+    localZone.textContent = getTimeZoneLabel(USER_TIME_ZONE) + " · " + USER_TIME_ZONE;
+  }
+
+  const localDate = document.getElementById("local-date-clock");
+  if (localDate) localDate.textContent = formatClockDate(now, USER_TIME_ZONE);
+
+  const indiaClock = document.getElementById("india-time-clock");
+  if (indiaClock) indiaClock.textContent = formatClockTime(now, BOOKING_TIME_ZONE);
+
+  const indiaDate = document.getElementById("india-date-clock");
+  if (indiaDate) indiaDate.textContent = formatClockDate(now, BOOKING_TIME_ZONE);
+}
+
+function updateSelectedDateUI(dateKey) {
+  const preview = document.getElementById("selected-date-preview");
+  const detail = document.getElementById("selected-date-detail");
+  const text = dateKey ? formatDateKeyForDisplay(dateKey) : "Choose a date";
+
+  if (preview) preview.textContent = text;
+  if (detail) detail.textContent = dateKey ? text : "No date selected";
+}
+
 function formatSlotForUser(sourceDate, slot) {
   const startDate = zonedDateTimeToDate(
     sourceDate,
@@ -275,6 +356,12 @@ function updateTimezoneUI() {
   if (selectedSlot) {
     selectedSlot.dataset.timezone = USER_TIME_ZONE;
   }
+
+  updateSelectedDateUI("");
+  updateBookingContextClock();
+
+  if (bookingClockTimer) clearInterval(bookingClockTimer);
+  bookingClockTimer = setInterval(updateBookingContextClock, 1000);
 }
 
 /* =========================================================
@@ -355,30 +442,32 @@ async function loadTimeSlots(localDate) {
   );
 
   try {
-    const responses = await Promise.allSettled(
-      sourceDates.map(function (sourceDate) {
-        return getAvailability(sourceDate).then(function (result) {
-          return {
-            sourceDate: sourceDate,
-            result: result
-          };
+    // Load the nearby calendar dates one at a time. This keeps the JSONP
+    // request compatible with older browsers and avoids firing several
+    // cross-origin script requests at once.
+    const successfulResults = [];
+    const failures = [];
+
+    for (let i = 0; i < sourceDates.length; i += 1) {
+      if (requestId !== currentRequestId) return;
+
+      const sourceDate = sourceDates[i];
+
+      try {
+        const result = await getAvailability(sourceDate);
+        successfulResults.push({
+          sourceDate: sourceDate,
+          result: result
         });
-      })
-    );
+      } catch (error) {
+        failures.push({
+          sourceDate: sourceDate,
+          reason: error
+        });
+      }
+    }
 
     if (requestId !== currentRequestId) return;
-
-    const failures = responses.filter(function (response) {
-      return response.status === "rejected";
-    });
-
-    const successfulResults = responses
-      .filter(function (response) {
-        return response.status === "fulfilled";
-      })
-      .map(function (response) {
-        return response.value;
-      });
 
     if (successfulResults.length === 0) {
       throw failures[0]?.reason || new Error("Unable to load availability.");
@@ -515,24 +604,43 @@ function formatDateKeyForMessage(dateKey) {
 
 function updateSelectedSlotUI(slot) {
   const selected = document.getElementById("selected-slot");
-  if (!selected) return;
+  const bookingCard = document.getElementById("booking-time-card");
+  const bookingClock = document.getElementById("booking-time-clock");
+  const bookingLocal = document.getElementById("booking-time-local");
+  const bookingIndia = document.getElementById("booking-time-india");
 
   if (!slot) {
-    selected.innerHTML =
-      "<span>SELECTED SLOT</span><strong>No time selected</strong>";
+    if (selected) {
+      selected.innerHTML =
+        "<span>SELECTED SLOT</span><strong>No time selected</strong>";
+    }
+    if (bookingCard) bookingCard.classList.remove("is-selected");
+    if (bookingClock) bookingClock.textContent = "No slot selected";
+    if (bookingLocal) bookingLocal.textContent = "Choose an available slot below.";
+    if (bookingIndia) bookingIndia.textContent = "India: —";
     return;
   }
 
   const timeText =
     slot.displayStart +
     (slot.displayEnd ? " - " + slot.displayEnd : "");
+  const indiaTimeText =
+    formatSourceTimeForIndia(slot.sourceDate, slot.sourceStart) +
+    (slot.sourceEnd ? " - " + formatSourceTimeForIndia(slot.sourceDate, slot.sourceEnd) : "");
 
-  selected.innerHTML =
-    "<span>SELECTED SLOT · " +
-    escapeHTML(USER_TIME_ZONE) +
-    "</span><strong>" +
-    escapeHTML(timeText) +
-    "</strong>";
+  if (selected) {
+    selected.innerHTML =
+      "<span>SELECTED SLOT · " +
+      escapeHTML(USER_TIME_ZONE) +
+      "</span><strong>" +
+      escapeHTML(timeText) +
+      "</strong>";
+  }
+
+  if (bookingCard) bookingCard.classList.add("is-selected");
+  if (bookingClock) bookingClock.textContent = timeText;
+  if (bookingLocal) bookingLocal.textContent = "Your local time · " + USER_TIME_ZONE;
+  if (bookingIndia) bookingIndia.textContent = "India: " + indiaTimeText;
 }
 
 /* =========================================================
@@ -637,6 +745,7 @@ async function submitBooking(event) {
 
     selectedBookingTime = null;
     updateSelectedSlotUI(null);
+    updateSelectedDateUI(dateInput.value || "");
 
     document.querySelectorAll(".time-slot").forEach(function (btn) {
       btn.classList.remove("selected");
@@ -702,9 +811,12 @@ function setupBookingDate() {
   const todayKey = getVisitorTodayKey();
   dateInput.min = todayKey;
 
+  updateSelectedDateUI(dateInput.value || "");
+
   dateInput.addEventListener("change", function () {
     selectedBookingTime = null;
     updateSelectedSlotUI(null);
+    updateSelectedDateUI(dateInput.value || "");
 
     if (!dateInput.value) {
       const container = document.getElementById("time-slots");
