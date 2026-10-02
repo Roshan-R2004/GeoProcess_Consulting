@@ -528,6 +528,93 @@
     .booking-info-grid { grid-template-columns: 1fr; }
     .booking-trust { grid-template-columns: 1fr; }
   }
+
+  /* Timezone context strip inside the booking container */
+  .booking-context-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr 1.15fr;
+    gap: 12px;
+    margin: 0 0 24px;
+  }
+  .booking-context-card {
+    position: relative;
+    min-width: 0;
+    padding: 18px 18px 16px;
+    border: 1px solid var(--booking-line);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(10,25,39,.9), rgba(5,14,23,.94));
+    box-shadow: 0 14px 40px rgba(0,0,0,.16);
+    overflow: hidden;
+  }
+  .booking-context-card::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255,106,43,.55), transparent 72%);
+  }
+  .booking-context-kicker {
+    color: #708395;
+    font: 700 9px/1.2 'Space Mono', monospace;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .booking-context-value {
+    display: block;
+    margin-top: 9px;
+    color: #f5f8fb;
+    font: 800 clamp(20px, 2vw, 28px)/1.05 'Inter', sans-serif;
+    letter-spacing: -.025em;
+  }
+  .booking-context-meta {
+    display: block;
+    margin-top: 7px;
+    color: #8090a1;
+    font: 500 11px/1.45 'Inter', sans-serif;
+    overflow-wrap: anywhere;
+  }
+  .booking-context-date-input { margin-top: 9px; }
+  .booking-context-date-input .booking-input { margin-top: 0; }
+  .booking-context-date-preview {
+    display: block;
+    margin-top: 7px;
+    color: var(--booking-accent-bright);
+    font: 700 11px/1.4 'Space Mono', monospace;
+  }
+  .booking-context-card.live::after {
+    content: "LIVE";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 4px 6px;
+    border: 1px solid rgba(255,106,43,.18);
+    border-radius: 6px;
+    background: rgba(255,106,43,.07);
+    color: var(--booking-accent);
+    font: 700 7px/1 'Space Mono', monospace;
+    letter-spacing: .08em;
+  }
+  .booking-context-booking strong {
+    display: block;
+    margin-top: 9px;
+    color: #f5f8fb;
+    font: 800 clamp(17px, 1.7vw, 23px)/1.15 'Inter', sans-serif;
+  }
+  .booking-context-booking .booking-context-meta + .booking-context-meta { margin-top: 3px; }
+  .booking-context-card.is-selected {
+    border-color: rgba(255,106,43,.32);
+    background: linear-gradient(145deg, rgba(255,106,43,.08), rgba(5,14,23,.96));
+  }
+  @media (max-width: 1000px) {
+    .booking-context-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 600px) {
+    .booking-context-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; }
+    .booking-context-card { padding: 16px; }
+  }
+
 </style>
 </head>
 
@@ -598,16 +685,50 @@
             <h2>Schedule your consultation</h2>
           </div>
           <div>
-            <p>Available slots are converted automatically for your current timezone. No manual timezone calculation is required.</p>
+            <p>Pick a date once. Your local time and India time stay visible so there is no timezone confusion.</p>
           </div>
+        </div>
+
+        <div class="booking-context-grid" aria-label="Booking timezone information">
+          <section class="booking-context-card booking-context-date">
+            <span class="booking-context-kicker">01 · CHOOSE DATE</span>
+            <div class="booking-context-date-input">
+              <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
+            </div>
+            <span class="booking-context-date-preview" id="selected-date-preview">Choose a date</span>
+            <small id="date-help" class="booking-context-meta">Available dates are shown in your local time.</small>
+          </section>
+
+          <section class="booking-context-card live">
+            <span class="booking-context-kicker">02 · YOUR LOCAL TIME</span>
+            <strong class="booking-context-value" id="local-time-clock">--:--:--</strong>
+            <span class="booking-context-meta" id="local-time-zone">Detecting your timezone...</span>
+            <span class="booking-context-meta" id="local-date-clock">—</span>
+          </section>
+
+          <section class="booking-context-card live">
+            <span class="booking-context-kicker">03 · INDIA TIME</span>
+            <strong class="booking-context-value" id="india-time-clock">--:--:--</strong>
+            <span class="booking-context-meta">India Standard Time · Asia/Kolkata</span>
+            <span class="booking-context-meta" id="india-date-clock">—</span>
+          </section>
+
+          <section class="booking-context-card booking-context-booking" id="booking-time-card">
+            <span class="booking-context-kicker">04 · BOOKING TIME</span>
+            <strong id="booking-time-clock">No slot selected</strong>
+            <span class="booking-context-meta" id="booking-time-local">Choose an available slot below.</span>
+            <span class="booking-context-meta" id="booking-time-india">India: —</span>
+          </section>
         </div>
 
         <div class="booking-card">
           <section class="booking-step step-date">
-            <div class="step-heading"><span class="step-number">01</span><div><span class="step-kicker">CALENDAR</span><h3>Choose a date</h3></div></div>
-            <label for="booking-date">Your consultation date</label>
-            <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
-            <small id="date-help">Available dates are shown in your local time.</small>
+            <div class="step-heading"><span class="step-number">01</span><div><span class="step-kicker">DATE</span><h3>Confirm the day</h3></div></div>
+            <div class="selected-slot" style="margin-top:0">
+              <span>SELECTED DATE</span>
+              <strong id="selected-date-detail">No date selected</strong>
+            </div>
+            <small style="margin-top:12px">The date picker above controls which calendar availability is loaded.</small>
 
             <div class="booking-trust" style="margin-top:24px;display:block;border:0;background:transparent">
               <div class="booking-trust-item" style="border:1px solid rgba(255,255,255,.07);border-radius:16px;margin-bottom:8px">
