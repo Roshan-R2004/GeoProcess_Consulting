@@ -1,0 +1,606 @@
+{
+  "version": 1,
+  "description": "GeoProcess Consulting technical question and answer bank used by the website AI Assistant. Answers are general technical knowledge; company-specific facts remain governed by the website knowledge and Cloudflare Worker instructions.",
+  "items": [
+    {
+      "id": 1,
+      "category": "LiDAR",
+      "question": "What is LiDAR and how does it measure distance?",
+      "answer": "LiDAR stands for Light Detection and Ranging. It measures distance by sending laser pulses toward a target and calculating the return time of the reflected light. Repeated measurements can form a dense 3D point cloud."
+    },
+    {
+      "id": 2,
+      "category": "LiDAR",
+      "question": "What are the main components of a LiDAR system?",
+      "answer": "Typical LiDAR systems include a laser source, scanner, GNSS positioning, an inertial measurement unit (IMU), timing and recording electronics, and software for processing the measurements. Mobile and airborne systems also integrate the sensor with a vehicle or aircraft."
+    },
+    {
+      "id": 3,
+      "category": "LiDAR",
+      "question": "What is the difference between airborne and terrestrial LiDAR?",
+      "answer": "Airborne LiDAR is mounted on an aircraft or drone and is suited to corridors and large areas. Terrestrial LiDAR is mounted on the ground or a vehicle and can capture very dense detail around buildings, structures and assets."
+    },
+    {
+      "id": 4,
+      "category": "LiDAR",
+      "question": "What is a point cloud?",
+      "answer": "A point cloud is a set of 3D points representing surfaces or objects. Each point commonly contains X, Y and Z coordinates and may also include attributes such as intensity, return number, classification or color."
+    },
+    {
+      "id": 5,
+      "category": "LiDAR",
+      "question": "What information is stored in a LAS file?",
+      "answer": "LAS is a standard point-cloud format that can store coordinates, point classification, return information, intensity and other attributes such as GPS time or scan angle, depending on the LAS version and data producer."
+    },
+    {
+      "id": 6,
+      "category": "LiDAR",
+      "question": "What is the purpose of point cloud classification?",
+      "answer": "Point-cloud classification assigns points to meaningful categories such as ground, vegetation, buildings or water. Classification makes the raw cloud usable for terrain modeling, mapping, extraction and analysis."
+    },
+    {
+      "id": 7,
+      "category": "LiDAR",
+      "question": "What are LiDAR return types (first, last, intermediate)?",
+      "answer": "A laser pulse can produce multiple returns when it interacts with several surfaces. First returns usually come from the highest intercepted surface, last returns often represent lower surfaces such as ground, and intermediate returns describe additional surfaces between them."
+    },
+    {
+      "id": 8,
+      "category": "LiDAR",
+      "question": "How is point density calculated?",
+      "answer": "Point density is commonly expressed as points per square meter. A basic estimate is the number of points in an area divided by the area size. Density can vary across a dataset because of scan geometry, overlap and filtering."
+    },
+    {
+      "id": 9,
+      "category": "LiDAR",
+      "question": "What factors influence LiDAR accuracy?",
+      "answer": "Accuracy is influenced by sensor calibration, GNSS/IMU quality, flight or scan geometry, control information, terrain, surface reflectivity, atmospheric conditions, point density and processing methods."
+    },
+    {
+      "id": 10,
+      "category": "LiDAR",
+      "question": "What is vertical accuracy in LiDAR surveys?",
+      "answer": "Vertical accuracy describes how closely LiDAR-derived elevations agree with a trusted reference elevation. It is commonly evaluated using checkpoints and statistics such as RMSE or error percentiles."
+    },
+    {
+      "id": 11,
+      "category": "LiDAR",
+      "question": "What is horizontal accuracy in LiDAR surveys?",
+      "answer": "Horizontal accuracy describes how closely the planimetric position of LiDAR features matches their true or reference location. It is affected by positioning, sensor orientation, calibration and the processing workflow."
+    },
+    {
+      "id": 12,
+      "category": "LiDAR",
+      "question": "What is intensity data in LiDAR?",
+      "answer": "Intensity is a measure related to the strength of the laser return recorded by the sensor. It can help distinguish materials or surface characteristics, although intensity values are affected by acquisition and sensor conditions."
+    },
+    {
+      "id": 13,
+      "category": "LiDAR",
+      "question": "How does LiDAR penetrate vegetation?",
+      "answer": "Vegetation is semi-transparent to laser pulses because gaps between leaves and branches allow some pulses to reach lower surfaces. Multiple returns can therefore describe canopy, understory and ground beneath vegetation."
+    },
+    {
+      "id": 14,
+      "category": "LiDAR",
+      "question": "What is strip adjustment in LiDAR processing?",
+      "answer": "Strip adjustment aligns overlapping LiDAR flight or scan strips so that the same surfaces agree more closely between strips. It helps reduce systematic offsets and improves relative consistency across the dataset."
+    },
+    {
+      "id": 15,
+      "category": "LiDAR",
+      "question": "What is boresight calibration?",
+      "answer": "Boresight calibration estimates and corrects the angular misalignment between the LiDAR sensor and the navigation system. Good boresight calibration reduces geometric discrepancies between overlapping strips."
+    },
+    {
+      "id": 16,
+      "category": "LiDAR",
+      "question": "What are common LiDAR classification classes?",
+      "answer": "Common classes include unclassified, ground, low/medium/high vegetation, building, water and noise. Exact class codes depend on the point-cloud standard and project specification."
+    },
+    {
+      "id": 17,
+      "category": "LiDAR",
+      "question": "What causes noise in point cloud datasets?",
+      "answer": "Noise can come from sensor effects, weak or multiple reflections, atmospheric conditions, moving objects, GNSS/IMU errors, surface properties and processing artifacts. Outlier filtering is used to identify and remove inappropriate points."
+    },
+    {
+      "id": 18,
+      "category": "LiDAR",
+      "question": "What quality checks are performed on LiDAR data?",
+      "answer": "Typical checks include coordinate-system verification, completeness, point density, overlap consistency, strip alignment, vertical and horizontal accuracy, classification quality, outliers, voids and deliverable-format checks."
+    },
+    {
+      "id": 19,
+      "category": "LiDAR",
+      "question": "What is the workflow from raw LiDAR data to deliverables?",
+      "answer": "A common workflow is data receipt and validation, calibration or strip checks, noise cleaning, classification, ground extraction, feature extraction or modeling, QA/QC and final export to the required point-cloud, GIS, CAD or terrain formats."
+    },
+    {
+      "id": 20,
+      "category": "LiDAR",
+      "question": "What are the limitations of LiDAR technology?",
+      "answer": "LiDAR can be affected by cost, sensor visibility, water and reflective surfaces, dense or complex vegetation, acquisition geometry, weather and the quality of positioning and calibration. Processing large point clouds can also require significant storage and computing resources."
+    },
+    {
+      "id": 21,
+      "category": "GIS",
+      "question": "What is GIS and why is it important?",
+      "answer": "GIS stands for Geographic Information System. It stores, manages, analyzes and visualizes information tied to locations. GIS is important because it connects geography with attributes and spatial relationships to support mapping and decisions."
+    },
+    {
+      "id": 22,
+      "category": "GIS",
+      "question": "What is the difference between raster and vector data?",
+      "answer": "Raster data represents information as a grid of cells and is common for imagery, elevation and continuous surfaces. Vector data represents discrete features as points, lines and polygons with associated attributes."
+    },
+    {
+      "id": 23,
+      "category": "GIS",
+      "question": "What are points, lines, and polygons?",
+      "answer": "Points represent locations, lines represent linear features and polygons represent enclosed areas. Examples include a pole as a point, a road as a line and a land parcel as a polygon."
+    },
+    {
+      "id": 24,
+      "category": "GIS",
+      "question": "What is coordinate reference system (CRS)?",
+      "answer": "A coordinate reference system defines how locations are represented on the Earth using coordinates. It includes the geographic or projected coordinate framework, datum and units needed to interpret the coordinates correctly."
+    },
+    {
+      "id": 25,
+      "category": "GIS",
+      "question": "What is a projected coordinate system?",
+      "answer": "A projected coordinate system converts positions on the curved Earth to a flat coordinate plane. It normally uses linear units such as meters or feet and is useful for measurement and mapping at a particular scale and region."
+    },
+    {
+      "id": 26,
+      "category": "GIS",
+      "question": "What is a geographic coordinate system?",
+      "answer": "A geographic coordinate system represents positions on the Earth using angular coordinates such as latitude and longitude, referenced to a geographic datum or ellipsoid."
+    },
+    {
+      "id": 27,
+      "category": "GIS",
+      "question": "What is spatial analysis?",
+      "answer": "Spatial analysis uses geographic relationships and geometry to answer questions about location, proximity, distribution, patterns and connections. Examples include buffers, overlays, proximity analysis and network analysis."
+    },
+    {
+      "id": 28,
+      "category": "GIS",
+      "question": "What is geocoding?",
+      "answer": "Geocoding converts a text address or place description into geographic coordinates. Reverse geocoding does the opposite by converting coordinates into a human-readable location."
+    },
+    {
+      "id": 29,
+      "category": "GIS",
+      "question": "What is spatial interpolation?",
+      "answer": "Spatial interpolation estimates values at unsampled locations from known observations. Common methods include IDW, kriging and spline, with the choice depending on the data and the surface being modeled."
+    },
+    {
+      "id": 30,
+      "category": "GIS",
+      "question": "What is buffering in GIS?",
+      "answer": "Buffering creates a zone around a feature at a specified distance. Buffers are useful for proximity analysis, service areas, corridor studies and identifying features within a defined distance."
+    },
+    {
+      "id": 31,
+      "category": "GIS",
+      "question": "What is overlay analysis?",
+      "answer": "Overlay analysis combines spatial layers to find relationships between them. Operations such as intersect, union, clip and spatial joins can be used to identify combined conditions."
+    },
+    {
+      "id": 32,
+      "category": "GIS",
+      "question": "What is network analysis?",
+      "answer": "Network analysis evaluates connected systems such as roads, pipelines or utility networks. Typical tasks include shortest paths, service areas, routing and tracing through connected features."
+    },
+    {
+      "id": 33,
+      "category": "GIS",
+      "question": "What is map projection distortion?",
+      "answer": "Because a curved Earth cannot be flattened without distortion, map projections can change distance, area, shape or direction. Every projection balances these properties differently."
+    },
+    {
+      "id": 34,
+      "category": "GIS",
+      "question": "What is topology in GIS?",
+      "answer": "Topology describes spatial relationships such as adjacency, connectivity and shared boundaries. It is used to maintain geometric consistency between related features."
+    },
+    {
+      "id": 35,
+      "category": "GIS",
+      "question": "Why is topology important?",
+      "answer": "Topology helps detect and prevent problems such as gaps, overlaps, slivers, dangling lines and broken connectivity. This is especially important for reliable GIS analysis and asset datasets."
+    },
+    {
+      "id": 36,
+      "category": "GIS",
+      "question": "What are topology rules for polygons?",
+      "answer": "Common polygon rules include must not overlap, must not have gaps and must contain or cover appropriate features. The exact rules depend on the database and project requirements."
+    },
+    {
+      "id": 37,
+      "category": "GIS",
+      "question": "What is attribute data?",
+      "answer": "Attribute data is descriptive information stored with a spatial feature. For example, a road feature may include name, road class, surface type and maintenance status."
+    },
+    {
+      "id": 38,
+      "category": "GIS",
+      "question": "What is georeferencing?",
+      "answer": "Georeferencing assigns real-world coordinates to a raster, map or scanned drawing so it aligns with other spatial data. It typically uses control points and a transformation model."
+    },
+    {
+      "id": 39,
+      "category": "GIS",
+      "question": "What is the difference between ArcGIS Pro and QGIS?",
+      "answer": "ArcGIS Pro is Esri's commercial desktop GIS with a broad integrated ecosystem and licensed enterprise tools. QGIS is an open-source desktop GIS with strong standards support and a large plugin ecosystem. The best choice depends on project requirements, budget and existing infrastructure."
+    },
+    {
+      "id": 40,
+      "category": "GIS",
+      "question": "How do you optimize large GIS datasets?",
+      "answer": "Optimization can include using spatial indexes, suitable data formats, tiling or partitioning, simplifying geometry where appropriate, filtering fields, building pyramids or overviews, and avoiding unnecessary duplication of data."
+    },
+    {
+      "id": 41,
+      "category": "BIM & Digital Twin",
+      "question": "What is BIM?",
+      "answer": "BIM stands for Building Information Modeling. It is a structured digital representation of a building or asset that combines geometry with information used for design, documentation, coordination, construction and operations."
+    },
+    {
+      "id": 42,
+      "category": "BIM & Digital Twin",
+      "question": "What is the difference between BIM and CAD?",
+      "answer": "CAD primarily focuses on drafting and geometry, while BIM organizes geometry together with structured information and relationships about building components. BIM can therefore support coordination and lifecycle workflows beyond drawing production."
+    },
+    {
+      "id": 43,
+      "category": "BIM & Digital Twin",
+      "question": "What are LOD 100 through LOD 500?",
+      "answer": "LOD is commonly used to describe the level of development or representation of BIM elements. LOD 100 is conceptual, LOD 200 is approximate, LOD 300 is defined design-level geometry, LOD 400 is detailed fabrication or construction-level content, and LOD 500 represents an as-built or verified condition."
+    },
+    {
+      "id": 44,
+      "category": "BIM & Digital Twin",
+      "question": "What is LOD 400?",
+      "answer": "LOD 400 generally represents detailed elements suitable for fabrication, assembly or construction-level use. Geometry, dimensions and other information are more detailed than at LOD 300."
+    },
+    {
+      "id": 45,
+      "category": "BIM & Digital Twin",
+      "question": "What is LOD 500?",
+      "answer": "LOD 500 generally represents an as-built or field-verified condition. It is intended to reflect what was actually installed or verified, rather than only the design intent."
+    },
+    {
+      "id": 46,
+      "category": "BIM & Digital Twin",
+      "question": "What is Scan-to-BIM?",
+      "answer": "Scan-to-BIM is the workflow of using laser scans or point clouds to create or update BIM models. The process typically includes registration, cleanup, interpretation and modeling of building components."
+    },
+    {
+      "id": 47,
+      "category": "BIM & Digital Twin",
+      "question": "What is a Digital Twin?",
+      "answer": "A Digital Twin is a digital representation of a physical asset or system that is connected to relevant data and can be maintained over time. In geospatial and built-environment workflows it can combine spatial, engineering and operational information."
+    },
+    {
+      "id": 48,
+      "category": "BIM & Digital Twin",
+      "question": "How are LiDAR and BIM integrated?",
+      "answer": "LiDAR provides dense 3D measurements of existing conditions. Those point clouds can be registered, classified and interpreted to create or validate BIM geometry, making LiDAR useful for as-built documentation and Scan-to-BIM workflows."
+    },
+    {
+      "id": 49,
+      "category": "BIM & Digital Twin",
+      "question": "What quality checks are required in BIM models?",
+      "answer": "Typical checks include geometric accuracy, element completeness, naming and parameter standards, model coordination, levels and grids, clashes, file integrity, LOD requirements and consistency with the source survey or point cloud."
+    },
+    {
+      "id": 50,
+      "category": "BIM & Digital Twin",
+      "question": "What challenges arise when converting point clouds to BIM?",
+      "answer": "Challenges include noisy or incomplete scans, occlusions, complex geometry, inconsistent registration, choosing the correct modeling detail, interpreting design intent from existing conditions and maintaining model standards."
+    },
+    {
+      "id": 51,
+      "category": "Photogrammetry",
+      "question": "What is photogrammetry?",
+      "answer": "Photogrammetry extracts measurements and 3D information from overlapping photographs. Software identifies corresponding image features and uses camera geometry to reconstruct positions, surfaces and models."
+    },
+    {
+      "id": 52,
+      "category": "Photogrammetry",
+      "question": "How does photogrammetry differ from LiDAR?",
+      "answer": "Photogrammetry derives geometry from images and image overlap, while LiDAR measures distances directly with laser pulses. Their accuracy and performance depend on different acquisition conditions, and they are often used together."
+    },
+    {
+      "id": 53,
+      "category": "Photogrammetry",
+      "question": "What is image overlap and why is it important?",
+      "answer": "Image overlap means the same ground or object appears in multiple photos. High, well-distributed overlap gives the software enough common features to estimate camera positions and reconstruct 3D geometry reliably."
+    },
+    {
+      "id": 54,
+      "category": "Photogrammetry",
+      "question": "What are Ground Control Points (GCPs)?",
+      "answer": "Ground Control Points are accurately surveyed locations that are identifiable in the imagery and used to constrain or check the photogrammetric model against known coordinates."
+    },
+    {
+      "id": 55,
+      "category": "Photogrammetry",
+      "question": "How are GCPs used in photogrammetry?",
+      "answer": "GCPs are marked in images and their surveyed coordinates are supplied to the photogrammetry software. They help improve absolute georeferencing and provide an independent basis for accuracy checks."
+    },
+    {
+      "id": 56,
+      "category": "Photogrammetry",
+      "question": "What is orthorectification?",
+      "answer": "Orthorectification removes image distortions caused by terrain relief and camera geometry so that the resulting image has a map-like, geometrically corrected relationship with the ground."
+    },
+    {
+      "id": 57,
+      "category": "Photogrammetry",
+      "question": "What is bundle adjustment?",
+      "answer": "Bundle adjustment jointly refines camera positions, orientations and 3D point coordinates to minimize image-reprojection errors across the photo network."
+    },
+    {
+      "id": 58,
+      "category": "Photogrammetry",
+      "question": "What is an orthomosaic?",
+      "answer": "An orthomosaic is a single mosaic produced from multiple orthorectified images. It provides a continuous map-like image over the project area."
+    },
+    {
+      "id": 59,
+      "category": "Photogrammetry",
+      "question": "What is Agisoft Metashape used for?",
+      "answer": "Agisoft Metashape is photogrammetry software used for tasks such as image alignment, camera calibration, dense reconstruction, digital elevation products, orthomosaics and 3D modeling."
+    },
+    {
+      "id": 60,
+      "category": "Photogrammetry",
+      "question": "What factors affect photogrammetric accuracy?",
+      "answer": "Accuracy depends on image quality, overlap, camera calibration, flight geometry, GCP quality and distribution, terrain, lighting, image texture and the quality of the processing workflow."
+    },
+    {
+      "id": 61,
+      "category": "Annotation & AI/ML",
+      "question": "What is data annotation?",
+      "answer": "Data annotation is the process of labeling raw data so a machine-learning model can learn from it. Labels can describe objects, classes, boundaries, attributes or other target information."
+    },
+    {
+      "id": 62,
+      "category": "Annotation & AI/ML",
+      "question": "Why is annotation critical for machine learning?",
+      "answer": "Supervised machine-learning models learn patterns from labeled examples. Poor, inconsistent or incomplete annotations can reduce model performance and make the learned patterns unreliable."
+    },
+    {
+      "id": 63,
+      "category": "Annotation & AI/ML",
+      "question": "What are bounding boxes?",
+      "answer": "A bounding box is a rectangular label around an object in an image or other spatial frame. It is commonly used for object-detection tasks."
+    },
+    {
+      "id": 64,
+      "category": "Annotation & AI/ML",
+      "question": "What is semantic segmentation?",
+      "answer": "Semantic segmentation assigns a class label to each pixel or point, so all items belonging to the same class share the same category even when there are multiple individual objects."
+    },
+    {
+      "id": 65,
+      "category": "Annotation & AI/ML",
+      "question": "What is instance segmentation?",
+      "answer": "Instance segmentation identifies individual objects separately while also assigning a class to each object. Two objects of the same class can therefore receive separate instance labels."
+    },
+    {
+      "id": 66,
+      "category": "Annotation & AI/ML",
+      "question": "What are common quality issues in annotation projects?",
+      "answer": "Common issues include missing labels, inconsistent class definitions, ambiguous boundaries, incorrect geometry, duplicate annotations, class imbalance and variation between annotators."
+    },
+    {
+      "id": 67,
+      "category": "Annotation & AI/ML",
+      "question": "How is LiDAR annotation different from image annotation?",
+      "answer": "LiDAR annotation works with 3D points and their attributes, while image annotation works with pixels or image geometry. LiDAR annotation can use elevation, intensity, returns and 3D shape as additional information."
+    },
+    {
+      "id": 68,
+      "category": "Annotation & AI/ML",
+      "question": "What datasets are commonly used for geospatial AI?",
+      "answer": "Geospatial AI can use aerial or satellite imagery, LiDAR point clouds, street-level imagery, GIS layers, digital elevation data, building footprints, road networks and other spatial datasets, depending on the task."
+    },
+    {
+      "id": 69,
+      "category": "Annotation & AI/ML",
+      "question": "How can AI assist in feature extraction from LiDAR data?",
+      "answer": "AI models can help classify points, detect objects, segment structures and identify patterns such as buildings, vegetation or infrastructure. The results still need suitable training data and quality control."
+    },
+    {
+      "id": 70,
+      "category": "Annotation & AI/ML",
+      "question": "What is the role of machine learning in GIS?",
+      "answer": "Machine learning can support classification, prediction, pattern detection, image analysis, feature extraction and prioritization of spatial records. It complements GIS analysis rather than replacing core spatial logic."
+    },
+    {
+      "id": 71,
+      "category": "Terrain & Elevation Models",
+      "question": "What is a DEM?",
+      "answer": "DEM is a broad term for a digital representation of elevation. The exact meaning can vary by organization, but it generally refers to an elevation surface stored digitally."
+    },
+    {
+      "id": 72,
+      "category": "Terrain & Elevation Models",
+      "question": "What is a DTM?",
+      "answer": "A DTM, or Digital Terrain Model, represents the bare-earth terrain surface, typically excluding buildings and vegetation. It is used for terrain analysis, contours, drainage and engineering workflows."
+    },
+    {
+      "id": 73,
+      "category": "Terrain & Elevation Models",
+      "question": "What is a DSM?",
+      "answer": "A DSM, or Digital Surface Model, represents the elevations of the Earth's surface including objects such as buildings and vegetation where captured by the source data."
+    },
+    {
+      "id": 74,
+      "category": "Terrain & Elevation Models",
+      "question": "What is a TIN model?",
+      "answer": "A TIN, or Triangulated Irregular Network, represents a surface using connected triangles built from irregularly spaced elevation points or breaklines."
+    },
+    {
+      "id": 75,
+      "category": "Terrain & Elevation Models",
+      "question": "What are contour lines?",
+      "answer": "Contour lines connect locations with the same elevation. They provide a 2D way to visualize terrain shape and elevation change."
+    },
+    {
+      "id": 76,
+      "category": "Terrain & Elevation Models",
+      "question": "How are contours generated from LiDAR data?",
+      "answer": "Contours can be generated from a terrain surface derived from classified ground points. The surface is interpolated and contour lines are extracted at specified elevation intervals."
+    },
+    {
+      "id": 77,
+      "category": "Terrain & Elevation Models",
+      "question": "What is slope analysis?",
+      "answer": "Slope analysis measures the rate of elevation change across a surface, commonly expressed as a percentage or angle. It is used for terrain stability, drainage, accessibility and other spatial analyses."
+    },
+    {
+      "id": 78,
+      "category": "Terrain & Elevation Models",
+      "question": "What is aspect analysis?",
+      "answer": "Aspect describes the direction a terrain surface faces, usually expressed as a compass direction or azimuth. It is useful for solar exposure, drainage and terrain studies."
+    },
+    {
+      "id": 79,
+      "category": "Terrain & Elevation Models",
+      "question": "How are terrain models validated?",
+      "answer": "Terrain models are validated using independent checkpoints, known elevations, breaklines and visual or statistical checks for artifacts. Accuracy is commonly summarized with measures such as RMSE."
+    },
+    {
+      "id": 80,
+      "category": "Terrain & Elevation Models",
+      "question": "Which terrain model is best for flood analysis?",
+      "answer": "A bare-earth DTM is usually the starting point for terrain-driven flood modeling because it represents the ground surface. The appropriate model and added features depend on whether buildings, walls, channels and other structures need to be represented."
+    },
+    {
+      "id": 81,
+      "category": "CAD & Scan Conversion",
+      "question": "What is the difference between 2D CAD and 3D CAD?",
+      "answer": "2D CAD focuses on planar drawings such as lines, arcs and annotations. 3D CAD represents objects and geometry in three dimensions and can support modeling, visualization and engineering design."
+    },
+    {
+      "id": 82,
+      "category": "CAD & Scan Conversion",
+      "question": "What is CAD-to-BIM conversion?",
+      "answer": "CAD-to-BIM conversion turns drawing-based CAD information into structured BIM elements such as walls, floors, doors or MEP components, with geometry and associated information."
+    },
+    {
+      "id": 83,
+      "category": "CAD & Scan Conversion",
+      "question": "What is Scan-to-GIS?",
+      "answer": "Scan-to-GIS is the workflow of extracting spatial features from point clouds or scans and structuring them as GIS geometry and attributes."
+    },
+    {
+      "id": 84,
+      "category": "CAD & Scan Conversion",
+      "question": "How do you extract CAD features into GIS?",
+      "answer": "CAD features can be imported or converted into GIS-supported geometry, then assigned the correct coordinate system, cleaned, attributed and validated before being stored in the target GIS database."
+    },
+    {
+      "id": 85,
+      "category": "CAD & Scan Conversion",
+      "question": "What are common challenges in CAD data cleaning?",
+      "answer": "Common problems include duplicate or disconnected geometry, incorrect layers, missing attributes, inconsistent units, invalid coordinate systems, open polygons, annotation clutter and mixed feature types."
+    },
+    {
+      "id": 86,
+      "category": "LiDAR Software & Tools",
+      "question": "What is TerraSolid used for?",
+      "answer": "TerraSolid software is widely used for LiDAR processing tasks such as point-cloud management, classification, modeling, editing, feature extraction and quality control workflows."
+    },
+    {
+      "id": 87,
+      "category": "LiDAR Software & Tools",
+      "question": "What is LAStools used for?",
+      "answer": "LAStools is a collection of command-line and GUI tools for efficient LiDAR processing, including filtering, tiling, classification-related processing, statistics, conversion and point-cloud management."
+    },
+    {
+      "id": 88,
+      "category": "LiDAR Software & Tools",
+      "question": "Why is Global Mapper popular in geospatial projects?",
+      "answer": "Global Mapper is popular because it supports many raster, vector and elevation formats and provides practical tools for visualization, conversion, terrain analysis, data preparation and geospatial workflows."
+    },
+    {
+      "id": 89,
+      "category": "LiDAR Software & Tools",
+      "question": "What are the advantages of open-source GIS software?",
+      "answer": "Open-source GIS can reduce licensing cost, provide transparent and extensible tooling, support automation through scripting and plugins, and offer access to a large community and standards-based workflows."
+    },
+    {
+      "id": 90,
+      "category": "LiDAR Software & Tools",
+      "question": "When should paid GIS software be preferred over free tools?",
+      "answer": "Paid software may be preferable when an organization needs vendor-supported enterprise workflows, specific proprietary capabilities, established integrations, managed support or compatibility with an existing licensed environment."
+    },
+    {
+      "id": 91,
+      "category": "Python & GIS Automation",
+      "question": "What is ArcPy?",
+      "answer": "ArcPy is Esri's Python site-package for automating ArcGIS workflows. It provides access to geoprocessing tools, spatial data management and other ArcGIS functionality from Python."
+    },
+    {
+      "id": 92,
+      "category": "Python & GIS Automation",
+      "question": "What is PyQGIS?",
+      "answer": "PyQGIS is the Python API for QGIS. It allows developers to automate QGIS operations, work with layers and geometries, create plugins and build processing workflows."
+    },
+    {
+      "id": 93,
+      "category": "Python & GIS Automation",
+      "question": "What is the difference between ArcPy and PyQGIS?",
+      "answer": "ArcPy is designed around Esri's ArcGIS ecosystem, while PyQGIS is designed around QGIS. Both support GIS automation, but their APIs, data models and toolsets are different."
+    },
+    {
+      "id": 94,
+      "category": "Python & GIS Automation",
+      "question": "How can Python automate GIS workflows?",
+      "answer": "Python can automate repetitive tasks such as data conversion, field calculation, geoprocessing, validation, batch exports, metadata updates, map production and report generation."
+    },
+    {
+      "id": 95,
+      "category": "Python & GIS Automation",
+      "question": "What is Pandas and how is it used in GIS?",
+      "answer": "Pandas is a Python library for tabular data analysis. In GIS workflows it can be used to clean, join, summarize and transform attribute tables before or alongside spatial processing."
+    },
+    {
+      "id": 96,
+      "category": "Python & GIS Automation",
+      "question": "How can Python process LAS/LAZ files?",
+      "answer": "Python can process LAS/LAZ point clouds using libraries and external tools that read, filter, classify, transform or summarize point data. The best approach depends on dataset size and required operations."
+    },
+    {
+      "id": 97,
+      "category": "Python & GIS Automation",
+      "question": "What libraries are commonly used for geospatial Python development?",
+      "answer": "Common libraries include GeoPandas, Shapely, Rasterio, Fiona or Pyogrio, PyProj, PDAL, laspy and libraries from ArcGIS or QGIS. The choice depends on the data and workflow."
+    },
+    {
+      "id": 98,
+      "category": "Python & GIS Automation",
+      "question": "How do you perform batch processing with Python?",
+      "answer": "A batch workflow loops through many input files or features, applies the same processing steps, records errors and outputs, and writes standardized results. Logging and validation are important for reliable batch jobs."
+    },
+    {
+      "id": 99,
+      "category": "Python & GIS Automation",
+      "question": "How can machine learning models be integrated into GIS workflows?",
+      "answer": "A GIS workflow can prepare spatial features or imagery, pass them to a trained model, convert predictions back into spatial data, validate the outputs and publish the results for GIS analysis or mapping."
+    },
+    {
+      "id": 100,
+      "category": "Python & GIS Automation",
+      "question": "What does a complete GIS/LiDAR automation pipeline look like?",
+      "answer": "A typical pipeline is data intake and validation, coordinate-system checks, preprocessing, point-cloud or raster processing, classification or feature extraction, QA/QC, conversion to target formats, reporting and delivery. Orchestration, logging and repeatable configuration make the pipeline maintainable."
+    }
+  ]
+}
