@@ -19,603 +19,7 @@
   <link rel="stylesheet" href="css/pages/booking.css">
   <link rel="stylesheet" href="css/modern.css">
   <link rel="stylesheet" href="css/compact.css">
-
-<style>
-  /* GeoProcess booking visual system: same dark + orange palette as the main site. */
-  :root {
-    --booking-bg: #050b12;
-    --booking-surface: #08111a;
-    --booking-surface-2: #0b1620;
-    --booking-surface-3: #0f1c28;
-    --booking-line: rgba(255, 255, 255, .10);
-    --booking-line-soft: rgba(255, 255, 255, .065);
-    --booking-text: #f4f7fb;
-    --booking-text-soft: #c4d0db;
-    --booking-muted: #7d8d9e;
-    --booking-accent: #ff6a2b;
-    --booking-accent-bright: #ff8350;
-    --booking-accent-soft: rgba(255, 106, 43, .12);
-    --booking-radius: 20px;
-  }
-
-  .booking-page {
-    background: var(--booking-bg);
-    color: var(--booking-text);
-    overflow: hidden;
-  }
-
-  .booking-hero {
-    position: relative;
-    padding: clamp(56px, 8vw, 100px) 0 58px;
-    background:
-      radial-gradient(circle at 82% 20%, rgba(255, 106, 43, .13), transparent 30%),
-      linear-gradient(180deg, rgba(255,255,255,.015), transparent 72%);
-    border-bottom: 1px solid var(--booking-line-soft);
-  }
-
-  .booking-hero::after {
-    content: "";
-    position: absolute;
-    inset: auto 0 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,106,43,.28), transparent);
-  }
-
-  .booking-hero-grid {
-    align-items: center;
-    gap: clamp(36px, 6vw, 86px);
-  }
-
-  .booking-hero-copy { max-width: 760px; }
-
-  .booking-hero h1 {
-    max-width: 760px;
-    margin: 14px 0 24px;
-    font-size: clamp(44px, 6vw, 78px);
-    line-height: .98;
-    letter-spacing: -.05em;
-  }
-
-  .booking-hero h1 span { color: var(--booking-accent); }
-
-  .booking-hero-copy > p {
-    max-width: 680px;
-    margin: 0;
-    color: var(--booking-text-soft);
-    font-size: clamp(16px, 1.7vw, 19px);
-    line-height: 1.7;
-  }
-
-  .booking-local-bar {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 26px;
-    padding: 10px 14px;
-    border: 1px solid rgba(255,106,43,.22);
-    border-radius: 999px;
-    background: rgba(255,106,43,.055);
-    color: #d8e0e7;
-    font: 700 11px/1.2 'Space Mono', monospace;
-    letter-spacing: .055em;
-    text-transform: uppercase;
-  }
-
-  .booking-local-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--booking-accent);
-    box-shadow: 0 0 0 5px rgba(255,106,43,.08), 0 0 18px rgba(255,106,43,.45);
-  }
-
-  .booking-hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 28px;
-    color: #728296;
-    font: 700 10px/1.2 'Space Mono', monospace;
-    letter-spacing: .14em;
-  }
-
-  .booking-hero-meta i {
-    width: 34px;
-    height: 1px;
-    background: rgba(255,255,255,.12);
-  }
-
-  .booking-side-card {
-    position: relative;
-    border: 1px solid var(--booking-line);
-    border-radius: 24px;
-    padding: 28px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.025), transparent 55%),
-      var(--booking-surface);
-    box-shadow: 0 30px 90px rgba(0,0,0,.24);
-  }
-
-  .booking-side-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 28px;
-    right: 28px;
-    height: 1px;
-    background: linear-gradient(90deg, var(--booking-accent), transparent 70%);
-    opacity: .65;
-  }
-
-  .booking-side-kicker {
-    color: var(--booking-accent-bright);
-    font: 700 10px/1.2 'Space Mono', monospace;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-  }
-
-  .booking-side-card h3 {
-    margin: 10px 0 8px;
-    font-size: 27px;
-    letter-spacing: -.025em;
-  }
-
-  .booking-side-card p {
-    margin: 0;
-    color: var(--booking-muted);
-    line-height: 1.65;
-  }
-
-  .booking-side-list {
-    display: grid;
-    gap: 0;
-    margin-top: 22px;
-  }
-
-  .booking-side-list div {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    padding: 14px 0;
-    border-top: 1px solid var(--booking-line-soft);
-  }
-
-  .booking-side-list b {
-    width: 28px;
-    height: 28px;
-    flex: 0 0 28px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(255,106,43,.22);
-    border-radius: 9px;
-    background: var(--booking-accent-soft);
-    color: var(--booking-accent);
-    font: 700 11px 'Space Mono', monospace;
-  }
-
-  .booking-side-list span {
-    color: #ced8e2;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .booking-side-list strong { color: #f5f8fb; }
-
-  .booking-section {
-    padding: 52px 0 96px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.012), transparent 14%),
-      var(--booking-bg);
-  }
-
-  .booking-intro {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 28px;
-    margin-bottom: 22px;
-  }
-
-  .booking-intro > div:last-child { max-width: 560px; }
-
-  .booking-intro h2 {
-    margin: 8px 0 8px;
-    font-size: clamp(30px, 4vw, 46px);
-    letter-spacing: -.04em;
-  }
-
-  .booking-intro p {
-    margin: 0;
-    color: var(--booking-muted);
-    line-height: 1.7;
-  }
-
-  .booking-intro .eyebrow + .eyebrow { color: var(--booking-accent); }
-
-  .booking-card {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(250px,.8fr) minmax(320px,1fr) minmax(340px,1.22fr);
-    overflow: hidden;
-    border: 1px solid var(--booking-line);
-    border-radius: 24px;
-    background: var(--booking-surface);
-    box-shadow: 0 32px 100px rgba(0,0,0,.28);
-  }
-
-  .booking-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--booking-accent), rgba(255,106,43,.18), transparent);
-    z-index: 1;
-  }
-
-  .booking-step {
-    min-width: 0;
-    padding: 30px;
-  }
-
-  .booking-step + .booking-step { border-left: 1px solid var(--booking-line-soft); }
-  .booking-step.step-details { background: rgba(255,255,255,.012); }
-
-  .step-heading {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  .step-number {
-    width: 38px;
-    height: 38px;
-    flex: 0 0 38px;
-    display: grid;
-    place-items: center;
-    border: 1px solid rgba(255,106,43,.25);
-    border-radius: 11px;
-    background: var(--booking-accent-soft);
-    color: var(--booking-accent);
-    font: 700 12px 'Space Mono', monospace;
-  }
-
-  .step-kicker {
-    color: #68798c;
-    font: 700 10px/1.2 'Space Mono', monospace;
-    letter-spacing: .14em;
-  }
-
-  .step-heading h3 {
-    margin: 5px 0 0;
-    font-size: 21px;
-    letter-spacing: -.02em;
-  }
-
-  .booking-step label { color: #bdc8d3; }
-
-  .booking-input,
-  .booking-step input[type='text'],
-  .booking-step input[type='email'],
-  .booking-step input[type='tel'],
-  .booking-step select,
-  .booking-step textarea {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 8px;
-    padding: 13px 14px;
-    border: 1px solid rgba(255,255,255,.09);
-    border-radius: 13px;
-    outline: none;
-    background: #07111a;
-    color: var(--booking-text);
-    transition: border-color .2s, box-shadow .2s, background .2s;
-  }
-
-  .booking-input:hover,
-  .booking-step input:hover,
-  .booking-step select:hover,
-  .booking-step textarea:hover {
-    border-color: rgba(255,106,43,.22);
-  }
-
-  .booking-input:focus,
-  .booking-step input:focus,
-  .booking-step select:focus,
-  .booking-step textarea:focus {
-    border-color: rgba(255,106,43,.62);
-    box-shadow: 0 0 0 4px rgba(255,106,43,.09);
-    background: #08131d;
-  }
-
-  .booking-step small {
-    display: block;
-    margin-top: 9px;
-    color: #718296;
-    line-height: 1.55;
-  }
-
-  .time-slots {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 10px;
-    min-height: 110px;
-  }
-
-  .time-slots > p {
-    grid-column: 1 / -1;
-    margin: 0;
-    color: #728398;
-    line-height: 1.6;
-  }
-
-  .time-slot {
-    min-height: 54px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 12px;
-    background: #07111a;
-    color: #d9e2eb;
-    font: 600 13px/1.3 'Inter', sans-serif;
-    cursor: pointer;
-    transition: border-color .18s, background .18s, transform .18s, box-shadow .18s;
-  }
-
-  .time-slot:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255,106,43,.45);
-    background: #0a1620;
-  }
-
-  .time-slot.selected {
-    border-color: var(--booking-accent);
-    background: var(--booking-accent-soft);
-    color: #fff;
-    box-shadow: 0 12px 28px rgba(255,106,43,.11);
-  }
-
-  .selected-slot {
-    margin-top: 16px;
-    padding: 15px 16px;
-    border: 1px dashed rgba(255,255,255,.13);
-    border-radius: 14px;
-    background: rgba(255,255,255,.018);
-  }
-
-  .selected-slot span {
-    display: block;
-    color: #6d7f92;
-    font: 700 9px/1.2 'Space Mono', monospace;
-    letter-spacing: .13em;
-  }
-
-  .selected-slot strong {
-    display: block;
-    margin-top: 5px;
-    color: #f2f6fa;
-    font-size: 14px;
-  }
-
-  .field { margin-bottom: 13px; }
-  .field-wide { margin-top: 2px; }
-  .field label { font-size: 13px; }
-  .field label b { color: var(--booking-accent); }
-  .field textarea { resize: vertical; min-height: 118px; }
-
-  .form-footer {
-    display: grid;
-    gap: 12px;
-    margin-top: 18px;
-  }
-
-  .form-footer > span {
-    color: #718296;
-    font-size: 12px;
-    line-height: 1.55;
-  }
-
-  .booking-submit {
-    border: 0;
-    border-radius: 13px;
-    padding: 14px 16px;
-    background: linear-gradient(135deg, var(--booking-accent-bright), var(--booking-accent));
-    color: #fff;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 15px 34px rgba(255,106,43,.20);
-    transition: transform .18s, filter .18s;
-  }
-
-  .booking-submit:hover { transform: translateY(-2px); filter: brightness(1.04); }
-  .booking-submit:disabled { opacity: .65; cursor: wait; transform: none; }
-
-  .booking-message {
-    grid-column: 1 / -1;
-    margin: 0;
-    padding: 0 30px;
-  }
-
-  .booking-message.success,
-  .booking-message.error,
-  .booking-message.loading {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    padding: 13px 16px;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 13px;
-    background: rgba(255,255,255,.03);
-  }
-
-  .booking-info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 18px;
-    gap: 12px;
-  }
-
-  .booking-info-card {
-    min-height: 118px;
-    border: 1px solid var(--booking-line-soft);
-    border-radius: 17px;
-    background: var(--booking-surface);
-  }
-
-  .booking-info-card .booking-icon { color: var(--booking-accent); }
-
-  .booking-trust {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr 1fr 1fr;
-    gap: 1px;
-    margin-top: 18px;
-    overflow: hidden;
-    border: 1px solid var(--booking-line-soft);
-    border-radius: 18px;
-    background: var(--booking-line-soft);
-  }
-
-  .booking-trust-item {
-    padding: 18px 20px;
-    background: var(--booking-surface);
-  }
-
-  .booking-trust-item strong {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 13px;
-    color: #eef3f7;
-  }
-
-  .booking-trust-item span {
-    color: #728398;
-    font-size: 12px;
-    line-height: 1.45;
-  }
-
-  /* Keep the small timezone-only trust cards visually consistent. */
-  .booking-container .booking-trust[style] {
-    background: transparent !important;
-  }
-
-  .booking-container .booking-trust[style] .booking-trust-item[style] {
-    background: var(--booking-surface) !important;
-    border-color: var(--booking-line-soft) !important;
-  }
-
-  @media (max-width: 1080px) {
-    .booking-card { grid-template-columns: 1fr 1fr; }
-    .booking-step.step-details {
-      grid-column: 1 / -1;
-      border-left: 0;
-      border-top: 1px solid var(--booking-line-soft);
-    }
-    .booking-hero-grid { grid-template-columns: 1fr; }
-    .booking-radar { display: none; }
-    .booking-trust { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 720px) {
-    .booking-hero { padding-top: 42px; }
-    .booking-hero h1 { font-size: 46px; }
-    .booking-intro { display: block; }
-    .booking-card { grid-template-columns: 1fr; border-radius: 21px; }
-    .booking-step + .booking-step {
-      border-left: 0;
-      border-top: 1px solid var(--booking-line-soft);
-    }
-    .booking-step.step-details { grid-column: auto; }
-    .time-slots { grid-template-columns: 1fr; }
-    .booking-info-grid { grid-template-columns: 1fr; }
-    .booking-trust { grid-template-columns: 1fr; }
-  }
-
-  /* Timezone context strip inside the booking container */
-  .booking-context-grid {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr 1fr 1.15fr;
-    gap: 12px;
-    margin: 0 0 24px;
-  }
-  .booking-context-card {
-    position: relative;
-    min-width: 0;
-    padding: 18px 18px 16px;
-    border: 1px solid var(--booking-line);
-    border-radius: 16px;
-    background: linear-gradient(145deg, rgba(10,25,39,.9), rgba(5,14,23,.94));
-    box-shadow: 0 14px 40px rgba(0,0,0,.16);
-    overflow: hidden;
-  }
-  .booking-context-card::before {
-    content: "";
-    position: absolute;
-    left: 18px;
-    right: 18px;
-    top: 0;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(255,106,43,.55), transparent 72%);
-  }
-  .booking-context-kicker {
-    color: #708395;
-    font: 700 9px/1.2 'Space Mono', monospace;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-  }
-  .booking-context-value {
-    display: block;
-    margin-top: 9px;
-    color: #f5f8fb;
-    font: 800 clamp(20px, 2vw, 28px)/1.05 'Inter', sans-serif;
-    letter-spacing: -.025em;
-  }
-  .booking-context-meta {
-    display: block;
-    margin-top: 7px;
-    color: #8090a1;
-    font: 500 11px/1.45 'Inter', sans-serif;
-    overflow-wrap: anywhere;
-  }
-  .booking-context-date-input { margin-top: 9px; }
-  .booking-context-date-input .booking-input { margin-top: 0; }
-  .booking-context-date-preview {
-    display: block;
-    margin-top: 7px;
-    color: var(--booking-accent-bright);
-    font: 700 11px/1.4 'Space Mono', monospace;
-  }
-  .booking-context-card.live::after {
-    content: "LIVE";
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    padding: 4px 6px;
-    border: 1px solid rgba(255,106,43,.18);
-    border-radius: 6px;
-    background: rgba(255,106,43,.07);
-    color: var(--booking-accent);
-    font: 700 7px/1 'Space Mono', monospace;
-    letter-spacing: .08em;
-  }
-  .booking-context-booking strong {
-    display: block;
-    margin-top: 9px;
-    color: #f5f8fb;
-    font: 800 clamp(17px, 1.7vw, 23px)/1.15 'Inter', sans-serif;
-  }
-  .booking-context-booking .booking-context-meta + .booking-context-meta { margin-top: 3px; }
-  .booking-context-card.is-selected {
-    border-color: rgba(255,106,43,.32);
-    background: linear-gradient(145deg, rgba(255,106,43,.08), rgba(5,14,23,.96));
-  }
-  @media (max-width: 1000px) {
-    .booking-context-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 600px) {
-    .booking-context-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; }
-    .booking-context-card { padding: 16px; }
-  }
-
-</style>
+  <link rel="stylesheet" href="css/ai-assistant.css">
 </head>
 
 <body>
@@ -654,24 +58,24 @@
     <section class="booking-hero">
       <div class="container">
         <div class="booking-hero-grid">
-          <div class="booking-hero-copy">
+          <div>
             <div class="eyebrow">ONLINE CONSULTATION · IST</div>
-            <h1>Book a conversation that starts <span>on time.</span></h1>
-            <p>Choose a consultation slot in your own local timezone, tell us what you are working on, and let GeoProcess prepare for the discussion.</p>
-            <div class="booking-local-bar"><span class="booking-local-dot"></span><span>Live availability · automatically adjusted to your timezone</span></div>
-            <div class="booking-hero-meta"><span>01 DATE</span><i></i><span>02 TIME</span><i></i><span>03 DETAILS</span></div>
-          </div>
-
-          <aside class="booking-side-card" aria-label="What happens next">
-            <div class="booking-side-kicker">BOOKING NODE / 01</div>
-            <h3>Simple from start to finish.</h3>
-            <p>Your selected time is shown in your local timezone. The booking system keeps the original calendar time in the background.</p>
-            <div class="booking-side-list">
-              <div><b>01</b><span><strong>Pick a date</strong><br>Choose a day that works for you.</span></div>
-              <div><b>02</b><span><strong>Pick a time</strong><br>See only available consultation slots.</span></div>
-              <div><b>03</b><span><strong>Share the brief</strong><br>Give us enough context to make the call useful.</span></div>
+            <h1>Pick a date.<br><span>Pick a time.</span><br>Confirm the discussion.</h1>
+            <p>Choose an available consultation slot, then share the project details we need to make the conversation
+              useful from the first minute.</p>
+            <div class="booking-hero-meta"><span>01 DATE</span><i></i><span>02 TIME</span><i></i><span>03 DETAILS</span>
             </div>
-          </aside>
+          </div>
+          <div class="booking-radar" aria-hidden="true">
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-ring r3"></div>
+            <div class="radar-cross x"></div>
+            <div class="radar-cross y"></div>
+            <div class="radar-core"></div>
+            <span class="radar-label top">BOOKING NODE / 01</span><span class="radar-label bottom">LIVE SLOT
+              SELECTION</span>
+          </div>
         </div>
       </div>
     </section>
@@ -679,112 +83,97 @@
     <section class="booking-section">
       <div class="container booking-container">
         <div class="booking-intro">
-          <div>
-            <div class="eyebrow">GEOPROCESS CONSULTING</div>
-            <div class="eyebrow" id="booking-timezone" style="margin-top:10px">YOUR LOCAL TIME</div>
-            <h2>Schedule your consultation</h2>
-          </div>
-          <div>
-            <p>Pick a date once. Your local time and India time stay visible so there is no timezone confusion.</p>
-          </div>
-        </div>
-
-        <div class="booking-context-grid" aria-label="Booking timezone information">
-          <section class="booking-context-card booking-context-date">
-            <span class="booking-context-kicker">01 · CHOOSE DATE</span>
-            <div class="booking-context-date-input">
-              <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
-            </div>
-            <span class="booking-context-date-preview" id="selected-date-preview">Choose a date</span>
-            <small id="date-help" class="booking-context-meta">Available dates are shown in your local time.</small>
-          </section>
-
-          <section class="booking-context-card live">
-            <span class="booking-context-kicker">02 · YOUR LOCAL TIME</span>
-            <strong class="booking-context-value" id="local-time-clock">--:--:--</strong>
-            <span class="booking-context-meta" id="local-time-zone">Detecting your timezone...</span>
-            <span class="booking-context-meta" id="local-date-clock">—</span>
-          </section>
-
-          <section class="booking-context-card live">
-            <span class="booking-context-kicker">03 · INDIA TIME</span>
-            <strong class="booking-context-value" id="india-time-clock">--:--:--</strong>
-            <span class="booking-context-meta">India Standard Time · Asia/Kolkata</span>
-            <span class="booking-context-meta" id="india-date-clock">—</span>
-          </section>
-
-          <section class="booking-context-card booking-context-booking" id="booking-time-card">
-            <span class="booking-context-kicker">04 · BOOKING TIME</span>
-            <strong id="booking-time-clock">No slot selected</strong>
-            <span class="booking-context-meta" id="booking-time-local">Choose an available slot below.</span>
-            <span class="booking-context-meta" id="booking-time-india">India: —</span>
-          </section>
+          <div class="eyebrow">GEOPROCESS CONSULTING</div>
+          <h2>Schedule Your Consultation</h2>
+          <p>Select a date to load the available consultation times. Then complete your details and confirm the request.
+          </p>
         </div>
 
         <div class="booking-card">
-          <section class="booking-step step-date">
-            <div class="step-heading"><span class="step-number">01</span><div><span class="step-kicker">DATE</span><h3>Confirm the day</h3></div></div>
-            <div class="selected-slot" style="margin-top:0">
-              <span>SELECTED DATE</span>
-              <strong id="selected-date-detail">No date selected</strong>
-            </div>
-            <small style="margin-top:12px">The date picker above controls which calendar availability is loaded.</small>
-
-            <div class="booking-trust" style="margin-top:24px;display:block;border:0;background:transparent">
-              <div class="booking-trust-item" style="border:1px solid rgba(255,255,255,.07);border-radius:16px;margin-bottom:8px">
-                <strong>Local-time booking</strong><span>Your browser timezone is detected automatically.</span>
-              </div>
-              <div class="booking-trust-item" style="border:1px solid rgba(255,255,255,.07);border-radius:16px">
-                <strong>Calendar-backed availability</strong><span>Only slots returned by the connected booking calendar are shown.</span>
+          <div class="booking-step step-date">
+            <div class="step-heading"><span class="step-number">01</span>
+              <div><span class="step-kicker">CALENDAR</span>
+                <h3>Choose a Date</h3>
               </div>
             </div>
-          </section>
+            <div class="booking-zone-summary" aria-live="polite">
+              <div><span class="zone-label">YOUR LOCAL TIME</span><strong id="booking-local-zone">Detecting your time
+                  zone…</strong></div>
+              <div><span class="zone-label">BUSINESS TIME</span><strong>India Standard Time (IST) ·
+                  Asia/Kolkata</strong></div>
+            </div>
+            <label for="booking-date" style="margin-top:18px;">Consultation date</label>
+            <input type="date" id="booking-date" class="booking-input" aria-describedby="date-help">
+            <small id="date-help">Available dates are shown in your local time. Each slot also shows the matching India
+              time (IST).</small>
+          </div>
 
-          <section class="booking-step step-time">
-            <div class="step-heading"><span class="step-number">02</span><div><span class="step-kicker">AVAILABILITY</span><h3>Choose a time</h3></div></div>
+          <div class="booking-step step-time">
+            <div class="step-heading"><span class="step-number">02</span>
+              <div><span class="step-kicker">AVAILABILITY</span>
+                <h3>Choose a Time</h3>
+              </div>
+            </div>
             <div id="time-slots" class="time-slots" aria-live="polite">
               <p>Select a date to see available times.</p>
             </div>
-            <div id="selected-slot" class="selected-slot" aria-live="polite"><span>SELECTED SLOT</span><strong>No time selected</strong></div>
-          </section>
+            <div id="selected-slot" class="selected-slot" aria-live="polite"><span>SELECTED SLOT</span><strong>No time
+                selected</strong></div>
+          </div>
 
-          <section class="booking-step step-details">
-            <div class="step-heading"><span class="step-number">03</span><div><span class="step-kicker">PROJECT PROFILE</span><h3>Tell us about the work</h3></div></div>
+          <div class="booking-step step-details">
+            <div class="step-heading"><span class="step-number">03</span>
+              <div><span class="step-kicker">PROJECT PROFILE</span>
+                <h3>Your Details</h3>
+              </div>
+            </div>
             <form id="booking-form">
-              <div class="field"><label for="customer-name">Full Name <b>*</b></label><input type="text" id="customer-name" placeholder="Your full name" required></div>
-              <div class="field"><label for="customer-email">Email Address <b>*</b></label><input type="email" id="customer-email" placeholder="you@company.com" required></div>
-              <div class="field"><label for="customer-phone">Phone / WhatsApp</label><input type="tel" id="customer-phone" placeholder="+91 ..."></div>
-              <div class="field"><label for="customer-company">Company</label><input type="text" id="customer-company" placeholder="Company / organization"></div>
-              <div class="field field-wide"><label for="customer-service">Service <b>*</b></label><select id="customer-service" required>
-                <option value="">Select the service you want to discuss</option>
-                <option>LiDAR Data Processing &amp; Classification</option>
-                <option>GIS &amp; Spatial Data Management</option>
-                <option>3D Mapping &amp; 3D Geospatial Modeling</option>
-                <option>Photogrammetry &amp; Aerial Mapping</option>
-                <option>Point Cloud Processing &amp; Quality Assurance</option>
-                <option>DTM, DSM &amp; DEM Generation</option>
-                <option>BIM Modeling — LOD 400 &amp; LOD 500</option>
-                <option>Geospatial Data Automation &amp; Analysis</option>
-                <option>Powerline Vegetation Danger-Zone Analytics</option>
-              </select></div>
-              <div class="field field-wide"><label for="customer-details">Project Brief</label><textarea id="customer-details" rows="5" placeholder="What data do you have? What do you need delivered? Mention area, software, format, scale, deadline or any key requirement."></textarea></div>
-              <div class="form-footer"><span>Your selected slot and project details are sent securely to the connected booking service.</span><button type="submit" class="booking-submit">Confirm consultation <span>↗</span></button></div>
+              <div class="field"><label for="customer-name">Full Name <b>*</b></label><input type="text"
+                  id="customer-name" placeholder="Your full name" required></div>
+              <div class="field"><label for="customer-email">Email Address <b>*</b></label><input type="email"
+                  id="customer-email" placeholder="you@company.com" required></div>
+              <div class="field"><label for="customer-phone">Phone / WhatsApp</label><input type="tel"
+                  id="customer-phone" placeholder="+91 ..."></div>
+              <div class="field"><label for="customer-company">Company</label><input type="text" id="customer-company"
+                  placeholder="Company / organization"></div>
+              <div class="field field-wide"><label for="customer-service">Service <b>*</b></label><select
+                  id="customer-service" required>
+                  <option value="">Select the service you want to discuss</option>
+                  <option>LiDAR Data Processing &amp; Classification</option>
+                  <option>GIS &amp; Spatial Data Management</option>
+                  <option>3D Mapping &amp; 3D Geospatial Modeling</option>
+                  <option>Photogrammetry &amp; Aerial Mapping</option>
+                  <option>Point Cloud Processing &amp; Quality Assurance</option>
+                  <option>DTM, DSM &amp; DEM Generation</option>
+                  <option>BIM Modeling — LOD 400 &amp; LOD 500</option>
+                  <option>Geospatial Data Automation &amp; Analysis</option>
+                  <option>Powerline Vegetation Danger-Zone Analytics</option>
+                </select></div>
+              <div class="field field-wide"><label for="customer-details">Project Brief</label><textarea
+                  id="customer-details" rows="5"
+                  placeholder="Tell us about your data, area, deliverables, software or project requirement..."></textarea>
+              </div>
+              <div class="form-footer"><span>By confirming, your selected date/time and project details are sent
+                  securely to the booking service.</span><button type="submit" class="booking-submit">Confirm Booking
+                  <span>↗</span></button></div>
             </form>
-          </section>
+          </div>
           <div id="booking-message" class="booking-message" aria-live="polite"></div>
         </div>
 
         <div class="booking-info-grid">
-          <div class="booking-info-card"><div class="booking-icon">01</div><strong>Local time</strong><span>Slots are converted automatically to your timezone.</span></div>
-          <div class="booking-info-card"><div class="booking-icon">02</div><strong>Real availability</strong><span>Times come directly from the connected consultation calendar.</span></div>
-          <div class="booking-info-card"><div class="booking-icon">03</div><strong>Prepared discussion</strong><span>Share the project brief so the conversation can start with context.</span></div>
-        </div>
-
-        <div class="booking-trust">
-          <div class="booking-trust-item"><strong>LiDAR · GIS · 3D · BIM</strong><span>Book time around the exact geospatial workflow you need to discuss.</span></div>
-          <div class="booking-trust-item"><strong>Timezone aware</strong><span>No need to convert India time yourself.</span></div>
-          <div class="booking-trust-item"><strong>Simple request</strong><span>Choose a slot, add your details, submit.</span></div>
-          <div class="booking-trust-item"><strong>Human review</strong><span>Your request is reviewed before the final invitation is issued.</span></div>
+          <div class="booking-info-card">
+            <div class="booking-icon">01</div><strong>Choose a Service</strong><span>Tell us which GeoProcess capability
+              you want to discuss.</span>
+          </div>
+          <div class="booking-info-card">
+            <div class="booking-icon">02</div><strong>Choose a Time</strong><span>Select an available consultation slot
+              for your chosen date.</span>
+          </div>
+          <div class="booking-info-card">
+            <div class="booking-icon">03</div><strong>Confirm Booking</strong><span>Submit your details and receive the
+              booking confirmation through the connected booking service.</span>
+          </div>
         </div>
       </div>
     </section>
@@ -834,9 +223,11 @@
         GIS · UAV · BIM · AI/ML</span></div>
   </footer>
   <button class="back-top" type="button" aria-label="Back to top">↑</button>
-  <script src="js/booking-config.js?v=11"></script>
-  <script src="js/pages/booking.js?v=11"></script>
+  <script src="js/booking-config.js?v=9"></script>
+  <script src="js/pages/booking.js?v=9"></script>
   <script src="js/main.js"></script>
+  <script src="js/ai-config.js"></script>
+  <script src="js/ai-assistant.js"></script>
 </body>
 
 </html>
