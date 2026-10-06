@@ -150,55 +150,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   form.addEventListener(
     "submit",
-    function (event) {
+    function () {
 
       if (submitting) {
         return;
       }
 
-      const nameInput = document.getElementById("contact-name");
-      const emailInput = document.getElementById("contact-email");
-      const phoneInput = document.getElementById("contact-phone");
-      const companyInput = document.getElementById("contact-company");
-      const serviceInput = document.getElementById("contact-service");
-      const scopeInput = document.getElementById("contact-scope");
-      const deliverableInput = document.getElementById("contact-deliverable");
-      const messageInput = document.getElementById("contact-message");
-
-      const requiredFields = [
-        [nameInput, "Please enter your name."],
-        [emailInput, "Please enter your company/work email."],
-        [companyInput, "Please enter your company / organization."],
-        [serviceInput, "Please select the primary requirement."],
-        [messageInput, "Please provide the project details."]
-      ];
-
-      for (const [field, message] of requiredFields) {
-        if (!field || !String(field.value || "").trim()) {
-          event.preventDefault();
-          showStatus(message, "error");
-          if (field) field.focus();
-          return;
-        }
-      }
-
-      const email = emailInput ? emailInput.value.trim() : "";
-      const phone = phoneInput ? phoneInput.value.trim() : "";
-      const phoneDigits = phone.replace(/\D/g, "");
-
-      if (email && emailInput && !emailInput.checkValidity()) {
-        event.preventDefault();
-        showStatus("Please enter a valid company/work email address.", "error");
-        emailInput.focus();
-        return;
-      }
-
-      if (phone && phoneDigits.length < 7) {
-        event.preventDefault();
-        showStatus("Please enter a valid Phone / WhatsApp number.", "error");
-        if (phoneInput) phoneInput.focus();
-        return;
-      }
 
       submitting = true;
 
@@ -296,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   const email =
-    "contact@geoprocessconsulting.in";
+    "contact@geoprocessconsulting.site";
 
   const subject =
     "Project Enquiry - GeoProcess Consulting";
@@ -355,6 +312,15 @@ document.addEventListener("DOMContentLoaded", function () {
         "noopener,noreferrer"
       );
 
+    } else {
+
+      window.location.href =
+        "mailto:" +
+        email +
+        "?subject=" +
+        enc(subject) +
+        "&body=" +
+        enc(body);
     }
 
 
