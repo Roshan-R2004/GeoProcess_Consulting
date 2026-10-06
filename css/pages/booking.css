@@ -39,3 +39,14 @@
 @media(max-width:900px){.booking-hero-grid{grid-template-columns:1fr}.booking-radar{width:min(360px,80vw)}.booking-card{grid-template-columns:1fr}.step-date,.step-time,.step-details{grid-column:1;grid-row:auto;border-right:0}.step-time{border-top:1px solid var(--gp-line)}}
 @media(max-width:680px){.booking-hero{padding:78px 0 62px}.booking-hero h1{font-size:3.15rem}.booking-radar{width:270px}.booking-step{padding:24px 20px}.time-slots{grid-template-columns:1fr}.booking-info-grid{grid-template-columns:1fr}.booking-card{border-radius:18px}#booking-form{grid-template-columns:1fr}.field-wide{grid-column:auto}.form-footer{align-items:stretch;flex-direction:column}.booking-submit{width:100%}.booking-hero-meta{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.booking-hero::after,.radar-ring,.radar-core{animation:none}.booking-submit,.time-slot,.booking-info-card{transition:none}}
+.selected-slot small{display:block;margin-top:6px;color:#64808e;font:500 .68rem/1.45 Inter,sans-serif}
+
+.booking-zone-summary{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px}
+.booking-zone-summary>div{padding:13px 14px;border:1px solid rgba(171,211,232,.14);border-radius:11px;background:rgba(255,255,255,.025)}
+.booking-zone-summary .zone-label{display:block;color:#5e7f8e;font:700 .54rem/1 "Space Grotesk",sans-serif;letter-spacing:.14em}
+.booking-zone-summary strong{display:block;margin-top:7px;color:#dcecf2;font:600 .78rem/1.35 Inter,sans-serif;word-break:break-word}
+.time-slot{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:9px 11px!important;text-align:left}
+.time-slot .slot-local{font:800 .79rem/1.2 Inter,sans-serif}
+.time-slot .slot-india{font:600 .62rem/1.25 Inter,sans-serif;opacity:.75}
+.time-slot.selected .slot-india{opacity:.9}
+@media(max-width:680px){.booking-zone-summary{grid-template-columns:1fr}}
