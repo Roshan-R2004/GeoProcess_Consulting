@@ -368,6 +368,22 @@ function showMessage(message, type) {
   box.className = 'booking-message' + (type ? ` ${type}` : '');
 }
 
+function updateOtherServiceField() {
+  const serviceInput = document.getElementById('customer-service');
+  const otherField = document.getElementById('customer-other-service-field');
+  const otherInput = document.getElementById('customer-other-service');
+  const showOther = serviceInput?.value === 'Others';
+
+  if (otherField) otherField.hidden = !showOther;
+  if (otherInput) {
+    otherInput.required = showOther;
+    if (!showOther) otherInput.value = '';
+  }
+}
+
+document.getElementById('customer-service')?.addEventListener('change', updateOtherServiceField);
+updateOtherServiceField();
+
 async function submitBooking(event) {
   event.preventDefault();
 
@@ -378,12 +394,16 @@ async function submitBooking(event) {
   const companyInput = document.getElementById('customer-company');
   const serviceInput = document.getElementById('customer-service');
   const detailsInput = document.getElementById('customer-details');
+  const otherServiceInput = document.getElementById('customer-other-service');
   const submitButton = document.querySelector('#booking-form button[type="submit"]');
 
   if (!dateInput?.value) return showMessage('Please select a date.', 'error');
   if (!selectedBookingTime) return showMessage('Please select an available time slot.', 'error');
   if (!nameInput?.value.trim()) return showMessage('Please enter your name.', 'error');
   if (!emailInput?.value.trim()) return showMessage('Please enter your email.', 'error');
+  if (serviceInput?.value === 'Others' && !otherServiceInput?.value.trim()) {
+    return showMessage('Please enter the service or requirement name.', 'error');
+  }
 
   if (submitButton) {
     submitButton.disabled = true;
@@ -396,7 +416,7 @@ async function submitBooking(event) {
     email: emailInput.value.trim(),
     phone: phoneInput?.value.trim() || '',
     company: companyInput?.value.trim() || '',
-    service: serviceInput?.value || '',
+    service: serviceInput?.value === 'Others' ? (otherServiceInput?.value.trim() || 'Others') : (serviceInput?.value || ''),
     date: selectedBookingTime.date,
     time: selectedBookingTime.time,
     details: detailsInput?.value.trim() || ''
@@ -422,6 +442,7 @@ async function submitBooking(event) {
 
     showMessage('Request received! Your booking is pending review. You will receive an invitation email once confirmed.', 'success');
     document.getElementById('booking-form')?.reset();
+    updateOtherServiceField();
     selectedBookingTime = null;
     updateSelectedSlotUI(null);
     loadTimeSlots(dateInput.value);

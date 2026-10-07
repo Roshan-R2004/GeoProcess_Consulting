@@ -8,6 +8,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!form || !status) return;
 
+  // Show an additional requirement field only when "Others" is selected.
+  const serviceSelect = document.getElementById("contact-service");
+  const otherRequirementGroup = document.getElementById("contact-other-requirement-group");
+  const otherRequirementInput = document.getElementById("contact-other-requirement");
+
+  function updateOtherRequirementField() {
+    const showOther = serviceSelect?.value === "Others";
+    if (otherRequirementGroup) otherRequirementGroup.hidden = !showOther;
+    if (otherRequirementInput) {
+      otherRequirementInput.required = showOther;
+      if (!showOther) otherRequirementInput.value = "";
+    }
+  }
+
+  serviceSelect?.addEventListener("change", updateOtherRequirementField);
+  updateOtherRequirementField();
+
   let submitting = false;
   let requestId = "";
   let timeoutId = null;
@@ -129,6 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         form.reset();
+        updateOtherRequirementField();
 
       } else {
 
