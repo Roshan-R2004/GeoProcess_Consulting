@@ -707,26 +707,45 @@ const GEOPROCESS_CONFIG = {
 
             const rfqForm = document.getElementById("rfq-form");
             const rfqWaBtn = document.getElementById("rfq-whatsapp-btn");
+            const rfqServiceInput = document.getElementById("client-service");
+            const rfqOtherServiceWrap = document.getElementById("client-other-service-wrap");
+            const rfqOtherServiceInput = document.getElementById("client-other-service");
+
+            function toggleRfqOtherService() {
+                const isOther = rfqServiceInput?.value === "Other";
+                if (rfqOtherServiceWrap) rfqOtherServiceWrap.hidden = !isOther;
+                if (rfqOtherServiceInput) {
+                    rfqOtherServiceInput.required = Boolean(isOther);
+                    if (!isOther) rfqOtherServiceInput.value = "";
+                }
+            }
+
+            rfqServiceInput?.addEventListener("change", toggleRfqOtherService);
+            toggleRfqOtherService();
 
             function getRfqPayload() {
                 const name = document.getElementById("client-name").value || "Prospective Client";
                 const email = document.getElementById("client-email").value || "Not specified";
                 const service = document.getElementById("client-service").value;
+                const otherService = rfqOtherServiceInput?.value.trim() || "";
                 const notes = document.getElementById("client-notes").value || "Standard specification";
-                return {name, email, service, notes};
+                return {name, email, service, otherService, notes};
             }
 
             rfqForm.addEventListener("submit", (e) => {
                 e.preventDefault();
-                const {name, email, service, notes} = getRfqPayload();
-                const subject = encodeURIComponent(`RFQ: ${service} — ${name}`);
-                const body = encodeURIComponent(`Client/Org: ${name}\nEmail: ${email}\nService Module: ${service}\nProject Notes:\n${notes}`);
+                const {name, email, service, otherService, notes} = getRfqPayload();
+                const serviceDescription = service === "Other" && otherService ? `Other — ${otherService}` : service;
+                const subject = encodeURIComponent(`RFQ: ${serviceDescription} — ${name}`);
+                const body = encodeURIComponent(`Client/Org: ${name}\nEmail: ${email}\nService Module: ${service}\n${otherService ? `Requested geospatial service: ${otherService}\n` : ""}Project Notes:\n${notes}`);
                 window.location.href = `mailto:${GEOPROCESS_CONFIG.email}?subject=${subject}&body=${body}`;
             });
 
             rfqWaBtn.addEventListener("click", () => {
-                const {name, email, service, notes} = getRfqPayload();
-                const text = encodeURIComponent(`*New Project RFQ — GeoProcess Consulting*\n*Name:* ${name}\n*Email:* ${email}\n*Module:* ${service}\n*Scope:* ${notes}`);
+                if (!rfqForm.reportValidity()) return;
+                const {name, email, service, otherService, notes} = getRfqPayload();
+                const serviceDescription = service === "Other" && otherService ? `Other — ${otherService}` : service;
+                const text = encodeURIComponent(`*New Project RFQ — GeoProcess Consulting*\n*Name:* ${name}\n*Email:* ${email}\n*Module:* ${serviceDescription}\n*Scope:* ${notes}`);
                 window.open(`https://wa.me/${GEOPROCESS_CONFIG.whatsappNumber}?text=${text}`, "_blank", "noopener,noreferrer");
             });
         });
