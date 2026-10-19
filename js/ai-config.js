@@ -6,7 +6,7 @@ window.GEOPROCESS_AI = {
   contactEmail: "contact@geoprocessconsulting.in",
   whatsappUrl: "https://wa.me/917205666324",
   bookingUrl: "booking.html",
-  contactUrl: "contact.html#project-enquiry",
+  contactUrl: "/#contact",
   knowledgeUrl: "data/ai-knowledge.json",
   technicalKnowledgeUrl: "data/ai-technical-questions.json"
 };

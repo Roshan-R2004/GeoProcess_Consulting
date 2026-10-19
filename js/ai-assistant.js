@@ -5,7 +5,7 @@
   const WORKER_URL = String(cfg.workerUrl || '').trim();
   const COMPANY = cfg.companyName || 'GeoProcess Consulting';
   const CONTACT_EMAIL = cfg.contactEmail || 'contact@geoprocessconsulting.in';
-  const CONTACT_URL = cfg.contactUrl || '/contact/#project-enquiry';
+  const CONTACT_URL = cfg.contactUrl || '/#contact';
   const BOOKING_URL = cfg.bookingUrl || '/booking/';
   const WHATSAPP = cfg.whatsappUrl || 'https://wa.me/917205666324';
   const KNOWLEDGE_URL = cfg.knowledgeUrl || 'data/ai-knowledge.json';
@@ -200,7 +200,7 @@
     wrap.innerHTML = `
       <div class="gp-ai-handoff-title">Would you like to continue with our team?</div>
       <div class="gp-ai-handoff-note">Your recent AI conversation will be included in the WhatsApp message.</div>
-      <a class="primary gp-ai-whatsapp" href="${escapeAttr(buildWhatsAppUrl())}" target="_blank" rel="noopener">💬 Continue on WhatsApp</a>
+      <a class="primary gp-ai-whatsapp" href="${escapeAttr(buildWhatsAppUrl())}" target="_blank" rel="noopener noreferrer">💬 Continue on WhatsApp</a>
       <a class="secondary" href="${escapeAttr(CONTACT_URL)}">✉ Send Project Enquiry</a>
       <a class="secondary" href="${escapeAttr(BOOKING_URL)}">📅 Book a Consultation</a>`;
     box.appendChild(wrap);
@@ -215,7 +215,7 @@
     wrap.className = 'gp-ai-contact-card';
     wrap.innerHTML = `
       <div class="gp-ai-card-label">Contact GeoProcess Consulting</div>
-      <a href="${escapeAttr(WHATSAPP)}" target="_blank" rel="noopener">💬 WhatsApp · +91 (720) 56 66324</a>
+      <a href="${escapeAttr(WHATSAPP)}" target="_blank" rel="noopener noreferrer">💬 WhatsApp · +91 (720) 56 66324</a>
       <a href="mailto:${escapeAttr(CONTACT_EMAIL)}">✉ ${escapeAttr(CONTACT_EMAIL)}</a>
       <a href="${escapeAttr(BOOKING_URL)}">📅 Book a Consultation</a>
       <a href="${escapeAttr(CONTACT_URL)}">📝 Send a Project Enquiry</a>`;
