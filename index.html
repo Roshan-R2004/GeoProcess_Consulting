@@ -1,455 +1,784 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" class="home-floating-bg">
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" type="image/png" sizes="128x128" href="assets/brand/favicon.png" />
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <meta name="description"
-    content="GeoProcess Consulting delivers LiDAR, GIS, photogrammetry, DTM/DSM, CAD, BIM and 3D geospatial processing for engineering and infrastructure projects." />
-  <meta content="#06111d" name="theme-color" />
-  <title>Geospatial Data Processing Services | GeoProcess</title>
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700"
-    rel="stylesheet" />
-  <link href="css/style.css" rel="stylesheet" />
-  <link href="css/pages/home.css" rel="stylesheet" />
-  <link href="css/theme.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="css/modern.css">
-  <link rel="stylesheet" href="css/compact.css">
-  <link rel="stylesheet" href="css/ai-assistant.css">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="author" content="GeoProcess Consulting" />
-  <link rel="canonical" href="https://geoprocessconsulting.in/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Geospatial Data Processing Services | GeoProcess" />
-  <meta property="og:description"
-    content="GeoProcess Consulting delivers LiDAR, GIS, photogrammetry, DTM/DSM, CAD, BIM and 3D geospatial processing for engineering and infrastructure projects." />
-  <meta property="og:url" content="https://geoprocessconsulting.in/" />
-  <meta property="og:site_name" content="GeoProcess Consulting" />
-  <meta property="og:image" content="https://geoprocessconsulting.in/assets/brand/Photogrammetry-1.png" />
-  <meta property="og:image:alt" content="GeoProcess Consulting geospatial processing" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Geospatial Data Processing Services | GeoProcess" />
-  <meta name="twitter:description"
-    content="GeoProcess Consulting delivers LiDAR, GIS, photogrammetry, DTM/DSM, CAD, BIM and 3D geospatial processing for engineering and infrastructure projects." />
-  <meta name="twitter:url" content="https://geoprocessconsulting.in/" />
-  <meta name="twitter:image" content="https://geoprocessconsulting.in/assets/brand/Photogrammetry-1.png" />
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": "https://geoprocessconsulting.in/#organization",
-      "name": "GeoProcess Consulting",
-      "url": "https://geoprocessconsulting.in/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://geoprocessconsulting.in/assets/brand/favicon.png"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/company/geoprocess-consulting"
-      ],
-      "email": "mailto:contact@geoprocessconsulting.in",
-      "telephone": "+91 7205666324",
-      "description": "Geospatial data processing and engineering support across LiDAR, GIS, photogrammetry, DTM/DSM, CAD, BIM, 3D mapping and spatial analytics."
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://geoprocessconsulting.in/#website",
-      "url": "https://geoprocessconsulting.in/",
-      "name": "GeoProcess Consulting",
-      "publisher": {
-        "@id": "https://geoprocessconsulting.in/#organization"
-      },
-      "inLanguage": "en"
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://geoprocessconsulting.in/#webpage",
-      "url": "https://geoprocessconsulting.in/",
-      "name": "Geospatial Data Processing Services | GeoProcess",
-      "description": "GeoProcess Consulting delivers LiDAR, GIS, photogrammetry, DTM/DSM, CAD, BIM and 3D geospatial processing for engineering and infrastructure projects.",
-      "isPartOf": {
-        "@id": "https://geoprocessconsulting.in/#website"
-      },
-      "about": {
-        "@id": "https://geoprocessconsulting.in/#organization"
-      },
-      "primaryImageOfPage": {
-        "@type": "ImageObject",
-        "url": "https://geoprocessconsulting.in/assets/brand/Photogrammetry-1.png"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://geoprocessconsulting.in/#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Why choose GeoProcess Consulting?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GeoProcess Consulting focuses on turning complex point clouds and aerial survey data into structured, engineering-ready geospatial information, with emphasis on LiDAR, GIS, utility corridors, vegetation risk and terrain modeling."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What services do you offer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Services include powerline vegetation and danger-zone analytics, advanced LiDAR classification, enterprise GIS and web mapping, DTM/DSM extraction, UAV and orthophoto mapping, and 3D CAD or Scan-to-BIM workflows."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What is Danger-Zone Detection for Tree Pruning?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Danger-zone detection uses LiDAR and GIS to measure the relationship between vegetation and powerline infrastructure, helping identify trees or branches that may encroach on defined clearance zones."
-          }
-        }
-      ]
-    }
-  ]
-}
-  </script>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="128x128" href="assets/brand/favicon.png" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+
+    <title>GeoProcess Consulting | LiDAR, GIS, CAD & BIM Engineering</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700"
+        rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/pages/home.css" rel="stylesheet" />
+    <link href="css/theme.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="css/compact.css">
+    <link rel="stylesheet" href="css/ai-assistant.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+    <link rel="stylesheet" href="css/pages/index-geoprocess-reference-middle.css" />
+    <link rel="stylesheet" href="css/pages/index-geoprocess-preservation-overrides.css" />
+
+    <link rel="stylesheet" href="css/pages/index-inline-overrides.css" />
+
+    <meta name="description"
+        content="GeoProcess Consulting delivers LiDAR, GIS, CAD, Scan-to-BIM, photogrammetry and spatial analytics for engineering, infrastructure and utility teams worldwide." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="GeoProcess Consulting" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="theme-color" content="#06111d" />
+    <link rel="canonical" href="https://geoprocessconsulting.in/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GeoProcess Consulting" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="GeoProcess Consulting | LiDAR, GIS, CAD & BIM Engineering" />
+    <meta property="og:description"
+        content="GeoProcess Consulting delivers LiDAR, GIS, CAD, Scan-to-BIM, photogrammetry and spatial analytics for engineering, infrastructure and utility teams worldwide." />
+    <meta property="og:url" content="https://geoprocessconsulting.in/" />
+    <meta property="og:image" content="https://geoprocessconsulting.in/assets/images/geoprocess-og.jpg" />
+    <meta property="og:image:alt" content="LiDAR classification and geospatial processing" />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="680" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GeoProcess Consulting | LiDAR, GIS, CAD & BIM Engineering" />
+    <meta name="twitter:description"
+        content="GeoProcess Consulting delivers LiDAR, GIS, CAD, Scan-to-BIM, photogrammetry and spatial analytics for engineering, infrastructure and utility teams worldwide." />
+    <meta name="twitter:image" content="https://geoprocessconsulting.in/assets/images/geoprocess-og.jpg" />
+
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://geoprocessconsulting.in/#organization","name":"GeoProcess Consulting","url":"https://geoprocessconsulting.in/","logo":"https://geoprocessconsulting.in/assets/brand/favicon.png","description":"Geospatial engineering and data-processing services including LiDAR, GIS, photogrammetry, CAD, Scan-to-BIM/Revit, 3D modeling, utility and powerline analytics, remote sensing and survey data processing.","email":"contact@geoprocessconsulting.in","telephone":"+91-720-566-6324","sameAs":["https://www.linkedin.com/company/geoprocess-consulting"],"alternateName":["Geo Process Consulting","GeoProcess Consulting India"]},{"@type":"WebSite","@id":"https://geoprocessconsulting.in/#website","url":"https://geoprocessconsulting.in/","name":"GeoProcess Consulting","publisher":{"@id":"https://geoprocessconsulting.in/#organization"},"inLanguage":"en-IN","alternateName":["Geo Process Consulting","GeoProcess Consulting India"]},{"@type":"WebPage","@id":"https://geoprocessconsulting.in/#webpage","url":"https://geoprocessconsulting.in/","name":"GeoProcess Consulting | LiDAR, GIS, CAD & BIM Engineering","description":"GeoProcess Consulting delivers LiDAR, GIS, CAD, Scan-to-BIM, photogrammetry and spatial analytics for engineering, infrastructure and utility teams worldwide.","isPartOf":{"@id":"https://geoprocessconsulting.in/#website"},"about":{"@id":"https://geoprocessconsulting.in/#organization"},"inLanguage":"en-IN"}]}</script>
 </head>
 
-<body>
-  <header class="site-nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index" aria-label="GeoProcess Consulting home">
-        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
-          <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
-          <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
-        </svg>
-        <span class="brand-copy"><span class="brand-name">GeoProcess Consulting</span><span class="brand-sub">Spatial
-            Data · Processed With Precision</span></span>
-      </a>
-      <div class="nav-right">
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-        <nav aria-label="Primary navigation">
-          <ul class="nav-list">
-            <li><a class="active" href="index">Home</a></li>
-            <li><a href="about">About</a></li>
-            <li><a href="services">Services</a></li>
-            <li><a href="projects">Projects</a></li>
-            <li><a href="videos">Videos</a></li>
-            <li><a href="study">Study</a></li>
-            <li><a href="index#faqs">FAQs</a></li>
-            <li><a href="contact">Contact</a></li>
-            <li><a class="nav-cta" href="booking">Book Consultation <span aria-hidden="true">↗</span></a></li>
-          </ul>
-        </nav>
-      </div>
+<body class="home-floating-bg">
+    <a class="skip-link" href="#top">Skip to content</a>
+    <svg class="gp-index-inline-001" aria-hidden="true">
+        <defs>
+            <filter id="liquid-displacement">
+                <feturbulence basefrequency="0.015 0.015" id="turbulence-node" numoctaves="2" result="noise"
+                    type="fractalNoise"></feturbulence>
+                <fedisplacementmap in="SourceGraphic" in2="noise" scale="14" xchannelselector="R" ychannelselector="G">
+                </fedisplacementmap>
+            </filter>
+        </defs>
+    </svg>
+    <div class="page-transition-curtain" id="page-curtain">
+        <div aria-hidden="true" class="glass-shutter-grid">
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+            <div class="glass-shutter-pane"></div>
+        </div>
+        <div aria-hidden="true" class="glass-horizon-laser" id="glass-horizon-laser"></div>
+        <div class="glass-loader-core" id="glass-loader-core">
+            <div aria-hidden="true" class="glass-optical-ring"></div>
+            <span class="glass-core-badge">OPTICAL LIDAR LENS // CALIBRATING</span>
+            <img class="gp-index-inline-002" alt="GeoProcess Consulting Logo" src="assets/brand/Remove BG.png" />
+            <div class="loader-percent-giant" id="loader-percent">000%</div>
+            <div class="loader-telemetry" id="loader-status">SYNCHRONIZING POINT-CLOUD TELEMETRY</div>
+            <div class="loader-bar-track">
+                <div class="loader-bar-fill" id="loader-bar"></div>
+            </div>
+        </div>
     </div>
-  </header>
-  <main>
-    <section class="hero">
-      <div class="hero-bg home-hero-bg" aria-hidden="true">
-        <div class="hero-slide is-active" style="background-image:url('assets/images/enterprise-gis-web-mapping.jpg')">
-        </div>
-        <div class="hero-slide" style="background-image:url('assets/brand/LOD-in-BIM.webp')"></div>
-        <div class="hero-slide" style="background-image:url('assets/images/Pothogrammetry.png')"></div>
-        <div class="hero-slide" style="background-image:url('assets/brand/Slider_Advance_Classificaton.jpg')"></div>
-        <div class="hero-slider-overlay"></div>
-        <div class="hero-slider-dots" role="tablist" aria-label="Hero image slides">
-          <button class="hero-dot is-active" type="button" role="tab" aria-selected="true"
-            aria-label="Slide 1"></button>
-          <button class="hero-dot" type="button" role="tab" aria-selected="false" aria-label="Slide 2"></button>
-          <button class="hero-dot" type="button" role="tab" aria-selected="false" aria-label="Slide 3"></button>
-          <button class="hero-dot" type="button" role="tab" aria-selected="false" aria-label="Slide 4"></button>
-        </div>
-      </div>
-      <div class="container hero-content">
-        <div class="eyebrow">LiDAR · GIS · Photogrammetry · BIM</div>
-        <h1>Precision geospatial data for <span>mission-critical decisions.</span></h1>
-        <p class="lead">GeoProcess Consulting is a global geospatial production and engineering partner delivering GIS,
-          LiDAR, CAD, BIM/Revit, Telecom GIS, 3D modeling, photogrammetry, remote sensing, mapping, survey-data
-          processing, data annotation, and QA/QC services. We support engineering, infrastructure, transportation,
-          utilities, telecom, oil & gas, mining, AEC, and government projects with scalable, accurate, and reliable
-          geospatial data processing. Our team works as an extended production partner for organizations seeking
-          dependable project support, capacity expansion, and specialized geospatial expertise.</p>
-        <div class="actions"><a class="btn btn-primary" href="services">Explore Services →</a><a class="btn btn-ghost"
-            href="booking">Book a Consultation</a></div>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">What we do</div>
-          <h2 class="section-title">From raw survey data to usable geospatial intelligence.</h2>
-          <p class="section-subtitle">A focused service portfolio for utilities, engineering, mapping and
-            spatial-data workflows.</p>
-        </div>
-        <div class="grid-3">
-          <article class="card"><img alt="LiDAR powerline corridor analysis" src="assets/images/pwline2-new.jpg"
-              loading="lazy" decoding="async" />
-            <div class="card-body"><span class="badge">Flagship</span>
-              <h3>Powerline Vegetation Analytics</h3>
-              <p>LiDAR corridor analysis for vegetation proximity, danger-zone identification and
-                operational decision support.</p>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-reticle" id="cursor-reticle"></div>
+    <canvas id="lidar-canvas"></canvas>
+    <div class="spatial-grid-overlay"></div>
+    <header class="site-nav">
+        <div class="container nav-inner">
+            <a class="brand" href="/" aria-label="GeoProcess Consulting home">
+                <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
+                    <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
+                    <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
+                </svg>
+                <span class="brand-copy"><span class="brand-name">GeoProcess Consulting</span><span
+                        class="brand-sub">Spatial
+                        Data · Processed With Precision</span></span>
+            </a>
+            <div class="nav-right">
+                <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+                <nav aria-label="Primary navigation">
+                    <ul class="nav-list">
+                        <li><a class="active" href="/">Home</a></li>
+                        <li><a href="about">About</a></li>
+                        <li><a href="services">Services</a></li>
+                        <li><a href="projects">Projects</a></li>
+                        <li><a href="videos">Videos</a></li>
+                        <li><a href="study">Study</a></li>
+                        <li><a href="/#faqs">FAQs</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                        <li><a class="nav-cta" href="booking">Book Consultation <span aria-hidden="true">↗</span></a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-          </article>
-          <article class="card"><img alt="Advanced LiDAR classification" src="assets/images/advanced-classification.jpg"
-              loading="lazy" decoding="async" />
-            <div class="card-body"><span class="badge">Point cloud</span>
-              <h3>Advanced Classification</h3>
-              <p>Structured classification of ground, vegetation, buildings and infrastructure from 3D
-                point-cloud data.</p>
-            </div>
-          </article>
-          <article class="card"><img alt="DTM terrain model" src="assets/images/dtm-new.jpg" loading="lazy"
-              decoding="async" />
-            <div class="card-body"><span class="badge">Terrain</span>
-              <h3>DTM / DSM / DEM</h3>
-              <p>Terrain and surface modeling for mapping, engineering, corridor analysis and downstream
-                GIS workflows.</p>
-            </div>
-          </article>
         </div>
-      </div>
-    </section>
-    <section class="section alt">
-      <div class="container">
-        <div class="split"><img alt="GeoProcess Consulting team" src="assets/images/about-team.jpg" loading="lazy"
-            decoding="async" />
-          <div>
-            <div class="eyebrow">Built around your workflow</div>
-            <h2 class="section-title">Engineering-ready results, not just pretty maps.</h2>
-            <p class="lead-note">Our workflow connects acquisition, classification,
-              spatial analysis, QA and delivery. The source brief describes a six-stage process from
-              corridor scoping through final export.</p>
-            <ul class="check-list">
-              <li>Danger-zone analytics</li>
-              <li>LiDAR classification</li>
-              <li>High-precision DTM / DSM</li>
-              <li>GIS &amp; CAD deliverables</li>
-              <li>UAV &amp; orthophoto mapping</li>
-              <li>3D CAD / BIM modeling</li>
-            </ul>
-            <div class="actions"><a class="btn btn-primary" href="about">See our workflow →</a></div>
-          </div>
+    </header>
+    <main id="top" class="home-floating-bg">
+        <!-- ========================================================================
+             HERO SECTION (FIERCE CONVERSION + 3D MODEL PREVIEW)
+             ======================================================================== -->
+        <section class="section-container hero-section" id="hero-section">
+            <div class="hero-bento">
+                <!-- Primary Conversion Block -->
+                <div class="hero-main-card glass-sheen-sweep">
+                    <div>
+                        <div class="eyebrow-badge">
+                            <span>[PRECISION GEOSPATIAL ENGINEERING // ISO-GRADE QA/QC]</span>
+                        </div>
+                        <h1 class="hero-title split-animate">
+                            Transforming Raw <span class="accent-cyan">3D Point Clouds</span> Into Survey-Grade <span
+                                class="accent-amber">Infrastructure Intelligence.</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            GeoProcess Consulting delivers high-density Aerial &amp; Mobile LiDAR classification, LOD
+                            500 Scan-to-BIM modeling, UAV Photogrammetry, and Enterprise WebGIS architectures for global
+                            AEC, utility, and civil engineering leaders.
+                        </p>
+                        <div class="hero-cta-group">
+                            <a href="#contact" class="btn-primary magnetic-el">
+                                <span>REQUEST PROJECT ESTIMATE</span>
+                                <span>→</span>
+                            </a>
+                            <button class="btn-amber magnetic-el" id="hero-ai-trigger">
+                                <span>LAUNCH AI SCOPE ADVISOR</span>
+                            </button>
+                            <a href="#deliverables" class="btn-outline magnetic-el">
+                                <span>EXPLORE DELIVERABLES</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- High-Impact Trust Signals -->
+                    <div class="trust-signals-row company-stat-row" aria-label="GeoProcess Consulting at a glance">
+                        <div class="company-stat">
+                            <div class="trust-metric-num"><span class="impact-count" data-count-to="6"
+                                    data-suffix="+">6+</span></div>
+                            <div class="trust-metric-label">Years of Experience</div>
+                        </div>
+                        <div class="company-stat">
+                            <div class="trust-metric-num"><span class="impact-count" data-count-to="100"
+                                    data-suffix="+">100+</span></div>
+                            <div class="trust-metric-label">Clients Served</div>
+                        </div>
+                        <div class="company-stat">
+                            <div class="trust-metric-num"><span class="impact-count" data-count-to="10"
+                                    data-suffix="+">10+</span></div>
+                            <div class="trust-metric-label">Countries Reached</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Geospatial Model Preview Column -->
+                <div class="hero-side-stack">
+                    <div class="geospatial-preview-card tilt-card glass-sheen-sweep">
+                        <div class="card-coord-header">
+                            <span>LIVE SCAN // ASPRS CLASS 02-06</span>
+                            <span class="gp-index-inline-003">PTS: 48.2M/KM²</span>
+                        </div>
+                        <div class="preview-visual-frame">
+                            <div class="scanline-bar"></div>
+                            <img src="assets/brand/Slider_Advance_Classificaton.jpg"
+                                alt="LiDAR Point Cloud Classification" />
+                        </div>
+                        <div>
+                            <span class="bento-tag">3D LIDAR &amp; TERRESTRIAL SCANNING</span>
+                            <h3 class="gp-index-inline-004">
+                                Automated + Manual Feature Extraction</h3>
+                            <p class="gp-index-inline-005"> Bare-earth
+                                DTM/DSM generation, powerline catenary modeling, and corridor asset inventory.</p>
+                        </div>
+                    </div>
+
+                    <div class="geospatial-preview-card tilt-card glass-sheen-sweep">
+                        <div class="card-coord-header">
+                            <span>DIGITAL TWIN // REVIT &amp; CIVIL 3D</span>
+                            <span class="gp-index-inline-006">TOLERANCE: &lt;3MM</span>
+                        </div>
+                        <div class="preview-visual-frame gp-index-inline-007">
+                            <img src="assets/brand/LOD-in-BIM.webp" alt="LOD 500 BIM Modeling" />
+                        </div>
+                        <div>
+                            <span class="bento-tag amber">SCAN-TO-BIM ENGINEERING</span>
+                            <h3 class="gp-index-inline-008">
+                                Clash-Free MEP &amp; Structural Twins</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             COMPANY OVERVIEW // SERVICES & DELIVERY REACH
+             ======================================================================== -->
+        <section class="company-impact-section" id="company-overview" aria-labelledby="company-impact-title">
+            <div class="company-impact-shell">
+                <div class="company-impact-heading">
+                    <div>
+                        <div class="eyebrow-badge">[GEOSPATIAL ENGINEERING // GLOBAL DELIVERY]</div>
+                        <h2 class="section-title split-animate" id="company-impact-title">Spatial expertise. <span
+                                class="accent-cyan">Engineering-ready outcomes.</span></h2>
+                    </div>
+                    <p class="company-impact-copy">GeoProcess Consulting (also written as Geo Process Consulting) is an
+                        India-based geospatial engineering and data-processing partner. We help engineering, AEC,
+                        surveying, infrastructure, and utility teams with LiDAR point-cloud classification, GIS mapping,
+                        DTM/DSM generation, photogrammetry, CAD conversion, Scan-to-BIM, and quality-focused production
+                        workflows.</p>
+                </div>
+                <div class="company-expertise-row">
+                    <div class="company-expertise-label"><span class="expertise-pulse"></span> CORE EXPERTISE</div>
+                    <div class="company-service-tags" aria-label="GeoProcess Consulting services">
+                        <span>LiDAR Processing</span>
+                        <span>GIS &amp; Spatial Analytics</span>
+                        <span>UAV Photogrammetry</span>
+                        <span>CAD</span>
+                        <span>Scan-to-BIM / Revit</span>
+                        <span>3D Modeling</span>
+                        <span>Utility &amp; Powerline Analytics</span>
+                        <span>Remote Sensing</span>
+                        <span>Survey Data Processing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             PINNED HORIZONTAL LIDAR PIPELINE
+             ======================================================================== -->
+        <section class="pipeline-section" id="workflow">
+            <div class="section-container">
+                <div class="pipeline-heading-row">
+                    <div>
+                        <div class="eyebrow-badge">[END-TO-END EXECUTION // WORKFLOW]</div>
+                        <h2 class="section-title split-animate">From Raw Point Clouds to <span
+                                class="accent-cyan">Engineering-Ready</span> Deliverables.</h2>
+                    </div>
+                    <span class="pipeline-note">Scroll to traverse the production stages →</span>
+                </div>
+                <div class="pipeline-viewport" id="pipeline-viewport">
+                    <div class="pipeline-track" id="pipeline-track">
+                        <article class="pipeline-stage">
+                            <div class="pipeline-stage-index"><span>STAGE 01 // INGESTION</span><span>01/04</span></div>
+                            <h3>Data Intake &amp; Initial QA/QC</h3>
+                            <p>Review LAS/LAZ/E57 data, coordinate systems, project specifications, point density, and
+                                dataset completeness before production starts.</p>
+                            <div class="stage-output">INPUT: LAS / LAZ / E57 / TIFF</div>
+                        </article>
+                        <article class="pipeline-stage">
+                            <div class="pipeline-stage-index"><span>STAGE 02 // CLASSIFICATION</span><span>02/04</span>
+                            </div>
+                            <h3>AI-Assisted + Expert Classification</h3>
+                            <p>Automated tools support the workflow while experienced specialists refine ground,
+                                vegetation, buildings, powerlines, and infrastructure classes.</p>
+                            <div class="stage-output">CHECKS: CLASSIFICATION + MANUAL REVIEW</div>
+                        </article>
+                        <article class="pipeline-stage">
+                            <div class="pipeline-stage-index"><span>STAGE 03 // EXTRACTION</span><span>03/04</span>
+                            </div>
+                            <h3>Terrain, Features &amp; CAD Outputs</h3>
+                            <p>Build DTM/DSM surfaces, contours, breaklines, corridor features, GIS layers, and clean
+                                CAD deliverables to match the requested specification.</p>
+                            <div class="stage-output">OUTPUT: DTM / DSM / GIS / DWG</div>
+                        </article>
+                        <article class="pipeline-stage">
+                            <div class="pipeline-stage-index"><span>STAGE 04 // DELIVERY</span><span>04/04</span></div>
+                            <h3>QA/QC &amp; Project Handover</h3>
+                            <p>Run final validation, resolve review comments, and package agreed deliverables with clear
+                                file naming and production notes for client handover.</p>
+                            <div class="stage-output">DELIVERY: VALIDATED PROJECT PACKAGE</div>
+                        </article>
+                    </div>
+                </div>
+                <div class="pipeline-line"></div>
+                <p class="pipeline-mobile-hint">Swipe horizontally to explore each stage.</p>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             BENTO GRID: CORE SPATIAL & ENGINEERING CAPABILITIES
+             ======================================================================== -->
+        <section class="section-container" id="services">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow-badge">[CORE CAPABILITIES // BENTO MATRIX]</div>
+                    <h2 class="section-title split-animate">Engineered for Complex Terrain &amp; Built Environments</h2>
+                </div>
+                <p class="gp-index-inline-009">
+                    Every deliverable undergoes multi-stage topological validation, coordinate transformation
+                    verification, and rigorous QA/QC compliance.
+                </p>
+            </div>
+
+            <div class="bento-grid">
+                <!-- Bento Card 1: Advanced LiDAR Classification (Span 8) -->
+                <article class="bento-card col-span-8 tilt-card">
+                    <div>
+                        <div class="card-coord-header">
+                            <span>MODULE 01 // POINT CLOUD ANALYTICS</span>
+                            <span>LAS / LAZ / E57 / RCP</span>
+                        </div>
+                        <svg class="svg-tech-icon" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                        <h3>Advanced LiDAR Classification &amp; Feature Extraction</h3>
+                        <p>
+                            High-precision airborne, terrestrial (TLS), and mobile mapping (MLS) point cloud processing.
+                            We classify bare earth, vegetation tiers, high-voltage transmission corridors, rail tracks,
+                            and highway assets to strict ASPRS standards.
+                        </p>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/images/advanced-classification.jpg"
+                            alt="Advanced LiDAR Point Cloud Classification" />
+                    </div>
+                    <div class="gp-index-inline-010">
+                        <span class="bento-tag">ASPRS COMPLIANT</span>
+                        <a href="#contact" class="nav-link gp-index-inline-011">CONFIGURE LIDAR SCOPE →</a>
+                    </div>
+                </article>
+
+                <!-- Bento Card 2: Scan-to-BIM & 3D CAD (Span 4) -->
+                <article class="bento-card col-span-4 tilt-card">
+                    <div>
+                        <div class="card-coord-header">
+                            <span>MODULE 02 // BIM &amp; CAD</span>
+                            <span>RVT / DWG / IFC</span>
+                        </div>
+                        <svg class="svg-tech-icon" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
+                        <h3>3D CAD &amp; Scan-to-BIM (LOD 100–500)</h3>
+                        <p>
+                            Intelligent parametric BIM models and 3D CAD drafting from laser scans for industrial
+                            plants, heritage architecture, and MEPF retrofit engineering.
+                        </p>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/images/3d-cad-bim-modeling.jpg" alt="3D CAD and BIM Modeling" />
+                    </div>
+                    <span class="bento-tag amber">REVIT // AUTO-CAD // NAVISWORKS</span>
+                </article>
+
+                <!-- Bento Card 3: UAV Photogrammetry & Orthophoto (Span 4) -->
+                <article class="bento-card col-span-4 tilt-card">
+                    <div>
+                        <div class="card-coord-header">
+                            <span>MODULE 03 // AERIAL MAPPING</span>
+                            <span>GEOTIFF / ECW</span>
+                        </div>
+                        <h3>UAV Photogrammetry &amp; True Orthophotos</h3>
+                        <p>
+                            Aerotriangulation, bundle block adjustment, and seamline-edited True Orthophoto mosaics with
+                            sub-pixel ground control accuracy.
+                        </p>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/brand/Photogrammetry-1.png" alt="UAV Photogrammetry" />
+                    </div>
+                    <span class="bento-tag">NADIR &amp; OBLIQUE PROCESSING</span>
+                </article>
+
+                <!-- Bento Card 4: DTM / DSM & Contour Modeling (Span 4) -->
+                <article class="bento-card col-span-4 tilt-card">
+                    <div>
+                        <div class="card-coord-header">
+                            <span>MODULE 04 // ELEVATION MODELS</span>
+                            <span>TIN / DEM / BREAKLINES</span>
+                        </div>
+                        <h3>High-Resolution DTM, DSM &amp; Hydro-Enforcement</h3>
+                        <p>
+                            3D breakline compilation, hydrological conditioning, flood-plain modeling, and volumetric
+                            cut/fill stockpile analytics.
+                        </p>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/images/dtm-new.jpg" alt="Digital Terrain Model" />
+                    </div>
+                    <span class="bento-tag amber">SUB-DECIMETER ELEVATION</span>
+                </article>
+
+                <!-- Bento Card 5: Enterprise GIS & Web Mapping (Span 4) -->
+                <article class="bento-card col-span-4 tilt-card">
+                    <div>
+                        <div class="card-coord-header">
+                            <span>MODULE 05 // SPATIAL SYSTEMS</span>
+                            <span>POSTGIS / ARCGIS / CESIUM</span>
+                        </div>
+                        <h3>Enterprise GIS &amp; Spatial Web Portals</h3>
+                        <p>
+                            Custom spatial database design, utility network topology, parcel cadastral mapping, and 3D
+                            WebGL geospatial dashboards.
+                        </p>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/images/enterprise-gis-web-mapping.jpg" alt="Enterprise GIS Web Mapping" />
+                    </div>
+                    <span class="bento-tag">FULL-STACK GEOSPATIAL</span>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             INTERACTIVE MOMENTUM CAROUSEL: DELIVERABLES & CASE STUDIES
+             ======================================================================== -->
+        <section class="section-container" id="deliverables">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow-badge">[ENGINEERING DELIVERABLES // DRAG TO EXPLORE]</div>
+                    <h2 class="section-title split-animate">Production-Proven Spatial Outputs</h2>
+                </div>
+                <div class="gp-index-inline-012">
+                    <button class="btn-outline magnetic-el" id="slide-prev">← PREV</button>
+                    <button class="btn-outline magnetic-el" id="slide-next">NEXT →</button>
+                </div>
+            </div>
+
+            <div class="slider-Viewport" id="portfolio-slider">
+                <div class="slider-track" id="slider-track">
+                    <div class="slide-card">
+                        <div class="slide-img-wrap">
+                            <img src="assets/images/Mobile Mapping.jpg" alt="Mobile LiDAR Corridor Mapping" />
+                        </div>
+                        <span class="bento-tag">CORRIDOR ENGINEERING</span>
+                        <h3 class="gp-index-inline-013">Mobile LiDAR Highway &amp; Rail
+                            Asset Extraction</h3>
+                        <p class="gp-index-inline-014">3D curb-to-curb vectorization,
+                            clearance analysis, and signage inventory across 450+ linear kilometers.</p>
+                    </div>
+
+                    <div class="slide-card">
+                        <div class="slide-img-wrap">
+                            <img src="assets/images/BIM.jpg" alt="Industrial BIM Modeling" />
+                        </div>
+                        <span class="bento-tag amber">AS-BUILT DIGITAL TWIN</span>
+                        <h3 class="gp-index-inline-015">Industrial Plant Scan-to-BIM
+                            (LOD 400/500)</h3>
+                        <p class="gp-index-inline-016">Full structural steel, piping, and
+                            HVAC parametric modeling from terrestrial FARO/Leica laser scans.</p>
+                    </div>
+
+                    <div class="slide-card">
+                        <div class="slide-img-wrap">
+                            <img src="assets/images/Ortho.jpg" alt="True Orthophoto Generation" />
+                        </div>
+                        <span class="bento-tag">PHOTOGRAMMETRY</span>
+                        <h3 class="gp-index-inline-017">Urban True-Orthophoto &amp; 3D
+                            City Mesh</h3>
+                        <p class="gp-index-inline-018">Zero-building-lean orthomosaics,
+                            radiometric balancing, and LOD 2/3 3D building footprints.</p>
+                    </div>
+
+                    <div class="slide-card">
+                        <div class="slide-img-wrap">
+                            <img src="assets/images/Laser Scanning.jpg" alt="Terrestrial Laser Scanning" />
+                        </div>
+                        <span class="bento-tag amber">TERRESTRIAL LIDAR</span>
+                        <h3 class="gp-index-inline-019">High-Density Point Cloud
+                            Registration &amp; 3D CAD</h3>
+                        <p class="gp-index-inline-020">Multi-station cloud-to-cloud
+                            registration, deformation monitoring, and 2D/3D as-built floor plans.</p>
+                    </div>
+
+                    <div class="slide-card">
+                        <div class="slide-img-wrap">
+                            <img src="assets/images/dsm-new.jpg" alt="Digital Surface Models" />
+                        </div>
+                        <span class="bento-tag">TERRAIN ANALYTICS</span>
+                        <h3 class="gp-index-inline-021">Hydro-Enforced DSM / DTM &amp;
+                            Contour Mapping</h3>
+                        <p class="gp-index-inline-022">Watershed delineation, telecom
+                            line-of-sight propagation models, and mining volumetric audits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================
+             CONVERSION / CONTACT DISPATCH SECTION
+             ======================================================================== -->
+        <section class="section-container legacy-faq-section" id="faqs">
+            <div class="container">
+                <div class="section-head">
+                    <div class="eyebrow">Frequently Asked Questions</div>
+                    <h2 class="section-title">FAQs</h2>
+                    <p class="section-subtitle">Answers to common questions about GeoProcess Consulting, our services
+                        and project delivery.</p>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item" open="">
+                        <summary>Why choose GeoProcess Consulting?</summary>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Actionable intelligence:</strong> We turn complex raw point clouds into
+                                    clear, decisive field execution.</li>
+                                <li><strong>Unmatched precision:</strong> Our automated AI pipelines deliver
+                                    sub-centimeter calibration you can trust.</li>
+                                <li><strong>Deep domain expertise:</strong> We understand utility corridors and the
+                                    specific challenges of vegetation management.</li>
+                                <li><strong>Proactive cost savings:</strong> We shift your operations from expensive,
+                                    reactive fixes to predictive pruning schedules.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What services do you offer?</summary>
+                        <div class="faq-answer">
+                            <p>We provide full-lifecycle geospatial analytics and engineering data processing,
+                                including:</p>
+                            <ul>
+                                <li><strong>Powerline Vegetation &amp; Danger-Zone Pruning:</strong> 3D encroachment,
+                                    species risk class, and tree-fall modeling.</li>
+                                <li><strong>Advanced LiDAR Classification:</strong> AI-driven segmentation for ground,
+                                    canopy, towers, conductors, and buildings.</li>
+                                <li><strong>Enterprise GIS &amp; Web Mapping:</strong> Enterprise geodatabase modeling,
+                                    custom field-app layers, and live dashboards.</li>
+                                <li><strong>DTM / DSM Extraction:</strong> Bare-earth terrain models and digital surface
+                                    canopy envelopes.</li>
+                                <li><strong>UAV &amp; Orthophoto Mapping:</strong> Sub-centimeter true-orthomosaics and
+                                    multispectral survey workflows.</li>
+                                <li><strong>3D CAD / Scan-to-BIM:</strong> Vectorized asset models ready for engineering
+                                    and design software.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What is Danger-Zone Detection for Tree Pruning?</summary>
+                        <div class="faq-answer">
+                            <p>Danger zone detection for tree pruning near power lines using LiDAR and GIS is a digital
+                                safety system. It uses laser scans and maps to find trees that are too close to electric
+                                wires. This helps crews clear branches before they cause power outages or fires.</p>
+                            <br />
+                            <strong>How LiDAR Works:</strong>
+                            <ul>
+                                <li><strong>Light Detection:</strong> Sends laser pulses from a plane, drone, or truck
+                                    to the ground.</li>
+                                <li><strong>3D Mapping:</strong> Measures the exact distance from tree branches to power
+                                    lines.</li>
+                                <li><strong>Data Points:</strong> Creates a 3D picture of the entire utility corridor.
+                                </li>
+                            </ul>
+                            <strong>How GIS Works:</strong>
+                            <ul>
+                                <li><strong>Geographic Data:</strong> Stores the precise location of power poles, wires,
+                                    and equipment.</li>
+                                <li><strong>Spatial Analysis:</strong> Combines map data with LiDAR scans to find
+                                    problem areas.</li>
+                                <li><strong>Risk Zones:</strong> Creates a digital boundary or buffer zone around live
+                                    wires.</li>
+                            </ul>
+                            <strong>Safety and Benefits:</strong>
+                            <ul>
+                                <li><strong>Automated Alerts:</strong> Flags trees that enter the danger buffer zone.
+                                </li>
+                                <li><strong>Smart Planning:</strong> Helps workers target high-risk trees first.</li>
+                                <li><strong>Fewer Outages:</strong> Prevents branches from touching lines during storms.
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What is Advanced Classification &amp; 3D Vectorization?</summary>
+                        <div class="faq-answer">
+                            <p>Advanced 3D building classification and vectorization converts unorganized 3D spatial
+                                data into clean, structured geometric vectors (like polygons and shapefiles).</p>
+                            <p class="small-top-note">Our automated pipeline isolates key infrastructure
+                                elements—such as towers, conductor sags, ground surfaces, and buildings—allowing
+                                utilities to export directly into GIS databases, CAD layouts, or BIM platforms for
+                                structural audits.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How long does a typical project take?</summary>
+                        <div class="faq-answer">
+                            <p>Turnaround depends on project scope, point density, and whether the data is linear
+                                corridor or area-based:</p>
+                            <ul>
+                                <li><strong>Free Pilot / Sample Verification (24–48 Hours):</strong>
+                                    <ul>
+                                        <li><em>Powerline Corridors:</em> 1 to 3 km (1–2 line spans) danger-zone
+                                            clearance audit.</li>
+                                        <li><em>Advanced LiDAR / DTM:</em> 10 to 50 Hectares (1–2 tiles) full ASPRS
+                                            classification &amp; bare-earth model.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Standard Production Projects (3–5 Business Days):</strong>
+                                    <ul>
+                                        <li><em>Corridors:</em> 20 to 100 km of transmission/distribution line
+                                            classification.</li>
+                                        <li><em>Area Topography:</em> 5 to 25 km² of urban, forestry, or civil DTM/DSM
+                                            &amp; 3D building vectorization.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Large-Scale / Enterprise Scopes (2–3 Weeks):</strong>
+                                    <ul>
+                                        <li>Corridors of 250–1,000+ km or area surveys exceeding 50–200+ km² with
+                                            continuous rolling milestone deliveries.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Emergency / Storm Damage Triage (Within 24 Hours):</strong>
+                                    <ul>
+                                        <li>Fast-track priority pipeline for immediate danger-tree and wire strike
+                                            identification.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-container" id="contact">
+            <div class="bento-grid">
+                <div class="bento-card col-span-6">
+                    <div>
+                        <div class="eyebrow-badge">[INITIATE TRANSMISSION // RFQ]</div>
+                        <h2 class="section-title split-animate gp-index-inline-023">Ready to Accelerate Your
+                            Geospatial Pipeline?</h2>
+                        <p class="gp-index-inline-024">
+                            Upload your sample dataset or share your project specifications. Our engineering leads
+                            respond within 4 business hours with a pilot proposal and turnaround schedule.
+                        </p>
+                        <div class="gp-index-inline-025">
+                            <div class="bento-card gp-index-inline-026">
+                                <span class="gp-index-inline-027">DIRECT ELECTRONIC MAIL</span>
+                                <a class="gp-index-inline-028"
+                                    href="mailto:contact@geoprocessconsulting.in">contact@geoprocessconsulting.in</a>
+                            </div>
+                            <div class="bento-card gp-index-inline-029">
+                                <span class="gp-index-inline-030">INSTANT WHATSAPP
+                                    ENGINEERING DESK</span>
+                                <a class="gp-index-inline-031"
+                                    href="https://wa.me/917205666324?text=Hi%20GeoProcess%20Consulting%2C%20I%20want%20to%20discuss%20a%20spatial%20analytics%20project."
+                                    target="_blank" rel="noopener noreferrer">+91
+                                    72056 66324 (Click to Chat on WhatsApp)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-card col-span-6">
+                    <form class="gp-index-inline-032" id="rfq-form">
+                        <div class="card-coord-header">
+                            <span>PROJECT SPECIFICATION TERMINAL</span>
+                            <span class="gp-index-inline-033">SSL ENCRYPTED</span>
+                        </div>
+                        <div>
+                            <label class="gp-index-inline-034">YOUR NAME / ORGANIZATION
+                                *</label>
+                            <input class="gp-index-inline-035" type="text" id="client-name" required
+                                placeholder="e.g., Arjun Mehta // AEC Infrastructure Ltd." />
+                        </div>
+                        <div>
+                            <label class="gp-index-inline-036">WORK EMAIL *</label>
+                            <input class="gp-index-inline-037" type="email" id="client-email" required
+                                placeholder="name@company.com" />
+                        </div>
+                        <div>
+                            <label class="gp-index-inline-038">PRIMARY SERVICE MODULE
+                                *</label>
+                            <select class="gp-index-inline-039" id="client-service">
+                                <option value="LiDAR Classification & Feature Extraction">LiDAR Classification &amp;
+                                    Feature Extraction</option>
+                                <option value="Scan-to-BIM & 3D CAD (LOD 100-500)">Scan-to-BIM &amp; 3D CAD (LOD
+                                    100–500)</option>
+                                <option value="UAV Photogrammetry & Orthophoto">UAV Photogrammetry &amp; Orthophoto
+                                </option>
+                                <option value="DTM / DSM & Volumetric Survey">DTM / DSM &amp; Volumetric Survey</option>
+                                <option value="Enterprise GIS & Web Mapping">Enterprise GIS &amp; Web Mapping</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="gp-index-inline-040">PROJECT PARAMETERS (AREA /
+                                KM / LOD / TIMELINE)</label>
+                            <textarea class="gp-index-inline-041" id="client-notes" rows="3"
+                                placeholder="Specify point density, area in sq.km or linear km, target CAD/BIM format..."></textarea>
+                        </div>
+                        <div class="gp-index-inline-042">
+                            <button type="submit" class="btn-primary gp-index-inline-043">DISPATCH VIA
+                                EMAIL</button>
+                            <button type="button" id="rfq-whatsapp-btn" class="btn-amber gp-index-inline-044">SEND TO
+                                WHATSAPP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <div class="footer-brand"><svg class="brand-mark footer-mark" viewBox="0 0 64 64" aria-hidden="true"
+                        focusable="false">
+                        <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
+                        <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
+                        <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
+                    </svg>
+                    <div>
+                        <div class="footer-title">GeoProcess Consulting</div>
+                        <div class="footer-sub">Spatial Data · Processed With Precision</div>
+                    </div>
+                </div>
+                <p class="footer-intro">Precision geospatial processing for LiDAR, GIS, photogrammetry, terrain, 3D,
+                    CAD, BIM
+                    and spatial analytics. From raw spatial data to structured, engineering-ready information.</p>
+                <div class="footer-signal"><span></span> SPATIAL DATA · PROCESSED WITH PRECISION</div>
+            </div>
+            <div>
+                <div class="footer-title">Explore</div>
+                <ul class="footer-list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="services">Services</a></li>
+                    <li><a href="projects">Projects</a></li>
+                    <li><a href="videos">Videos</a></li>
+                    <li><a href="study">Study Hub</a></li>
+                    <li><a href="/#faqs">FAQs</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-title">Connect</div>
+                <ul class="footer-list">
+                    <li><a href="mailto:contact@geoprocessconsulting.in">contact@geoprocessconsulting.in</a></li>
+                    <li><a href="https://wa.me/917205666324" target="_blank" rel="noopener noreferrer">WhatsApp · +91
+                            72056 66324</a></li>
+                    <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank"
+                            rel="noopener noreferrer">LinkedIn ·
+                            GeoProcess Consulting</a></li>
+                    <li><a href="booking">Schedule a consultation ↗</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </section>
-    <section class="section alt" id="faqs">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Frequently Asked Questions</div>
-          <h2 class="section-title">FQAs</h2>
-          <p class="section-subtitle">Answers to common questions about GeoProcess Consulting, our services
-            and project delivery.</p>
-        </div>
-        <div class="faq-list">
-          <details class="faq-item" open="">
-            <summary>Why choose GeoProcess Consulting?</summary>
-            <div class="faq-answer">
-              <ul>
-                <li><strong>Actionable intelligence:</strong> We turn complex raw point clouds into
-                  clear, decisive field execution.</li>
-                <li><strong>Unmatched precision:</strong> Our automated AI pipelines deliver
-                  sub-centimeter calibration you can trust.</li>
-                <li><strong>Deep domain expertise:</strong> We understand utility corridors and the
-                  specific challenges of vegetation management.</li>
-                <li><strong>Proactive cost savings:</strong> We shift your operations from expensive,
-                  reactive fixes to predictive pruning schedules.</li>
-              </ul>
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>What services do you offer?</summary>
-            <div class="faq-answer">
-              <p>We provide full-lifecycle geospatial analytics and engineering data processing,
-                including:</p>
-              <ul>
-                <li><strong>Powerline Vegetation &amp; Danger-Zone Pruning:</strong> 3D encroachment,
-                  species risk class, and tree-fall modeling.</li>
-                <li><strong>Advanced LiDAR Classification:</strong> AI-driven segmentation for ground,
-                  canopy, towers, conductors, and buildings.</li>
-                <li><strong>Enterprise GIS &amp; Web Mapping:</strong> Enterprise geodatabase modeling,
-                  custom field-app layers, and live dashboards.</li>
-                <li><strong>DTM / DSM Extraction:</strong> Bare-earth terrain models and digital surface
-                  canopy envelopes.</li>
-                <li><strong>UAV &amp; Orthophoto Mapping:</strong> Sub-centimeter true-orthomosaics and
-                  multispectral survey workflows.</li>
-                <li><strong>3D CAD / Scan-to-BIM:</strong> Vectorized asset models ready for engineering
-                  and design software.</li>
-              </ul>
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>What is Danger-Zone Detection for Tree Pruning?</summary>
-            <div class="faq-answer">
-              <p>Danger zone detection for tree pruning near power lines using LiDAR and GIS is a digital
-                safety system. It uses laser scans and maps to find trees that are too close to electric
-                wires. This helps crews clear branches before they cause power outages or fires.</p>
-              <br />
-              <strong>How LiDAR Works:</strong>
-              <ul>
-                <li><strong>Light Detection:</strong> Sends laser pulses from a plane, drone, or truck
-                  to the ground.</li>
-                <li><strong>3D Mapping:</strong> Measures the exact distance from tree branches to power
-                  lines.</li>
-                <li><strong>Data Points:</strong> Creates a 3D picture of the entire utility corridor.
-                </li>
-              </ul>
-              <strong>How GIS Works:</strong>
-              <ul>
-                <li><strong>Geographic Data:</strong> Stores the precise location of power poles, wires,
-                  and equipment.</li>
-                <li><strong>Spatial Analysis:</strong> Combines map data with LiDAR scans to find
-                  problem areas.</li>
-                <li><strong>Risk Zones:</strong> Creates a digital boundary or buffer zone around live
-                  wires.</li>
-              </ul>
-              <strong>Safety and Benefits:</strong>
-              <ul>
-                <li><strong>Automated Alerts:</strong> Flags trees that enter the danger buffer zone.
-                </li>
-                <li><strong>Smart Planning:</strong> Helps workers target high-risk trees first.</li>
-                <li><strong>Fewer Outages:</strong> Prevents branches from touching lines during storms.
-                </li>
-              </ul>
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>What is Advanced Classification &amp; 3D Vectorization?</summary>
-            <div class="faq-answer">
-              <p>Advanced 3D building classification and vectorization converts unorganized 3D spatial
-                data into clean, structured geometric vectors (like polygons and shapefiles).</p>
-              <p class="small-top-note">Our automated pipeline isolates key infrastructure
-                elements—such as towers, conductor sags, ground surfaces, and buildings—allowing
-                utilities to export directly into GIS databases, CAD layouts, or BIM platforms for
-                structural audits.</p>
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>How long does a typical project take?</summary>
-            <div class="faq-answer">
-              <p>Turnaround depends on project scope, point density, and whether the data is linear
-                corridor or area-based:</p>
-              <ul>
-                <li><strong>Free Pilot / Sample Verification (24–48 Hours):</strong>
-                  <ul>
-                    <li><em>Powerline Corridors:</em> 1 to 3 km (1–2 line spans) danger-zone
-                      clearance audit.</li>
-                    <li><em>Advanced LiDAR / DTM:</em> 10 to 50 Hectares (1–2 tiles) full ASPRS
-                      classification &amp; bare-earth model.</li>
-                  </ul>
-                </li>
-                <li><strong>Standard Production Projects (3–5 Business Days):</strong>
-                  <ul>
-                    <li><em>Corridors:</em> 20 to 100 km of transmission/distribution line
-                      classification.</li>
-                    <li><em>Area Topography:</em> 5 to 25 km² of urban, forestry, or civil DTM/DSM
-                      &amp; 3D building vectorization.</li>
-                  </ul>
-                </li>
-                <li><strong>Large-Scale / Enterprise Scopes (2–3 Weeks):</strong>
-                  <ul>
-                    <li>Corridors of 250–1,000+ km or area surveys exceeding 50–200+ km² with
-                      continuous rolling milestone deliveries.</li>
-                  </ul>
-                </li>
-                <li><strong>Emergency / Storm Damage Triage (Within 24 Hours):</strong>
-                  <ul>
-                    <li>Fast-track priority pipeline for immediate danger-tree and wire strike
-                      identification.</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-    <section class="section dark">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Ready when you are</div>
-          <h2 class="section-title">Let's discuss your next geospatial project.</h2>
-          <p class="section-subtitle">Choose a date and time online instead of waiting for a reply.</p>
-          <div class="actions contact-actions actions-centered">
-            <a class="btn btn-primary" href="booking">Confirm Booking →</a>
-            <div class="contact-mail-wrap">
-              <button aria-expanded="false" aria-haspopup="true" class="btn btn-ghost contact-social-btn"
-                type="button">✉ Email ▾</button>
-              <div class="contact-mail-menu" role="menu">
-                <a href="mailto:contact@geoprocessconsulting.site" role="menuitem">Open in Default
-                  Mail</a>
-                <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=contact%40geoprocessconsulting.site"
-                  rel="noopener" role="menuitem" target="_blank">Open in Gmail</a>
-                <a href="https://outlook.office.com/mail/deeplink/compose?to=contact%40geoprocessconsulting.site"
-                  rel="noopener" role="menuitem" target="_blank">Open in Outlook</a>
-              </div>
-            </div>
-            <a class="btn btn-ghost contact-social-btn" href="https://wa.me/917205666324" rel="noopener"
-              target="_blank">💬 WhatsApp</a>
-            <a class="btn btn-ghost contact-social-btn" href="https://www.linkedin.com/company/geoprocess-consulting"
-              rel="noopener" target="_blank">in LinkedIn</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="footer-brand"><svg class="brand-mark footer-mark" viewBox="0 0 64 64" aria-hidden="true"
-            focusable="false">
-            <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
-            <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
-            <circle class="pulse" cx="32" cy="32" r="5" fill="#ff6a2b" />
-          </svg>
-          <div>
-            <div class="footer-title">GeoProcess Consulting</div>
-            <div class="footer-sub">Spatial Data · Processed With Precision</div>
-          </div>
-        </div>
-        <p class="footer-intro">Precision geospatial processing for LiDAR, GIS, photogrammetry, terrain, 3D, CAD, BIM
-          and spatial analytics. From raw spatial data to structured, engineering-ready information.</p>
-        <div class="footer-signal"><span></span> SPATIAL DATA · PROCESSED WITH PRECISION</div>
-      </div>
-      <div>
-        <div class="footer-title">Explore</div>
-        <ul class="footer-list">
-          <li><a href="index">Home</a></li>
-          <li><a href="services">Services</a></li>
-          <li><a href="projects">Projects</a></li>
-          <li><a href="videos">Videos</a></li>
-          <li><a href="study">Study Hub</a></li>
-          <li><a href="index#faqs">FAQs</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-title">Connect</div>
-        <ul class="footer-list">
-          <li><a href="mailto:contact@geoprocessconsulting.site">contact@geoprocessconsulting.site</a></li>
-          <li><a href="https://wa.me/917205666324" target="_blank" rel="noopener">WhatsApp · +91 72056 66324</a></li>
-          <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank" rel="noopener">LinkedIn ·
-              GeoProcess Consulting</a></li>
-          <li><a href="booking">Schedule a consultation ↗</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="container footer-bottom"><span>© <span data-year>2026</span> GeoProcess Consulting</span><span>LI DAR ·
-        GIS · UAV · BIM · AI/ML</span></div>
-  </footer>
-  <button aria-label="Back to top" class="back-top">↑</button>
-  <script src="js/main.js"></script>
-  <script src="js/pages/home.js"></script>
-  <script src="js/ai-config.js"></script>
-  <script src="js/ai-assistant.js"></script>
+        <div class="container footer-bottom"><span>© GeoProcess Consulting</span><span>LiDAR ·
+                GIS · UAV · BIM · AI/ML</span></div>
+    </footer>
+    <button aria-label="Back to top" class="back-top">↑</button>
+    <script src="js/main.js" defer></script>
+    <script src="js/pages/home.js" defer></script>
+    <script src="js/ai-config.js" defer></script>
+    <script src="js/ai-assistant.js" defer></script>
+
+    <script src="js/pages/home-reference.js" defer></script>
 </body>
 
 </html>
