@@ -1,0 +1,229 @@
+/* Shared transparent-page treatment for the animated LiDAR canvas.
+   Intentionally scoped to pages that opt in; study.html is not modified. */
+html.has-floating-bg {
+  /* Dark fallback is painted behind the canvas, never over it. */
+  background: #050b12 !important;
+  background-color: #050b12 !important;
+  background-image: none !important;
+  color-scheme: dark;
+}
+
+body.has-floating-bg {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--gp-ink, #eaf3f8);
+}
+
+body.has-floating-bg::before { display: none !important; }
+body.has-floating-bg::after {
+  z-index: 3 !important;
+  opacity: .014 !important;
+  pointer-events: none !important;
+}
+
+#lidar-canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: block !important;
+  z-index: 0 !important;
+  opacity: .98;
+  pointer-events: none !important;
+  mix-blend-mode: screen;
+}
+
+.spatial-grid-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background-image:
+    linear-gradient(to right, rgba(150, 220, 239, .026) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(150, 220, 239, .026) 1px, transparent 1px) !important;
+  background-size: 72px 72px !important;
+  opacity: .58;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 18%, transparent 88%);
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 18%, transparent 88%);
+}
+
+body.has-floating-bg > main,
+body.has-floating-bg > .site-footer {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.has-floating-bg > header.site-nav {
+  z-index: 1000 !important;
+}
+
+body.has-floating-bg > .skip-link { position: fixed; z-index: 10000; }
+body.has-floating-bg > .back-top { z-index: 100 !important; }
+
+/* Remove opaque global/page fills that otherwise conceal the canvas.
+   Keep cards, forms, navigation and footer surfaces styled as translucent UI. */
+body.has-floating-bg main,
+body.has-floating-bg main > section,
+body.has-floating-bg main > .section,
+body.has-floating-bg .section,
+body.has-floating-bg .section.alt,
+body.has-floating-bg .section.dark,
+body.has-floating-bg .about-hero,
+body.has-floating-bg .services-hero,
+body.has-floating-bg .projects-hero,
+body.has-floating-bg .fancy-hero,
+body.has-floating-bg .vintage-hero,
+body.has-floating-bg .page-hero,
+body.has-floating-bg .booking-hero,
+body.has-floating-bg .booking-section,
+body.has-floating-bg .about-page,
+body.has-floating-bg .services-page,
+body.has-floating-bg .projects-page,
+body.has-floating-bg .projects-content,
+body.has-floating-bg .video-archive {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* Hero overlays are retained, but reduced to a glassy tint instead of an opaque slab. */
+body.has-floating-bg .hero::after,
+body.has-floating-bg .page-hero::after,
+body.has-floating-bg .about-hero::after,
+body.has-floating-bg .services-hero::after,
+body.has-floating-bg .projects-hero::after,
+body.has-floating-bg .fancy-hero::after,
+body.has-floating-bg .vintage-hero::after,
+body.has-floating-bg .booking-hero::after {
+  background: linear-gradient(90deg,
+    rgba(5, 13, 22, .48) 0%,
+    rgba(5, 13, 22, .24) 54%,
+    rgba(5, 13, 22, .10) 100%) !important;
+}
+
+/* Content surfaces remain readable without blocking the moving terrain entirely. */
+body.has-floating-bg .section.alt,
+body.has-floating-bg .section.dark {
+  background: rgba(4, 14, 23, .24) !important;
+}
+body.has-floating-bg .service-card-new,
+body.has-floating-bg .project-card-fancy,
+body.has-floating-bg .vintage-card,
+body.has-floating-bg .booking-card,
+body.has-floating-bg .booking-info-card,
+body.has-floating-bg .risk,
+body.has-floating-bg .workflow-step,
+body.has-floating-bg .case-item {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-floating-bg .spatial-grid-overlay { opacity: .32; }
+}
+
+/* Harmonize legacy page-specific light panels with the homepage's dark glass design. */
+body.has-floating-bg .about-hero::before,
+body.has-floating-bg .services-hero::before {
+  background:
+    radial-gradient(circle at 78% 30%, rgba(95, 227, 255, .10), transparent 28%),
+    radial-gradient(circle at 86% 78%, rgba(25, 183, 122, .08), transparent 27%),
+    linear-gradient(90deg, rgba(5, 13, 22, .42), rgba(5, 13, 22, .18) 58%, rgba(5, 13, 22, .06)) !important;
+}
+
+body.has-floating-bg .cap,
+body.has-floating-bg .pipe,
+body.has-floating-bg .workflow-step,
+body.has-floating-bg .service-card-new,
+body.has-floating-bg .cta-services,
+body.has-floating-bg .quote,
+body.has-floating-bg .closing,
+body.has-floating-bg .diff,
+body.has-floating-bg .projects-cta,
+body.has-floating-bg .video-card-fancy,
+body.has-floating-bg .fancy-note {
+  color: var(--gp-ink, #eaf3f8) !important;
+  background: linear-gradient(145deg, rgba(12, 28, 43, .80), rgba(4, 13, 22, .76)) !important;
+  border-color: var(--gp-line, rgba(171, 211, 232, .14)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 16px 36px rgba(0, 0, 0, .12);
+}
+
+body.has-floating-bg .pipeline-grid,
+body.has-floating-bg .workflow-grid {
+  background: rgba(95, 227, 255, .10) !important;
+  border-color: rgba(95, 227, 255, .12) !important;
+}
+body.has-floating-bg .pipeline-grid .pipe,
+body.has-floating-bg .workflow-grid .workflow-step {
+  background: rgba(7, 20, 31, .78) !important;
+}
+body.has-floating-bg .section-intro p,
+body.has-floating-bg .story-copy p,
+body.has-floating-bg .cap p,
+body.has-floating-bg .pipe p,
+body.has-floating-bg .service-body p,
+body.has-floating-bg .service-list-new li,
+body.has-floating-bg .workflow-step p,
+body.has-floating-bg .diff p,
+body.has-floating-bg .closing p,
+body.has-floating-bg .cta-services p,
+body.has-floating-bg .projects-cta p,
+body.has-floating-bg .project-intro p {
+  color: #b1c3ce !important;
+}
+body.has-floating-bg .cap h3,
+body.has-floating-bg .pipe h3,
+body.has-floating-bg .service-body h3,
+body.has-floating-bg .workflow-step h3,
+body.has-floating-bg .diff h3,
+body.has-floating-bg .closing h2,
+body.has-floating-bg .cta-services h2,
+body.has-floating-bg .projects-cta h2 {
+  color: #f0f8fc !important;
+}
+body.has-floating-bg .service-card-new.featured { border-color: rgba(95, 227, 255, .28) !important; }
+body.has-floating-bg .service-list-new { border-top-color: rgba(171, 211, 232, .13) !important; }
+body.has-floating-bg .service-list-new li { color: #b8c8d2 !important; }
+body.has-floating-bg .diff.featured { background: linear-gradient(145deg, rgba(10, 35, 49, .9), rgba(4, 13, 22, .82)) !important; }
+body.has-floating-bg .booking-hero { background: transparent !important; }
+body.has-floating-bg .vintage-hero::before,
+body.has-floating-bg .fancy-hero::before { opacity: .72; }
+body.has-floating-bg .vintage-video-page { background: transparent !important; }
+
+body.has-floating-bg .projects-hero::before {
+  background:
+    radial-gradient(circle at 80% 30%, rgba(95, 227, 255, .10), transparent 27%),
+    radial-gradient(circle at 92% 82%, rgba(25, 183, 122, .08), transparent 26%),
+    linear-gradient(100deg, rgba(5, 13, 22, .36), rgba(8, 27, 42, .19) 55%, rgba(6, 17, 29, .08)) !important;
+}
+body.has-floating-bg .fancy-hero::before {
+  background:
+    radial-gradient(circle at 75% 30%, rgba(95, 227, 255, .12), transparent 28%),
+    radial-gradient(circle at 92% 82%, rgba(25, 183, 122, .08), transparent 28%),
+    linear-gradient(110deg, rgba(5, 13, 22, .38), rgba(9, 34, 54, .18) 60%, rgba(7, 21, 34, .10)) !important;
+}
+body.has-floating-bg .projects-page,
+body.has-floating-bg .about-page,
+body.has-floating-bg .services-page,
+body.has-floating-bg .vintage-video-page,
+body.has-floating-bg .booking-page {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Keep the reference footer as a solid, dark, readable end-cap. */
+body.has-floating-bg > .site-footer {
+  position: relative;
+  z-index: 2;
+  background: #03080e !important;
+  background-color: #03080e !important;
+  background-image: none !important;
+}

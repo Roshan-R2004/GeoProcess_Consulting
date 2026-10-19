@@ -1,0 +1,221 @@
+/* Let the animated LiDAR canvas show through the page content. The original site's
+           global stylesheet gives <main> an opaque background, which hides the point-cloud. */
+        main#top {
+            background: transparent !important;
+        }
+
+        /* Preserve the original GeoProcess navigation and footer exactly while refreshing the middle. */
+        .site-nav { z-index: 1000 !important; }
+        .site-nav .brand-name {
+            font-family: "Manrope", system-ui, sans-serif !important;
+            font-weight: 800 !important; font-size: 1.05rem !important;
+            line-height: 1.05 !important; letter-spacing: -.03em !important; color: #f5fffb !important;
+        }
+        .site-nav .brand-sub {
+            font-family: "Space Mono", monospace !important;
+            color: var(--gp-blue-bright) !important; font-size: .57rem !important;
+            letter-spacing: .08em !important; text-transform: uppercase !important; margin-top: 4px !important;
+        }
+        .site-nav .nav-list a { font-family: "Manrope", system-ui, sans-serif !important; }
+        .site-footer {
+            padding: 70px 0 0 !important;
+            background: #03080e !important;
+            border-top: 1px solid var(--gp-line) !important;
+            color: #c4d3dc !important;
+        }
+        .site-footer .container { width: min(1260px, calc(100% - 48px)) !important; }
+        .site-footer .footer-grid {
+            display: grid !important; grid-template-columns: 1.5fr 1fr 1fr !important;
+            gap: 55px !important; padding-bottom: 55px !important;
+            max-width: none !important; margin: 0 auto !important;
+        }
+        .site-footer .footer-title {
+            font-family: "Space Grotesk", sans-serif !important;
+            font-size: .74rem !important; font-weight: 900 !important;
+            letter-spacing: .12em !important; text-transform: uppercase !important;
+            color: #fff !important; margin-bottom: 18px !important;
+        }
+        .site-footer .footer-brand .footer-title { margin: 0 !important; }
+        .site-footer .footer-list {
+            list-style: none !important; margin: 0 !important; padding: 0 !important;
+            display: grid !important; gap: 10px !important;
+            color: #9fb1c0 !important; font-size: .9rem !important;
+        }
+        .site-footer .footer-list a { color: #91a8b6 !important; text-decoration: none !important; }
+        .site-footer .footer-list a:hover { color: var(--gp-cyan) !important; }
+        .site-footer .footer-bottom {
+            border-top: 1px solid var(--gp-line) !important;
+            padding: 22px !important; text-align: center !important; color: #637887 !important;
+            font-size: .74rem !important;
+        }
+        #top .hero-title {
+            font-family: var(--font-heading) !important; font-size: clamp(2.4rem, 4.6vw, 4.35rem) !important;
+            font-weight: 700 !important; line-height: 1.06 !important; letter-spacing: -.03em !important;
+            color: var(--text-primary) !important;
+        }
+        #top .section-title {
+            font-family: var(--font-heading) !important; font-size: clamp(2rem, 3.5vw, 3rem) !important;
+            font-weight: 700 !important; letter-spacing: -.02em !important; line-height: 1.1 !important;
+            color: var(--text-primary) !important;
+        }
+        #top .bento-card h3 {
+            font-family: var(--font-heading) !important; font-size: 1.45rem !important;
+            line-height: 1.15 !important; letter-spacing: normal !important; color: var(--text-primary) !important;
+        }
+        #top .pipeline-stage h3 {
+            font-family: var(--font-heading) !important;
+            font-size: clamp(1.25rem, 2vw, 1.8rem) !important;
+            line-height: 1.15 !important; letter-spacing: normal !important; color: var(--text-primary) !important;
+        }
+        #top p { font-family: var(--font-mono) !important; color: var(--text-secondary) !important; }
+        #top .hero-subtitle { font-size: 1rem !important; }
+        #top .btn-primary {
+            background: var(--gis-cyan) !important; color: #05080c !important;
+            border-radius: var(--radius-md) !important; box-shadow: 0 0 24px rgba(0, 240, 255, .28) !important;
+        }
+        #top .btn-primary:hover { background: var(--gis-cyan) !important; color: #05080c !important; }
+        #top .legacy-faq-section { max-width: 1400px; margin: 0 auto; }
+        #top .legacy-faq-section .faq-item,
+        #top .legacy-faq-section .faq details {
+            background: rgba(19, 25, 34, .85) !important;
+            border: 1px solid var(--border-grid) !important; color: var(--text-primary) !important;
+        }
+        #top .legacy-faq-section .faq-item summary,
+        #top .legacy-faq-section .faq summary { color: var(--text-primary) !important; }
+        #top .legacy-faq-section .faq-answer,
+        #top .legacy-faq-section .faq-answer p,
+        #top .legacy-faq-section .faq-answer li { color: var(--text-secondary) !important; }
+        @media (max-width: 1024px) {
+            .site-footer .footer-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 680px) {
+            .site-footer .footer-grid { grid-template-columns: 1fr !important; gap: 35px !important; }
+            .site-footer { padding-top: 55px !important; }
+        }
+
+
+        /* The fixed Three.js point cloud is the page background: remove opaque global
+           page fills, while deliberately keeping the original dark header and footer. */
+        html, body {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+        body::before { display: none !important; }
+        body::after { opacity: .012 !important; z-index: 3 !important; }
+        #lidar-canvas {
+            position: fixed !important; inset: 0 !important;
+            width: 100vw !important; height: 100vh !important;
+            display: block !important; z-index: 0 !important;
+            opacity: 1 !important; mix-blend-mode: screen;
+        }
+        .spatial-grid-overlay {
+            z-index: 1 !important;
+            opacity: .52;
+            background-size: 72px 72px !important;
+        }
+        main#top { background: transparent !important; position: relative; z-index: 2; }
+        #top > section { background: transparent !important; }
+        #top .pipeline-section { background: transparent !important; }
+        #top .section-container { background: transparent !important; }
+
+        /* Three count-up proof points replace unverified hero claims. */
+        .trust-signals-row.company-stat-row {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(.65rem, 1.4vw, 1.25rem);
+        }
+        .company-stat { min-width: 0; position: relative; }
+        .company-stat:not(:last-child)::after {
+            content: ""; position: absolute; top: .15rem; bottom: .1rem; right: calc(clamp(.325rem, .7vw, .625rem) * -1);
+            width: 1px; background: linear-gradient(180deg, transparent, rgba(0,240,255,.25), transparent);
+        }
+        .company-stat .trust-metric-num {
+            font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+            line-height: 1.1; font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 22px rgba(0,240,255,.16);
+        }
+        .company-stat .trust-metric-label { margin-top: .45rem; line-height: 1.5; }
+        .impact-count { display: inline-block; min-width: 2ch; }
+
+        /* Transparent, glass-edged company overview so the moving point cloud remains visible. */
+        .company-impact-section {
+            position: relative; z-index: 2; width: 100%;
+            padding: 0 2rem 4.5rem !important;
+            margin: 0 auto; background: transparent !important;
+        }
+        .company-impact-shell {
+            position: relative; isolation: isolate; overflow: hidden;
+            max-width: 1400px; margin: 0 auto;
+            padding: clamp(1.65rem, 3.2vw, 2.75rem) clamp(1.25rem, 3.3vw, 3rem);
+            border-top: 1px solid rgba(148,163,184,.18);
+            border-bottom: 1px solid rgba(148,163,184,.18);
+            background: linear-gradient(115deg, rgba(7,16,25,.24), rgba(10,24,34,.12) 55%, rgba(0,240,255,.025));
+        }
+        .company-impact-shell::before {
+            content: ""; position: absolute; z-index: -1; left: -36%; top: 0;
+            width: 34%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gis-cyan), #fff, var(--infra-amber), transparent);
+            box-shadow: 0 0 22px rgba(0,240,255,.5);
+            animation: expertiseSweep 8s cubic-bezier(.45,0,.55,1) infinite;
+            pointer-events: none;
+        }
+        .company-impact-heading {
+            display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr);
+            gap: clamp(1.5rem, 4vw, 4.5rem); align-items: end;
+        }
+        .company-impact-heading .eyebrow-badge { margin-bottom: 1rem; }
+        .company-impact-heading .section-title {
+            max-width: 720px; margin: 0; font-size: clamp(1.9rem, 3.5vw, 3rem) !important;
+        }
+        .company-impact-copy {
+            max-width: 650px; margin: 0 !important; color: #b3c4d0 !important;
+            font-family: var(--font-mono) !important; font-size: clamp(.84rem, 1.15vw, .96rem) !important;
+            line-height: 1.9 !important;
+        }
+        .company-expertise-row {
+            display: grid; grid-template-columns: 155px minmax(0,1fr); gap: 1.25rem;
+            align-items: start; margin-top: 2.1rem; padding-top: 1.45rem;
+            border-top: 1px solid rgba(148,163,184,.13);
+        }
+        .company-expertise-label {
+            display: inline-flex; align-items: center; gap: .6rem; padding-top: .45rem;
+            color: var(--gis-cyan); font-family: var(--font-mono); font-size: .68rem;
+            letter-spacing: .12em; font-weight: 600;
+        }
+        .expertise-pulse {
+            width: 7px; height: 7px; display: inline-block; border-radius: 50%;
+            background: var(--signal-emerald); box-shadow: 0 0 12px rgba(16,185,129,.7);
+            animation: expertisePulse 2.2s ease-in-out infinite;
+        }
+        .company-service-tags { display: flex; flex-wrap: wrap; gap: .55rem; }
+        .company-service-tags span {
+            display: inline-flex; align-items: center; min-height: 34px; padding: .38rem .72rem;
+            border: 1px solid rgba(148,163,184,.17); border-radius: 7px;
+            color: #c6d5df; background: rgba(7,17,26,.26);
+            font-family: var(--font-mono); font-size: .69rem; line-height: 1.45;
+            transition: border-color .25s ease, color .25s ease, background .25s ease;
+        }
+        .company-service-tags span:hover {
+            border-color: rgba(0,240,255,.48); color: #eaffff; background: rgba(0,240,255,.055);
+        }
+        @keyframes expertiseSweep { 0%, 12% { left: -36%; opacity: 0; } 22% { opacity: 1; } 62% { left: 104%; opacity: .8; } 100% { left: 104%; opacity: 0; } }
+        @keyframes expertisePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.78); } }
+        @media (max-width: 900px) {
+            .company-impact-heading { grid-template-columns: 1fr; gap: 1.15rem; }
+            .company-impact-copy { max-width: 780px; }
+            .company-expertise-row { grid-template-columns: 1fr; gap: .8rem; }
+        }
+        @media (max-width: 640px) {
+            .company-impact-section { padding: 0 1.1rem 3.25rem !important; }
+            .company-impact-shell { padding: 1.5rem 1rem; }
+            .company-impact-heading .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem) !important; }
+            .trust-signals-row.company-stat-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+            .company-stat .trust-metric-num { font-size: clamp(1.15rem, 5vw, 1.45rem); }
+            .company-stat .trust-metric-label { font-size: .55rem; letter-spacing: .025em; overflow-wrap: anywhere; }
+            .company-service-tags { gap: .42rem; }
+            .company-service-tags span { font-size: .62rem; min-height: 31px; padding: .32rem .5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .company-impact-shell::before, .expertise-pulse { animation: none !important; }
+            .company-service-tags span { transition: none !important; }
+        }

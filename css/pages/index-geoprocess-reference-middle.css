@@ -1,0 +1,1339 @@
+/* ==========================================================================
+           1. DESIGN TOKENS & 60-30-10 COLOR SYSTEM
+           ========================================================================== */
+        :root {
+            /* 60% Dominant: Deep Matte Carbon & Charcoal */
+            --bg-carbon: #090b0e;
+            --bg-obsidian: #0d1117;
+
+            /* 30% Secondary: Structured Slate-Gray Glass Containers */
+            --surface-slate: rgba(19, 25, 34, 0.68);
+            --surface-slate-solid: #131922;
+            --surface-elevated: #1c2430;
+            --border-grid: rgba(148, 163, 184, 0.15);
+            --border-highlight: rgba(0, 240, 255, 0.42);
+
+            /* 10% Accents: High-Visibility GIS-Cyan & Infrastructure-Amber (>= 4.5:1 Contrast) */
+            --gis-cyan: #00f0ff;
+            --gis-cyan-dim: rgba(0, 240, 255, 0.12);
+            --infra-amber: #ffb800;
+            --infra-amber-dim: rgba(255, 184, 0, 0.12);
+            --signal-emerald: #10b981;
+
+            /* Typography */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+
+            /* Layout & Spacing */
+            --container-max: 1400px;
+            --bento-gap: 1.5rem;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: var(--bg-carbon);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            scroll-behavior: auto;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-carbon);
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+
+        ::selection {
+            background: var(--gis-cyan);
+            color: var(--bg-carbon);
+        }
+
+        /* ==========================================================================
+           2. 3D PRISMATIC GLASS PORTAL OPENING & WEBGL BACKGROUND
+           ========================================================================== */
+        #lidar-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .spatial-grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 90%);
+        }
+
+        /* Fullscreen 3D Glass Opening Stage */
+        .page-transition-curtain {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1400px;
+            overflow: hidden;
+            pointer-events: all;
+        }
+
+        /* 7-Blade 3D Optical Glass Louvers */
+        .glass-shutter-grid {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            pointer-events: none;
+        }
+
+        .glass-shutter-pane {
+            height: 100%;
+            background: linear-gradient(165deg,
+                    rgba(12, 18, 28, 0.78) 0%,
+                    rgba(16, 24, 38, 0.52) 50%,
+                    rgba(9, 12, 18, 0.85) 100%);
+            backdrop-filter: blur(36px) saturate(210%) contrast(115%);
+            -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(115%);
+            border-right: 1px solid rgba(0, 240, 255, 0.18);
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 0 40px rgba(0, 240, 255, 0.04);
+            position: relative;
+            transform-origin: center center;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Specular Chromatic Edge Highlight on Each Glass Blade */
+        .glass-shutter-pane::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.09) 0%,
+                    transparent 25%,
+                    transparent 80%,
+                    rgba(0, 240, 255, 0.08) 100%);
+            pointer-events: none;
+        }
+
+        /* Horizontal Laser Seam that ignites before glass opens */
+        .glass-horizon-laser {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gis-cyan), #ffffff, var(--infra-amber), transparent);
+            box-shadow: 0 0 30px var(--gis-cyan), 0 0 60px var(--gis-cyan);
+            transform: translateY(-50%) scaleX(0);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Center Prismatic Glass Lens Core */
+        .glass-loader-core {
+            position: relative;
+            z-index: 3;
+            padding: 2.8rem 3.4rem;
+            border-radius: 26px;
+            background: radial-gradient(circle at 30% 20%,
+                    rgba(255, 255, 255, 0.14) 0%,
+                    rgba(19, 28, 42, 0.48) 55%,
+                    rgba(9, 13, 20, 0.68) 100%);
+            backdrop-filter: blur(40px) saturate(220%);
+            -webkit-backdrop-filter: blur(40px) saturate(220%);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            box-shadow:
+                0 35px 90px rgba(0, 0, 0, 0.78),
+                inset 0 1px 2px rgba(255, 255, 255, 0.35),
+                inset 0 -1px 2px rgba(0, 240, 255, 0.25),
+                0 0 60px rgba(0, 240, 255, 0.16);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            max-width: calc(100vw - 2rem);
+            will-change: transform, opacity, filter;
+        }
+
+        /* Rotating Optical LiDAR Ring inside Glass Core */
+        .glass-optical-ring {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            border: 1px dashed rgba(0, 240, 255, 0.22);
+            pointer-events: none;
+            animation: spinOpticalRing 14s linear infinite;
+        }
+
+        .glass-optical-ring::after {
+            content: '';
+            position: absolute;
+            inset: 18px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 184, 0, 0.14);
+            border-top-color: var(--gis-cyan);
+        }
+
+        @keyframes spinOpticalRing {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Specular Caustic Shimmer across Center Lens */
+        .glass-loader-core::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -70%;
+            width: 50%;
+            height: 220%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.24),
+                    rgba(0, 240, 255, 0.20),
+                    transparent);
+            transform: rotate(25deg);
+            animation: glassSpecularSweep 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glassSpecularSweep {
+            0% {
+                left: -80%;
+            }
+
+            100% {
+                left: 150%;
+            }
+        }
+
+        .glass-core-badge {
+            position: relative;
+            z-index: 1;
+            font-size: 0.66rem;
+            letter-spacing: 0.2em;
+            color: var(--infra-amber);
+            text-transform: uppercase;
+            margin-bottom: 1.1rem;
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(255, 184, 0, 0.1);
+            border: 1px solid rgba(255, 184, 0, 0.3);
+        }
+
+        .loader-percent-giant {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-top: 0.85rem;
+            color: var(--text-primary);
+            text-shadow: 0 0 24px rgba(0, 240, 255, 0.45);
+        }
+
+        .loader-telemetry {
+            position: relative;
+            z-index: 1;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--gis-cyan);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-top: 0.45rem;
+        }
+
+        .loader-bar-track {
+            position: relative;
+            z-index: 1;
+            width: 260px;
+            max-width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.12);
+            margin-top: 0.9rem;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .loader-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gis-cyan), #ffffff, var(--infra-amber));
+            box-shadow: 0 0 14px var(--gis-cyan);
+        }
+
+        /* ==========================================================================
+           3. SPLIT-TEXT ANIMATION MASKS & GLASS SHEEN CARDS
+           ========================================================================== */
+        .split-word-mask {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+            padding-bottom: 0.06em;
+        }
+
+        .split-word-inner {
+            display: inline-block;
+            will-change: transform, opacity, filter;
+        }
+
+        /* Glass Specular Sheen Sweep on Hero Cards after Opening */
+        .glass-sheen-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-sheen-sweep::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 65%;
+            height: 100%;
+            background: linear-gradient(105deg,
+                    transparent 20%,
+                    rgba(255, 255, 255, 0.14) 50%,
+                    rgba(0, 240, 255, 0.12) 60%,
+                    transparent 80%);
+            pointer-events: none;
+            z-index: 5;
+            transition: none;
+        }
+
+        .glass-sheen-sweep.sheen-active::after {
+            left: 140%;
+            transition: left 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ==========================================================================
+           4. CUSTOM SPRING PHYSICS CURSOR
+           ========================================================================== */
+        .cursor-dot,
+        .cursor-reticle {
+            display: none;
+        }
+
+        @media (pointer: fine) {
+
+            .cursor-dot,
+            .cursor-reticle {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: 9998;
+                transform: translate(-50%, -50%);
+            }
+
+            .cursor-dot {
+                width: 6px;
+                height: 6px;
+                background: var(--gis-cyan);
+                border-radius: 50%;
+                box-shadow: 0 0 10px var(--gis-cyan);
+            }
+
+            .cursor-reticle {
+                width: 38px;
+                height: 38px;
+                border: 1px solid rgba(0, 240, 255, 0.45);
+                border-radius: 50%;
+                backdrop-filter: blur(2px);
+                transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cursor-reticle::before {
+                content: '';
+                position: absolute;
+                width: 4px;
+                height: 1px;
+                left: -6px;
+                background: var(--gis-cyan);
+                opacity: 0.5;
+                box-shadow: 46px 0 0 var(--gis-cyan);
+            }
+
+            .cursor-reticle.is-hovering {
+                width: 62px;
+                height: 62px;
+                border-color: var(--infra-amber);
+                background-color: rgba(255, 184, 0, 0.08);
+            }
+        }
+
+        /* ==========================================================================
+           5. HEADER, HUD TELEMETRY & GLASSMORPHISM NAVIGATION DRAWER
+           ========================================================================== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(9, 11, 14, 0.72);
+            border-bottom: 1px solid var(--border-grid);
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .header-inner {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0.9rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .brand-logo-img {
+            height: 44px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.2));
+        }
+
+        .brand-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            font-size: 0.68rem;
+            color: var(--gis-cyan);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .hud-telemetry {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            background: rgba(19, 25, 34, 0.82);
+            backdrop-filter: blur(12px);
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-grid);
+        }
+
+        .hud-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--signal-emerald);
+            box-shadow: 0 0 8px var(--signal-emerald);
+            display: inline-block;
+            margin-right: 6px;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.45;
+                transform: scale(1.25);
+            }
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gis-cyan);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .menu-toggle-btn {
+            background: rgba(28, 36, 48, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-grid);
+            color: var(--text-primary);
+            padding: 0.6rem 0.95rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .menu-toggle-btn:hover {
+            border-color: var(--gis-cyan);
+            color: var(--gis-cyan);
+        }
+
+        .glass-nav-drawer {
+            position: fixed;
+            inset: 0;
+            z-index: 95;
+            background: rgba(9, 11, 14, 0.86);
+            backdrop-filter: blur(32px) saturate(190%);
+            -webkit-backdrop-filter: blur(32px) saturate(190%);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .glass-nav-drawer.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .drawer-grid {
+            max-width: 1100px;
+            width: 100%;
+            max-height: 100vh;
+            overflow-y: auto;
+            padding: 7rem 2rem 2.5rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+        }
+
+        .drawer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.72rem;
+        }
+
+        .drawer-links a {
+            font-family: var(--font-heading);
+            font-size: clamp(1.35rem, 2.7vw, 2.3rem);
+            line-height: 1.1;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: color 0.25s, transform 0.25s;
+        }
+
+        .drawer-links a span {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--gis-cyan);
+            min-width: 2.15rem;
+        }
+
+        .drawer-links a:hover {
+            color: var(--gis-cyan);
+            transform: translateX(12px);
+        }
+
+        /* ==========================================================================
+           6. BUTTONS & LIQUID HOVER
+           ========================================================================== */
+        .btn-primary,
+        .btn-amber,
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.85rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gis-cyan);
+            color: #05080c;
+            box-shadow: 0 0 24px rgba(0, 240, 255, 0.28);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 36px rgba(0, 240, 255, 0.55);
+            transform: translateY(-2px);
+        }
+
+        .btn-amber {
+            background: var(--infra-amber);
+            color: #05080c;
+            box-shadow: 0 0 24px rgba(255, 184, 0, 0.25);
+        }
+
+        .btn-amber:hover {
+            box-shadow: 0 0 36px rgba(255, 184, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: rgba(28, 36, 48, 0.65);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border: 1px solid var(--border-grid);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gis-cyan);
+            color: var(--gis-cyan);
+        }
+
+        /* ==========================================================================
+           7. HERO SECTION (GLASSY MATERIALIZATION + LIVE TELEMETRY)
+           ========================================================================== */
+        main {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 7rem 2rem;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 7.5rem;
+            padding-bottom: 4rem;
+        }
+
+        .hero-bento {
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr;
+            gap: var(--bento-gap);
+            align-items: stretch;
+        }
+
+        .hero-main-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(19, 25, 34, 0.72) 100%);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.18),
+                0 25px 60px rgba(0, 0, 0, 0.5);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gis-cyan), var(--infra-amber), transparent);
+        }
+
+        .eyebrow-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.4rem 0.9rem;
+            background: var(--gis-cyan-dim);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: var(--gis-cyan);
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            width: fit-content;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.4rem, 4.6vw, 4.35rem);
+            font-weight: 700;
+            line-height: 1.06;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title .accent-cyan,
+        .section-title .accent-cyan {
+            color: var(--gis-cyan);
+        }
+
+        .hero-title .accent-amber {
+            color: var(--infra-amber);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin-bottom: 2.25rem;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .trust-signals-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-grid);
+        }
+
+        .trust-metric-num {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .trust-metric-num span {
+            color: var(--gis-cyan);
+        }
+
+        .trust-metric-label {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .hero-side-stack {
+            display: flex;
+            flex-direction: column;
+            gap: var(--bento-gap);
+        }
+
+        .geospatial-preview-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(19, 25, 34, 0.72) 100%);
+            backdrop-filter: blur(24px) saturate(170%);
+            -webkit-backdrop-filter: blur(24px) saturate(170%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.18),
+                0 20px 50px rgba(0, 0, 0, 0.45);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .card-coord-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .preview-visual-frame {
+            position: relative;
+            height: 240px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-grid);
+            margin-bottom: 1rem;
+        }
+
+        .preview-visual-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.4s ease;
+        }
+
+        .geospatial-preview-card:hover .preview-visual-frame img {
+            transform: scale(1.06);
+            filter: url(#liquid-displacement);
+        }
+
+        .scanline-bar {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gis-cyan);
+            box-shadow: 0 0 14px var(--gis-cyan);
+            animation: lidarScan 3.4s ease-in-out infinite;
+        }
+
+        @keyframes lidarScan {
+
+            0%,
+            100% {
+                top: 5%;
+                opacity: 0.85;
+            }
+
+            50% {
+                top: 92%;
+                opacity: 1;
+            }
+        }
+
+        /* ==========================================================================
+           8. PINNED HORIZONTAL PIPELINE & BENTO GRID ARCHITECTURE
+           ========================================================================== */
+        .pipeline-section {
+            position: relative;
+            padding: 4.5rem 0 5rem;
+            border-top: 1px solid var(--border-grid);
+            border-bottom: 1px solid var(--border-grid);
+            background: linear-gradient(180deg, rgba(13, 17, 23, 0.72), rgba(9, 11, 14, 0.5));
+        }
+
+        .pipeline-section .section-container {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .pipeline-heading-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .pipeline-heading-row .section-title {
+            max-width: 760px;
+        }
+
+        .pipeline-note {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .pipeline-viewport {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pipeline-track {
+            display: flex;
+            gap: 1.25rem;
+            width: max-content;
+            padding: 0.75rem 0 1.5rem;
+            will-change: transform;
+        }
+
+        .pipeline-stage {
+            width: min(34vw, 430px);
+            min-width: 290px;
+            min-height: 320px;
+            border: 1px solid var(--border-grid);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(19, 25, 34, 0.88));
+            backdrop-filter: blur(18px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 60px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pipeline-stage::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gis-cyan), var(--infra-amber), transparent);
+            transform: scaleX(0.3);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .pipeline-stage:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pipeline-stage-index {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            color: var(--gis-cyan);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 2.6rem;
+        }
+
+        .pipeline-stage h3 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.25rem, 2vw, 1.8rem);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .pipeline-stage p {
+            color: var(--text-secondary);
+            font-size: 0.87rem;
+            line-height: 1.8;
+        }
+
+        .pipeline-stage .stage-output {
+            position: absolute;
+            bottom: 1.7rem;
+            left: 2rem;
+            right: 2rem;
+            color: var(--infra-amber);
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+        }
+
+        .pipeline-line {
+            height: 1px;
+            margin-top: 0.2rem;
+            background: linear-gradient(90deg, transparent, var(--gis-cyan), var(--infra-amber), transparent);
+            opacity: 0.6;
+        }
+
+        .pipeline-mobile-hint {
+            display: none;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            margin-top: 0.8rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3.5rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--bento-gap);
+        }
+
+        .bento-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(19, 25, 34, 0.74) 100%);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid var(--border-grid);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .bento-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(0, 240, 255, 0.12),
+                    transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .bento-card:hover {
+            border-color: var(--border-highlight);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.55);
+        }
+
+        .bento-card:hover::after {
+            opacity: 1;
+        }
+
+        .col-span-8 {
+            grid-column: span 8;
+        }
+
+        .col-span-6 {
+            grid-column: span 6;
+        }
+
+        .col-span-4 {
+            grid-column: span 4;
+        }
+
+        .bento-media {
+            width: 100%;
+            height: 220px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid var(--border-grid);
+            position: relative;
+        }
+
+        .bento-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .bento-card:hover .bento-media img {
+            transform: scale(1.07);
+            filter: url(#liquid-displacement);
+        }
+
+        .bento-tag {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.68rem;
+            border-radius: 4px;
+            background: var(--surface-elevated);
+            color: var(--gis-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.22);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .bento-tag.amber {
+            color: var(--infra-amber);
+            border-color: rgba(255, 184, 0, 0.25);
+        }
+
+        .bento-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.45rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bento-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .svg-tech-icon {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gis-cyan);
+            stroke-width: 1.75;
+            fill: none;
+            stroke-dasharray: 120;
+            stroke-dashoffset: 0;
+        }
+
+        /* ==========================================================================
+           9. MOMENTUM PORTFOLIO SLIDER / DELIVERABLES CAROUSEL
+           ========================================================================== */
+        .slider-Viewport {
+            overflow: hidden;
+            cursor: grab;
+            padding: 1rem 0 2.5rem;
+            user-select: none;
+        }
+
+        .slider-Viewport:active {
+            cursor: grabbing;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: var(--bento-gap);
+            width: max-content;
+        }
+
+        .slide-card {
+            width: 420px;
+            background: var(--surface-slate);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-grid);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            flex-shrink: 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .slide-card:hover {
+            border-color: var(--infra-amber);
+        }
+
+        .slide-img-wrap {
+            height: 240px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-grid);
+            position: relative;
+        }
+
+        .slide-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           10. EXTERNAL AI ASSISTANT HUD THEME OVERRIDES & FOOTER
+           ========================================================================== */
+        #gp-ai-root {
+            z-index: 10010;
+        }
+
+        .gp-ai-panel {
+            background: linear-gradient(155deg, rgba(8, 14, 23, 0.96), rgba(13, 25, 38, 0.96)) !important;
+            backdrop-filter: blur(24px) !important;
+            border-color: rgba(0, 240, 255, 0.24) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52), 0 0 42px rgba(20, 165, 198, 0.08) !important;
+        }
+
+        .gp-ai-avatar,
+        .gp-ai-launcher,
+        .gp-ai-send,
+        .gp-ai-msg.user {
+            background: linear-gradient(135deg, var(--gis-cyan), #10bad4) !important;
+            color: #07131a !important;
+        }
+
+        .gp-ai-status {
+            color: #6ee7b7 !important;
+        }
+
+        .gp-ai-msg.assistant {
+            background: rgba(0, 240, 255, 0.045) !important;
+            border-color: rgba(0, 240, 255, 0.12) !important;
+        }
+
+        .gp-ai-launcher {
+            width: auto !important;
+            height: auto !important;
+            min-height: 50px;
+            padding: 0.9rem 1.25rem !important;
+            border: 1px solid rgba(0, 240, 255, 0.35) !important;
+            border-radius: 999px !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono) !important;
+            font-size: 0.76rem !important;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            box-shadow: 0 12px 30px rgba(0, 240, 255, 0.25) !important;
+        }
+
+        .site-footer {
+            border-top: 1px solid var(--border-grid);
+            background: var(--bg-obsidian);
+            padding: 4rem 2rem 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .site-footer a {
+            text-decoration-color: rgba(0, 240, 255, 0.35);
+            text-underline-offset: 3px;
+        }
+
+        .site-footer a:hover {
+            color: var(--gis-cyan) !important;
+        }
+
+        .footer-grid {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-bento {
+                grid-template-columns: 1fr;
+            }
+
+            .col-span-8,
+            .col-span-6,
+            .col-span-4 {
+                grid-column: span 12;
+            }
+
+            .desktop-nav,
+            .hud-telemetry {
+                display: none;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .drawer-grid {
+                grid-template-columns: 1fr;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+
+            .pipeline-stage {
+                width: min(78vw, 390px);
+            }
+
+            .pipeline-mobile-hint {
+                display: block;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section-container {
+                padding-left: 1.1rem;
+                padding-right: 1.1rem;
+            }
+
+            .trust-signals-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-main-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline-section {
+                padding: 4.5rem 0;
+            }
+
+            .pipeline-stage {
+                padding: 1.5rem;
+                min-height: 330px;
+            }
+
+            .pipeline-stage .stage-output {
+                left: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .glass-loader-core {
+                padding: 1.9rem 1.4rem;
+            }
+        }
