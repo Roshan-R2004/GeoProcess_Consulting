@@ -20,11 +20,9 @@
   --gp-shadow:0 28px 80px rgba(0,0,0,.35);
 }
 
-html{scroll-padding-top:92px}
-html:not(.home-floating-bg){background:var(--gp-bg)}
-body{color:var(--gp-ink)!important;font-family:"Space Grotesk",Inter,system-ui,sans-serif!important;overflow-x:hidden}
-body:not(.home-floating-bg){background-color:var(--gp-bg)!important;background-image:linear-gradient(rgba(95,227,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(95,227,255,.028) 1px,transparent 1px),radial-gradient(circle at 50% -20%,rgba(95,227,255,.07),transparent 40%)!important;background-size:72px 72px,72px 72px,100% 100%!important}
-body:not(.home-floating-bg)::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:linear-gradient(rgba(95,227,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(95,227,255,.035) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 80%)}
+html{background:var(--gp-bg);scroll-padding-top:92px}
+body{background-color:var(--gp-bg)!important;background-image:linear-gradient(rgba(95,227,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(95,227,255,.028) 1px,transparent 1px),radial-gradient(circle at 50% -20%,rgba(95,227,255,.07),transparent 40%)!important;background-size:72px 72px,72px 72px,100% 100%!important;color:var(--gp-ink)!important;font-family:"Space Grotesk",Inter,system-ui,sans-serif!important;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background-image:linear-gradient(rgba(95,227,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(95,227,255,.035) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 80%)}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E")}
 
 .container{width:min(1240px,calc(100% - 44px))!important}
