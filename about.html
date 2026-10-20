@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 
-<html lang="en" class="has-floating-bg">
+<html lang="en" class="site-effects-clean">
 
 <head>
   <meta charset="utf-8" />
   <link rel="icon" type="image/png" sizes="128x128" href="assets/brand/favicon.png" />
   <meta content="width=device-width, initial-scale=1" name="viewport" />
-
-
-  <title>About GeoProcess Consulting | Geospatial Engineering Partner</title>
+  <meta
+    content="GeoProcess Consulting — precision geospatial data processing, LiDAR, GIS, photogrammetry, DTM/DSM, BIM and spatial analytics."
+    name="description" />
+  <meta content="#06111d" name="theme-color" />
+  <title>About | GeoProcess Consulting</title>
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link
@@ -22,48 +24,38 @@
   <link rel="stylesheet" href="css/modern.css">
   <link rel="stylesheet" href="css/compact.css">
   <link rel="stylesheet" href="css/ai-assistant.css">
-
-  <meta name="description"
-    content="Learn about GeoProcess Consulting, a geospatial engineering and data-processing partner for LiDAR, GIS, CAD, BIM and infrastructure workflows." />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="author" content="GeoProcess Consulting" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="theme-color" content="#06111d" />
-  <link rel="canonical" href="https://geoprocessconsulting.in/about" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="GeoProcess Consulting" />
-  <meta property="og:locale" content="en_IN" />
-  <meta property="og:title" content="About GeoProcess Consulting | Geospatial Engineering Partner" />
-  <meta property="og:description"
-    content="Learn about GeoProcess Consulting, a geospatial engineering and data-processing partner for LiDAR, GIS, CAD, BIM and infrastructure workflows." />
-  <meta property="og:url" content="https://geoprocessconsulting.in/about" />
-  <meta property="og:image" content="https://geoprocessconsulting.in/assets/images/geoprocess-og.jpg" />
-  <meta property="og:image:alt" content="LiDAR classification and geospatial processing" />
-  <meta property="og:image:width" content="1600" />
-  <meta property="og:image:height" content="680" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="About GeoProcess Consulting | Geospatial Engineering Partner" />
-  <meta name="twitter:description"
-    content="Learn about GeoProcess Consulting, a geospatial engineering and data-processing partner for LiDAR, GIS, CAD, BIM and infrastructure workflows." />
-  <meta name="twitter:image" content="https://geoprocessconsulting.in/assets/images/geoprocess-og.jpg" />
-
-  <script
-    type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://geoprocessconsulting.in/about#webpage","url":"https://geoprocessconsulting.in/about","name":"About GeoProcess Consulting | Geospatial Engineering Partner","description":"Learn about GeoProcess Consulting, a geospatial engineering and data-processing partner for LiDAR, GIS, CAD, BIM and infrastructure workflows.","isPartOf":{"@type":"WebSite","@id":"https://geoprocessconsulting.in/#website","url":"https://geoprocessconsulting.in/","name":"GeoProcess Consulting"},"inLanguage":"en-IN"}</script>
-
-  <script
-    type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://geoprocessconsulting.in/"},{"@type":"ListItem","position":2,"name":"About GeoProcess Consulting","item":"https://geoprocessconsulting.in/about"}]}</script>
-  <link rel="stylesheet" href="css/pages/floating-background.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  <script src="js/floating-background.js" defer></script>
+  <link rel="stylesheet" href="css/pages/site-effects.css" />
+  <link rel="stylesheet" href="css/site-enhancements.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="js/site-effects.js" defer></script>
+  <link rel="stylesheet" href="css/pages/heading-animations.css" />
+  <link rel="stylesheet" href="css/pages/hero-visuals-restored.css" />
 </head>
 
-<body class="has-floating-bg">
-  <canvas id="lidar-canvas" aria-hidden="true"></canvas>
-  <div class="spatial-grid-overlay" aria-hidden="true"></div>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+<body class="site-effects-clean has-site-video">
+  <video class="site-background-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/advanced-classification.jpg" aria-hidden="true" tabindex="-1">
+    <source src="assets/videos/geoprocess-site-background.mp4" type="video/mp4" />
+  </video>
+  <div class="site-background-shade" aria-hidden="true"></div>
+  <div class="page-transition-curtain" id="page-curtain" role="status" aria-label="Loading GeoProcess Consulting">
+    <div class="glass-shutter-grid" aria-hidden="true">
+      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
+    </div>
+    <div class="glass-horizon-laser" id="glass-horizon-laser" aria-hidden="true"></div>
+    <div class="glass-loader-core" id="glass-loader-core">
+      <div class="glass-optical-ring" aria-hidden="true"></div>
+      <span class="glass-core-badge">OPTICAL LIDAR LENS // CALIBRATING</span>
+      <img class="loader-brand-logo" alt="GeoProcess Consulting" src="assets/brand/Remove%20BG.png" />
+      <div class="loader-percent-giant" id="loader-percent">000%</div>
+      <div class="loader-telemetry" id="loader-status">SYNCHRONIZING POINT-CLOUD TELEMETRY</div>
+      <div class="loader-bar-track"><div class="loader-bar-fill" id="loader-bar"></div></div>
+    </div>
+  </div>
+
   <header class="site-nav">
     <div class="container nav-inner">
-      <a class="brand" href="/" aria-label="GeoProcess Consulting home">
+      <a class="brand" href="index.html" aria-label="GeoProcess Consulting home">
         <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
           <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
           <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
@@ -76,22 +68,38 @@
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
         <nav aria-label="Primary navigation">
           <ul class="nav-list">
-            <li><a href="/">Home</a></li>
-            <li><a class="active" href="about">About</a></li>
-            <li><a href="services">Services</a></li>
-            <li><a href="projects">Projects</a></li>
-            <li><a href="videos">Videos</a></li>
-            <li><a href="study">Study</a></li>
-            <li><a href="/#faqs">FAQs</a></li>
-            <li><a href="/#contact">Contact</a></li>
-            <li><a class="nav-cta" href="booking">Book Consultation <span aria-hidden="true">↗</span></a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a class="active" href="about.html">About</a></li>
+            <li class="nav-service-menu">
+  <div class="nav-service-row">
+    <a href="services.html">Services</a>
+    <button class="nav-service-toggle" type="button" aria-label="Show individual service pages" aria-expanded="false" aria-controls="nav-service-submenu">▾</button>
+  </div>
+  <ul class="nav-service-submenu" id="nav-service-submenu">
+    <li><a href="lidar.html">LiDAR Processing</a></li>
+    <li><a href="photogrammetry.html">Photogrammetry</a></li>
+    <li><a href="gis.html">GIS Mapping</a></li>
+    <li><a href="webgis.html">WebGIS</a></li>
+    <li><a href="cad.html">CAD Conversion</a></li>
+    <li><a href="bim.html">BIM / Scan-to-BIM</a></li>
+    <li><a href="mobile-mapping.html">Mobile Mapping</a></li>
+    <li><a href="3d-mapping.html">3D Mapping</a></li>
+  </ul>
+</li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a href="study.html">Study</a></li>
+            <li><a href="index.html#faqs">FAQs</a></li>
+            <li><a href="contact.html#project-enquiry">Contact</a></li>
+            <li><a class="nav-cta" href="booking.html">Book Consultation <span aria-hidden="true">↗</span></a></li>
           </ul>
         </nav>
       </div>
     </div>
   </header>
-  <main id="main-content">
+  <main>
     <section class="about-hero">
+      <div class="site-scan-line" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div class="hero-copy">
           <div class="eyebrow">GEOSPATIAL DATA PROCESSING · ENGINEERING INTELLIGENCE</div>
@@ -262,8 +270,8 @@
           <h2>Have the survey data? Let's turn it into something your team can use.</h2>
           <p>Tell us what you have, what you need to extract, and what the final deliverable must support. We can shape
             the processing workflow around the project.</p>
-          <div class="actions actions-centered"><a class="btn btn-primary" href="booking">Book a Consultation →</a><a
-              class="btn btn-ghost" href="/#contact">Start a Conversation</a></div>
+          <div class="actions actions-centered"><a class="btn btn-primary" href="booking.html">Book a Consultation →</a><a
+              class="btn btn-ghost" href="contact.html">Start a Conversation</a></div>
         </div>
       </div>
     </section>
@@ -289,34 +297,34 @@
       <div>
         <div class="footer-title">Explore</div>
         <ul class="footer-list">
-          <li><a href="/">Home</a></li>
-          <li><a href="services">Services</a></li>
-          <li><a href="projects">Projects</a></li>
-          <li><a href="videos">Videos</a></li>
-          <li><a href="study">Study Hub</a></li>
-          <li><a href="/#faqs">FAQs</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="study.html">Study Hub</a></li>
+          <li><a href="index.html#faqs">FAQs</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-title">Connect</div>
         <ul class="footer-list">
-          <li><a href="mailto:contact@geoprocessconsulting.in">contact@geoprocessconsulting.in</a></li>
-          <li><a href="https://wa.me/917205666324" target="_blank" rel="noopener noreferrer">WhatsApp · +91 72056
-              66324</a></li>
-          <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank"
-              rel="noopener noreferrer">LinkedIn ·
+          <li><a href="mailto:contact@geoprocessconsulting.site">contact@geoprocessconsulting.site</a></li>
+          <li><a href="https://wa.me/917205666324" target="_blank" rel="noopener">WhatsApp · +91 72056 66324</a></li>
+          <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank" rel="noopener">LinkedIn ·
               GeoProcess Consulting</a></li>
-          <li><a href="booking">Schedule a consultation ↗</a></li>
+          <li><a href="booking.html">Schedule a consultation ↗</a></li>
         </ul>
       </div>
     </div>
-    <div class="container footer-bottom"><span>© GeoProcess Consulting</span><span>LiDAR ·
+    <div class="container footer-bottom"><span>© <span data-year>2026</span> GeoProcess Consulting</span><span>LI DAR ·
         GIS · UAV · BIM · AI/ML</span></div>
   </footer>
   <button aria-label="Back to top" class="back-top">↑</button>
-  <script src="js/main.js" defer></script>
-  <script src="js/ai-config.js" defer></script>
-  <script src="js/ai-assistant.js" defer></script>
+  <script src="js/main.js"></script>
+  <script src="js/service-navigation.js"></script>
+  <script src="js/text-animations.js"></script>
+  <script src="js/ai-config.js"></script>
+  <script src="js/ai-assistant.js"></script>
 </body>
 
 </html>

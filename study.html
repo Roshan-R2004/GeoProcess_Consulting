@@ -62,9 +62,30 @@
 
   <script
     type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://geoprocessconsulting.in/"},{"@type":"ListItem","position":2,"name":"Study Hub","item":"https://geoprocessconsulting.in/study"}]}</script>
+  <link rel="stylesheet" href="css/pages/site-effects.css" />
+  <link rel="stylesheet" href="css/site-enhancements.css" />
+  <link rel="stylesheet" href="css/pages/heading-animations.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="js/site-effects.js" defer></script>
+  <link rel="stylesheet" href="css/pages/hero-visuals-restored.css" />
 </head>
 
 <body class="study-page">
+  <div class="page-transition-curtain" id="page-curtain" role="status" aria-label="Loading GeoProcess Consulting">
+    <div class="glass-shutter-grid" aria-hidden="true">
+      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
+    </div>
+    <div class="glass-horizon-laser" id="glass-horizon-laser" aria-hidden="true"></div>
+    <div class="glass-loader-core" id="glass-loader-core">
+      <div class="glass-optical-ring" aria-hidden="true"></div>
+      <span class="glass-core-badge">OPTICAL LIDAR LENS // CALIBRATING</span>
+      <img class="loader-brand-logo" alt="GeoProcess Consulting" src="assets/brand/Remove%20BG.png" />
+      <div class="loader-percent-giant" id="loader-percent">000%</div>
+      <div class="loader-telemetry" id="loader-status">SYNCHRONIZING POINT-CLOUD TELEMETRY</div>
+      <div class="loader-bar-track"><div class="loader-bar-fill" id="loader-bar"></div></div>
+    </div>
+  </div>
   <a class="skip-link" href="#root">Skip to content</a>
   <header class="site-nav">
     <div class="container nav-inner">
@@ -82,14 +103,19 @@
         <nav aria-label="Primary navigation">
           <ul class="nav-list">
             <li><a href="/">Home</a></li>
-            <li><a href="about">About</a></li>
-            <li><a href="services">Services</a></li>
-            <li><a href="projects">Projects</a></li>
-            <li><a href="videos">Videos</a></li>
-            <li><a class="active" href="study">Study</a></li>
-            <li><a href="/#faqs">FAQs</a></li>
-            <li><a href="/#contact">Contact</a></li>
-            <li><a class="nav-cta" href="booking">Book Consultation <span aria-hidden="true">↗</span></a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="nav-service-menu">
+            <div class="nav-service-row"><a href="services.html">Services</a><button class="nav-service-toggle" type="button" aria-label="Show individual service pages" aria-expanded="false" aria-controls="nav-service-submenu">▾</button></div>
+            <ul class="nav-service-submenu" id="nav-service-submenu">
+              <li><a href="lidar.html">LiDAR Processing</a></li><li><a href="photogrammetry.html">Photogrammetry</a></li><li><a href="gis.html">GIS Mapping</a></li><li><a href="webgis.html">WebGIS</a></li><li><a href="cad.html">CAD Conversion</a></li><li><a href="bim.html">BIM / Scan-to-BIM</a></li><li><a href="mobile-mapping.html">Mobile Mapping</a></li><li><a href="3d-mapping.html">3D Mapping</a></li>
+            </ul>
+          </li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a class="active" href="study.html">Study</a></li>
+            <li><a href="index.html#faqs">FAQs</a></li>
+            <li><a href="contact.html#project-enquiry">Contact</a></li>
+            <li><a class="nav-cta" href="booking.html">Book Consultation <span aria-hidden="true">↗</span></a></li>
           </ul>
         </nav>
       </div>
@@ -101,6 +127,7 @@
         href="#source-library">Source Books</a></div>
   </div>
   <section class="study-hero" id="top">
+    <div class="site-scan-line" aria-hidden="true"></div>
     <div class="study-hero-bg"></div>
     <div class="container study-hero-content">
       <div class="study-eyebrow">GEOSPATIAL · LIDAR · GIS · BIM · AI/ML</div>
@@ -177,7 +204,7 @@
           <li>BIM Modeling — LOD 400 &amp; LOD 500</li>
           <li>Geospatial Data Automation &amp; Analysis</li>
         </ul>
-        <a class="study-contact-btn" href="/#contact">Contact Us →</a>
+        <a class="study-contact-btn" href="contact.html#project-enquiry">Contact Us →</a>
       </div>
     </aside>
   </div>
@@ -64954,11 +64981,11 @@
         <div class="footer-title">Explore</div>
         <ul class="footer-list">
           <li><a href="/">Home</a></li>
-          <li><a href="services">Services</a></li>
-          <li><a href="projects">Projects</a></li>
-          <li><a href="videos">Videos</a></li>
-          <li><a href="study">Study Hub</a></li>
-          <li><a href="/#faqs">FAQs</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="study.html">Study Hub</a></li>
+          <li><a href="index.html#faqs">FAQs</a></li>
         </ul>
       </div>
       <div>
@@ -64970,7 +64997,7 @@
           <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank"
               rel="noopener noreferrer">LinkedIn ·
               GeoProcess Consulting</a></li>
-          <li><a href="booking">Schedule a consultation ↗</a></li>
+          <li><a href="booking.html">Schedule a consultation ↗</a></li>
         </ul>
       </div>
     </div>
@@ -64988,6 +65015,8 @@
   <script src="js/ai-config.js" defer></script>
   <script src="js/ai-assistant.js" defer></script>
 
+  <script src="js/service-navigation.js" defer></script>
+  <script src="js/text-animations.js" defer></script>
 </body>
 
 </html>
