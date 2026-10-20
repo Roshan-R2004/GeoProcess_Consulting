@@ -5,8 +5,8 @@
   const WORKER_URL = String(cfg.workerUrl || '').trim();
   const COMPANY = cfg.companyName || 'GeoProcess Consulting';
   const CONTACT_EMAIL = cfg.contactEmail || 'contact@geoprocessconsulting.in';
-  const CONTACT_URL = cfg.contactUrl || '/#contact';
-  const BOOKING_URL = cfg.bookingUrl || '/booking/';
+  const CONTACT_URL = cfg.contactUrl || 'contact.html#project-enquiry';
+  const BOOKING_URL = cfg.bookingUrl || 'booking.html';
   const WHATSAPP = cfg.whatsappUrl || 'https://wa.me/917205666324';
   const KNOWLEDGE_URL = cfg.knowledgeUrl || 'data/ai-knowledge.json';
   const TECHNICAL_URL = cfg.technicalKnowledgeUrl || 'data/ai-technical-questions.json';
@@ -200,7 +200,7 @@
     wrap.innerHTML = `
       <div class="gp-ai-handoff-title">Would you like to continue with our team?</div>
       <div class="gp-ai-handoff-note">Your recent AI conversation will be included in the WhatsApp message.</div>
-      <a class="primary gp-ai-whatsapp" href="${escapeAttr(buildWhatsAppUrl())}" target="_blank" rel="noopener noreferrer">💬 Continue on WhatsApp</a>
+      <a class="primary gp-ai-whatsapp" href="${escapeAttr(buildWhatsAppUrl())}" target="_blank" rel="noopener">💬 Continue on WhatsApp</a>
       <a class="secondary" href="${escapeAttr(CONTACT_URL)}">✉ Send Project Enquiry</a>
       <a class="secondary" href="${escapeAttr(BOOKING_URL)}">📅 Book a Consultation</a>`;
     box.appendChild(wrap);
@@ -215,7 +215,7 @@
     wrap.className = 'gp-ai-contact-card';
     wrap.innerHTML = `
       <div class="gp-ai-card-label">Contact GeoProcess Consulting</div>
-      <a href="${escapeAttr(WHATSAPP)}" target="_blank" rel="noopener noreferrer">💬 WhatsApp · +91 (720) 56 66324</a>
+      <a href="${escapeAttr(WHATSAPP)}" target="_blank" rel="noopener">💬 WhatsApp · +91 (720) 56 66324</a>
       <a href="mailto:${escapeAttr(CONTACT_EMAIL)}">✉ ${escapeAttr(CONTACT_EMAIL)}</a>
       <a href="${escapeAttr(BOOKING_URL)}">📅 Book a Consultation</a>
       <a href="${escapeAttr(CONTACT_URL)}">📝 Send a Project Enquiry</a>`;
@@ -559,6 +559,9 @@
     document.body.appendChild(root);
     const input = root.querySelector('.gp-ai-input');
     root.querySelector('.gp-ai-launcher').addEventListener('click', () => state.open ? closePanel() : openPanel());
+    document.querySelectorAll('[data-open-ai-scope], #hero-ai-trigger').forEach((button) => {
+      button.addEventListener('click', () => openPanel());
+    });
     root.querySelector('.gp-ai-close').addEventListener('click', closePanel);
     root.querySelector('.gp-ai-clear').addEventListener('click', clearChat);
     root.querySelector('.gp-ai-send').addEventListener('click', () => sendMessage(input.value));
