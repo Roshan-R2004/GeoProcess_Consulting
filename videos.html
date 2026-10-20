@@ -33,14 +33,20 @@
 </head>
 
 <body class="site-effects-clean has-site-video">
-  <video class="site-background-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/advanced-classification.jpg" aria-hidden="true" tabindex="-1">
+  <video class="site-background-video" autoplay muted loop playsinline preload="metadata"
+    poster="assets/images/advanced-classification.jpg" aria-hidden="true" tabindex="-1">
     <source src="assets/videos/geoprocess-site-background.mp4" type="video/mp4" />
   </video>
   <div class="site-background-shade" aria-hidden="true"></div>
   <div class="page-transition-curtain" id="page-curtain" role="status" aria-label="Loading GeoProcess Consulting">
     <div class="glass-shutter-grid" aria-hidden="true">
-      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
-      <div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div><div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
+      <div class="glass-shutter-pane"></div>
     </div>
     <div class="glass-horizon-laser" id="glass-horizon-laser" aria-hidden="true"></div>
     <div class="glass-loader-core" id="glass-loader-core">
@@ -49,13 +55,15 @@
       <img class="loader-brand-logo" alt="GeoProcess Consulting" src="assets/brand/Remove%20BG.png" />
       <div class="loader-percent-giant" id="loader-percent">000%</div>
       <div class="loader-telemetry" id="loader-status">SYNCHRONIZING POINT-CLOUD TELEMETRY</div>
-      <div class="loader-bar-track"><div class="loader-bar-fill" id="loader-bar"></div></div>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
     </div>
   </div>
 
   <header class="site-nav">
     <div class="container nav-inner">
-      <a class="brand" href="index.html" aria-label="GeoProcess Consulting home">
+      <a class="brand" href="index" aria-label="GeoProcess Consulting home">
         <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
           <circle cx="32" cy="32" r="28" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" />
           <circle cx="32" cy="32" r="17" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="3" />
@@ -68,30 +76,31 @@
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
         <nav aria-label="Primary navigation">
           <ul class="nav-list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="index">Home</a></li>
+            <li><a href="about">About</a></li>
             <li class="nav-service-menu">
-  <div class="nav-service-row">
-    <a href="services.html">Services</a>
-    <button class="nav-service-toggle" type="button" aria-label="Show individual service pages" aria-expanded="false" aria-controls="nav-service-submenu">▾</button>
-  </div>
-  <ul class="nav-service-submenu" id="nav-service-submenu">
-    <li><a href="lidar.html">LiDAR Processing</a></li>
-    <li><a href="photogrammetry.html">Photogrammetry</a></li>
-    <li><a href="gis.html">GIS Mapping</a></li>
-    <li><a href="webgis.html">WebGIS</a></li>
-    <li><a href="cad.html">CAD Conversion</a></li>
-    <li><a href="bim.html">BIM / Scan-to-BIM</a></li>
-    <li><a href="mobile-mapping.html">Mobile Mapping</a></li>
-    <li><a href="3d-mapping.html">3D Mapping</a></li>
-  </ul>
-</li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a class="active" href="videos.html">Videos</a></li>
-            <li><a href="study.html">Study</a></li>
-            <li><a href="index.html#faqs">FAQs</a></li>
-            <li><a href="contact.html#project-enquiry">Contact</a></li>
-            <li><a class="nav-cta" href="booking.html">Book Consultation <span aria-hidden="true">↗</span></a></li>
+              <div class="nav-service-row">
+                <a href="services">Services</a>
+                <button class="nav-service-toggle" type="button" aria-label="Show individual service pages"
+                  aria-expanded="false" aria-controls="nav-service-submenu">▾</button>
+              </div>
+              <ul class="nav-service-submenu" id="nav-service-submenu">
+                <li><a href="lidar">LiDAR Processing</a></li>
+                <li><a href="photogrammetry">Photogrammetry</a></li>
+                <li><a href="gis">GIS Mapping</a></li>
+                <li><a href="webgis">WebGIS</a></li>
+                <li><a href="cad">CAD Conversion</a></li>
+                <li><a href="bim">BIM / Scan-to-BIM</a></li>
+                <li><a href="mobile-mapping">Mobile Mapping</a></li>
+                <li><a href="3d-mapping">3D Mapping</a></li>
+              </ul>
+            </li>
+            <li><a href="projects">Projects</a></li>
+            <li><a class="active" href="videos">Videos</a></li>
+            <li><a href="study">Study</a></li>
+            <li><a href="index#faqs">FAQs</a></li>
+            <li><a href="contact#project-enquiry">Contact</a></li>
+            <li><a class="nav-cta" href="booking">Book Consultation <span aria-hidden="true">↗</span></a></li>
           </ul>
         </nav>
       </div>
@@ -197,8 +206,8 @@
           <div class="fancy-kicker fancy-kicker-accent">HAVE A DATASET?</div>
           <h2>Show us the raw data. Let's define what it can become.</h2>
           <p>Tell us about your LiDAR, GIS, imagery or infrastructure project and the deliverable you need.</p>
-          <div class="actions actions-centered"><a class="btn btn-primary" href="booking.html">Book a Consultation →</a><a
-              class="btn btn-ghost" href="contact.html">Contact
+          <div class="actions actions-centered"><a class="btn btn-primary" href="booking">Book a Consultation →</a><a
+              class="btn btn-ghost" href="contact">Contact
               GeoProcess</a></div>
         </div>
       </div>
@@ -225,12 +234,12 @@
       <div>
         <div class="footer-title">Explore</div>
         <ul class="footer-list">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <li><a href="videos.html">Videos</a></li>
-          <li><a href="study.html">Study Hub</a></li>
-          <li><a href="index.html#faqs">FAQs</a></li>
+          <li><a href="index">Home</a></li>
+          <li><a href="services">Services</a></li>
+          <li><a href="projects">Projects</a></li>
+          <li><a href="videos">Videos</a></li>
+          <li><a href="study">Study Hub</a></li>
+          <li><a href="index#faqs">FAQs</a></li>
         </ul>
       </div>
       <div>
@@ -240,7 +249,7 @@
           <li><a href="https://wa.me/917205666324" target="_blank" rel="noopener">WhatsApp · +91 72056 66324</a></li>
           <li><a href="https://www.linkedin.com/company/geoprocess-consulting" target="_blank" rel="noopener">LinkedIn ·
               GeoProcess Consulting</a></li>
-          <li><a href="booking.html">Schedule a consultation ↗</a></li>
+          <li><a href="booking">Schedule a consultation ↗</a></li>
         </ul>
       </div>
     </div>
