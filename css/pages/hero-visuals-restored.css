@@ -1,0 +1,153 @@
+/* GeoProcess Consulting — restore the original two-column hero layouts and glowing visual panels. */
+@media (min-width: 1001px) {
+  body.site-effects-clean .hero-grid,
+  body.site-effects-clean .services-hero-grid,
+  body.site-effects-clean .project-hero-grid,
+  body.site-effects-clean .contact-hero-grid,
+  body.site-effects-clean .fancy-hero-grid,
+  body.has-floating-bg .booking-hero-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr) !important;
+    column-gap: clamp(28px, 4.5vw, 68px) !important;
+    row-gap: clamp(20px, 3vw, 34px) !important;
+    align-items: center !important;
+  }
+
+  body.site-effects-clean .hero-grid > :first-child,
+  body.site-effects-clean .services-hero-grid > :first-child,
+  body.site-effects-clean .project-hero-grid > :first-child,
+  body.site-effects-clean .contact-hero-grid > :first-child,
+  body.site-effects-clean .fancy-hero-grid > :first-child,
+  body.has-floating-bg .booking-hero-grid > :first-child {
+    grid-column: auto !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+}
+
+/* The visual blocks remain decorative and never intercept links or form interactions. */
+body.site-effects-clean .hero-visual,
+body.site-effects-clean .data-orbit,
+body.site-effects-clean .project-visual,
+body.site-effects-clean .contact-signal,
+body.site-effects-clean .video-orb,
+body.site-effects-clean .booking-radar,
+body.has-floating-bg .booking-radar {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto;
+  max-width: 100%;
+  pointer-events: none;
+  overflow: visible !important;
+}
+
+body.site-effects-clean .project-visual { display: grid !important; }
+body.site-effects-clean .data-orbit { min-height: 350px; }
+body.site-effects-clean .hero-visual { min-height: 390px; }
+body.site-effects-clean .contact-signal { min-height: 320px; align-items: center; justify-content: center; }
+body.site-effects-clean .video-orb { min-height: 340px; align-items: center; justify-content: center; }
+
+/* About-page radar: rotating sweep, breathing ring and softly pulsing points. */
+@keyframes gpRadarSweep {
+  0% { transform: rotate(0deg); opacity: .25; }
+  50% { opacity: .95; }
+  100% { transform: rotate(360deg); opacity: .25; }
+}
+@keyframes gpRadarGlow {
+  0%, 100% { box-shadow: inset 0 0 34px rgba(23,166,115,.045), 0 0 22px rgba(95,227,255,.045); }
+  50% { box-shadow: inset 0 0 85px rgba(23,166,115,.14), 0 0 44px rgba(95,227,255,.13); }
+}
+@keyframes gpNodePulse {
+  0%, 100% { opacity: .72; scale: .88; }
+  50% { opacity: 1; scale: 1.12; }
+}
+body.site-effects-clean .hero-visual .radar {
+  animation: gpRadarGlow 3.6s ease-in-out infinite !important;
+}
+body.site-effects-clean .hero-visual .radar-line:not(.x) {
+  transform-origin: 50% 50%;
+  animation: gpRadarSweep 6s linear infinite !important;
+}
+body.site-effects-clean .hero-visual .node,
+body.site-effects-clean .data-orbit .orbit-dot {
+  animation: gpNodePulse 2.5s ease-in-out infinite !important;
+}
+body.site-effects-clean .hero-visual .n2,
+body.site-effects-clean .data-orbit .od2 { animation-delay: .45s !important; }
+body.site-effects-clean .hero-visual .n3,
+body.site-effects-clean .data-orbit .od3 { animation-delay: .9s !important; }
+body.site-effects-clean .hero-visual .n4,
+body.site-effects-clean .data-orbit .od4 { animation-delay: 1.35s !important; }
+
+/* Supporting page visuals: subtle glows instead of the previous animation reset. */
+@keyframes gpOrbitBreath {
+  0%, 100% { box-shadow: 0 0 38px rgba(23,166,115,.04); }
+  50% { box-shadow: 0 0 78px rgba(23,166,115,.16), inset 0 0 34px rgba(95,227,255,.05); }
+}
+@keyframes gpTerrainScan {
+  0%, 100% { opacity: .42; }
+  50% { opacity: .95; }
+}
+@keyframes gpSignalPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(95,227,255,.06)); }
+  50% { filter: drop-shadow(0 0 18px rgba(95,227,255,.28)); }
+}
+@keyframes gpOrbFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+body.site-effects-clean .data-orbit .orbit {
+  animation: gpOrbitBreath 4s ease-in-out infinite !important;
+}
+body.site-effects-clean .project-visual .terrain::before {
+  animation: gpTerrainScan 3.8s ease-in-out infinite !important;
+}
+body.site-effects-clean .contact-signal .signal-ring,
+body.site-effects-clean .contact-signal .signal-core {
+  animation: gpSignalPulse 3.4s ease-in-out infinite !important;
+}
+body.site-effects-clean .video-orb .orb-core {
+  animation: gpOrbFloat 4.2s ease-in-out infinite !important;
+}
+body.site-effects-clean .video-orb .orb-chip {
+  animation: gpNodePulse 3s ease-in-out infinite !important;
+}
+
+/* Keep two columns on desktop and let the original mobile/tablet layouts stack normally. */
+@media (max-width: 1000px) {
+  body.site-effects-clean .hero-grid,
+  body.site-effects-clean .services-hero-grid,
+  body.site-effects-clean .project-hero-grid,
+  body.site-effects-clean .contact-hero-grid,
+  body.site-effects-clean .fancy-hero-grid,
+  body.has-floating-bg .booking-hero-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  body.site-effects-clean .hero-visual,
+  body.site-effects-clean .data-orbit,
+  body.site-effects-clean .project-visual,
+  body.site-effects-clean .contact-signal,
+  body.site-effects-clean .video-orb,
+  body.site-effects-clean .booking-radar,
+  body.has-floating-bg .booking-radar {
+    min-height: 250px;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.site-effects-clean .hero-visual .radar,
+  body.site-effects-clean .hero-visual .radar-line,
+  body.site-effects-clean .hero-visual .node,
+  body.site-effects-clean .data-orbit .orbit,
+  body.site-effects-clean .data-orbit .orbit-dot,
+  body.site-effects-clean .project-visual .terrain::before,
+  body.site-effects-clean .contact-signal .signal-ring,
+  body.site-effects-clean .contact-signal .signal-core,
+  body.site-effects-clean .video-orb .orb-core,
+  body.site-effects-clean .video-orb .orb-chip {
+    animation: none !important;
+  }
+}

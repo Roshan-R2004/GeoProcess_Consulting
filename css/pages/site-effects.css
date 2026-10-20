@@ -1,0 +1,379 @@
+/* GeoProcess Consulting: the three approved motion effects only. */
+html.site-effects-clean {
+  background: #03080e !important;
+  background-color: #03080e !important;
+  background-image: none !important;
+}
+body.site-effects-clean {
+  margin: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  isolation: isolate;
+  color-scheme: dark;
+}
+body.site-effects-clean::before { content: none !important; display: none !important; }
+
+.site-background-video {
+  position: fixed !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  z-index: 0 !important;
+  opacity: .94;
+  pointer-events: none !important;
+  background: #03080e;
+}
+.site-background-shade {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg, rgba(3,8,14,.60), rgba(3,8,14,.40) 52%, rgba(3,8,14,.63)),
+              linear-gradient(180deg, rgba(3,8,14,.22), rgba(3,8,14,.44));
+}
+body.site-effects-clean > header.site-nav { z-index: 1000 !important; }
+body.site-effects-clean > main,
+body.site-effects-clean > footer,
+body.site-effects-clean > .site-footer,
+body.site-effects-clean > .back-top,
+body.site-effects-clean > .study-back-top {
+  position: relative;
+  z-index: 2;
+}
+body.site-effects-clean > .skip-link { z-index: 10001 !important; }
+
+/* Let the same background video remain visible without changing card/content styling. */
+body.site-effects-clean main,
+body.site-effects-clean .hero,
+body.site-effects-clean .about-hero,
+body.site-effects-clean .services-hero,
+body.site-effects-clean .projects-hero,
+body.site-effects-clean .contact-hero,
+body.site-effects-clean .fancy-hero,
+body.site-effects-clean .booking-hero,
+body.site-effects-clean .booking-section,
+body.site-effects-clean .booking-page,
+body.site-effects-clean .section,
+body.site-effects-clean .section.alt,
+body.site-effects-clean .projects-content,
+body.site-effects-clean .video-archive,
+body.site-effects-clean .contact-main,
+body.site-effects-clean .study-hero,
+body.site-effects-clean .study-main,
+body.site-effects-clean .study-layout,
+body.site-effects-clean #root {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+body.site-effects-clean .site-nav {
+  background: rgba(3,8,14,.80) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Remove the diagram/orbit artwork shown in the reference; the hero copy flows naturally instead. */
+body.site-effects-clean .study-hero-bg,
+body.site-effects-clean .hero-visual,
+body.site-effects-clean .data-orbit,
+body.site-effects-clean .project-visual,
+body.site-effects-clean .booking-radar,
+body.site-effects-clean .contact-signal,
+body.site-effects-clean .video-orb {
+  display: none !important;
+}
+body.site-effects-clean .hero-grid,
+body.site-effects-clean .services-hero-grid,
+body.site-effects-clean .project-hero-grid,
+body.site-effects-clean .booking-hero-grid,
+body.site-effects-clean .contact-hero-grid,
+body.site-effects-clean .fancy-hero-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+body.site-effects-clean .about-hero::after { content: none !important; display: none !important; }
+/* Suppress old scan pseudos so every page gets one consistent scan line below. */
+body.site-effects-clean .hero-content::after,
+body.site-effects-clean .page-hero .container::after,
+body.site-effects-clean .about-hero .container::after,
+body.site-effects-clean .services-hero .container::after,
+body.site-effects-clean .projects-hero .container::after,
+body.site-effects-clean .contact-hero .container::after,
+body.site-effects-clean .booking-hero::after { content: none !important; display: none !important; }
+
+/* Sitewide motion reset: stop ambient glows, card reveals, logo pulses, orbit graphics, and hover transforms. */
+body.site-effects-clean *,
+body.site-effects-clean *::before,
+body.site-effects-clean *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+body.site-effects-clean main *:hover { transform: none !important; }
+/* Restore the one allowed scanning motion after the global motion reset. */
+body.site-effects-clean .site-scan-line { animation: siteThreeEffectScan 7s linear infinite !important; }
+body.site-effects-clean [data-gp-reveal] { opacity: 1 !important; transform: none !important; }
+body.site-effects-clean .card::after,
+body.site-effects-clean .service-card-new::after,
+body.site-effects-clean .project-card-fancy::after,
+body.site-effects-clean .vintage-card::after { display: none !important; }
+
+/* ONE shared scanning animation is used on every page hero. */
+body.site-effects-clean .hero,
+body.site-effects-clean .about-hero,
+body.site-effects-clean .services-hero,
+body.site-effects-clean .projects-hero,
+body.site-effects-clean .contact-hero,
+body.site-effects-clean .fancy-hero,
+body.site-effects-clean .booking-hero,
+body.site-effects-clean .study-hero {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+}
+.site-scan-line {
+  position: absolute;
+  z-index: 1;
+  left: -8%;
+  right: -8%;
+  top: 36%;
+  height: 1.5px;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgba(95,227,255,.05) 12%, rgba(95,227,255,.82) 50%, rgba(25,183,122,.38) 66%, transparent);
+  box-shadow: 0 0 16px rgba(95,227,255,.32), 0 0 34px rgba(95,227,255,.12);
+  animation: siteThreeEffectScan 7s linear infinite !important;
+}
+body.site-effects-clean .hero > .container,
+body.site-effects-clean .about-hero > .container,
+body.site-effects-clean .services-hero > .container,
+body.site-effects-clean .projects-hero > .container,
+body.site-effects-clean .contact-hero > .container,
+body.site-effects-clean .fancy-hero > .container,
+body.site-effects-clean .booking-hero > .container,
+body.site-effects-clean .study-hero > .container,
+body.site-effects-clean .hero-content { position: relative; z-index: 2; }
+@keyframes siteThreeEffectScan {
+  0% { transform: translateY(-220px); opacity: 0; }
+  12% { opacity: .9; }
+  82% { opacity: .9; }
+  100% { transform: translateY(430px); opacity: 0; }
+}
+
+/* Original glass/LiDAR loading animation reused across all pages. */
+.page-transition-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  overflow: hidden;
+  color: #edf7ff;
+  background: rgba(3,8,14,.20);
+  pointer-events: all;
+}
+.page-transition-curtain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, rgba(255,255,255,.025) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 90%);
+  -webkit-mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 90%);
+}
+.glass-shutter-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.glass-shutter-pane {
+  height: 100%;
+  background: linear-gradient(165deg, rgba(12,18,28,.86), rgba(16,24,38,.70) 50%, rgba(9,12,18,.90));
+  backdrop-filter: blur(36px) saturate(210%) contrast(115%);
+  -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(115%);
+  border-right: 1px solid rgba(0,240,255,.18);
+  border-left: 1px solid rgba(255,255,255,.06);
+  box-shadow: inset 0 0 40px rgba(0,240,255,.04);
+  position: relative;
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+}
+.glass-shutter-pane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,.09), transparent 25%, transparent 80%, rgba(0,240,255,.08));
+  pointer-events: none;
+}
+.glass-horizon-laser {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #5fe3ff, #fff, #ffb800, transparent);
+  box-shadow: 0 0 30px #5fe3ff, 0 0 60px rgba(95,227,255,.65);
+  transform: translateY(-50%) scaleX(0);
+  z-index: 2;
+  pointer-events: none;
+}
+.glass-loader-core {
+  position: relative;
+  z-index: 3;
+  padding: 2.6rem 3.1rem;
+  border-radius: 26px;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.14), rgba(19,28,42,.72) 55%, rgba(9,13,20,.83));
+  backdrop-filter: blur(40px) saturate(220%);
+  -webkit-backdrop-filter: blur(40px) saturate(220%);
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: 0 35px 90px rgba(0,0,0,.78), inset 0 1px 2px rgba(255,255,255,.35), inset 0 -1px 2px rgba(0,240,255,.25), 0 0 60px rgba(0,240,255,.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  width: min(420px, calc(100vw - 32px));
+  will-change: transform, opacity, filter;
+}
+.glass-optical-ring {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  top: 50%;
+  left: 50%;
+  margin: -170px 0 0 -170px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0,240,255,.22);
+  pointer-events: none;
+  animation: spinOpticalRing 14s linear infinite !important;
+}
+.glass-optical-ring::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,184,0,.14);
+  border-top-color: #5fe3ff;
+}
+@keyframes spinOpticalRing { to { transform: rotate(360deg); } }
+.glass-loader-core::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -70%;
+  width: 50%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.24), rgba(0,240,255,.20), transparent);
+  transform: rotate(25deg);
+  animation: glassSpecularSweep 2.2s cubic-bezier(.16,1,.3,1) infinite !important;
+  pointer-events: none;
+}
+@keyframes glassSpecularSweep { 0% { left: -80%; } 100% { left: 150%; } }
+.glass-core-badge {
+  position: relative;
+  z-index: 1;
+  font: 700 .62rem/1.45 "Space Grotesk", Inter, sans-serif;
+  letter-spacing: .18em;
+  color: #ffb800;
+  text-transform: uppercase;
+  margin-bottom: .75rem;
+  padding: .35rem .8rem;
+  border-radius: 999px;
+  background: rgba(255,184,0,.1);
+  border: 1px solid rgba(255,184,0,.3);
+}
+.loader-brand-logo { position: relative; z-index: 1; width: 72px; height: 60px; object-fit: contain; margin: .25rem 0 .3rem; }
+.loader-percent-giant {
+  position: relative;
+  z-index: 1;
+  font: 800 2.6rem/1 "Space Grotesk", Inter, sans-serif;
+  letter-spacing: -.03em;
+  margin-top: .35rem;
+  color: #f3faff;
+  text-shadow: 0 0 24px rgba(0,240,255,.45);
+}
+.loader-telemetry {
+  position: relative;
+  z-index: 1;
+  font: 700 .64rem/1.5 "Space Mono", monospace;
+  color: #5fe3ff;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  margin-top: .5rem;
+}
+.loader-bar-track { position: relative; z-index: 1; width: 260px; max-width: 100%; height: 3px; background: rgba(255,255,255,.12); margin-top: .9rem; border-radius: 999px; overflow: hidden; }
+.loader-bar-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0; background: linear-gradient(90deg,#5fe3ff,#fff,#ffb800); box-shadow: 0 0 14px #5fe3ff; }
+body.site-effects-clean .page-transition-curtain .glass-optical-ring { animation: spinOpticalRing 14s linear infinite !important; }
+body.site-effects-clean .page-transition-curtain .glass-loader-core::before { animation: glassSpecularSweep 2.2s cubic-bezier(.16,1,.3,1) infinite !important; }
+.page-transition-curtain.is-fallback-opening .glass-shutter-pane { animation: loaderPaneFallback .75s ease-in forwards !important; }
+.page-transition-curtain.is-fallback-opening .glass-shutter-pane:nth-child(4) { animation-delay: .08s !important; }
+.page-transition-curtain.is-fallback-opening .glass-shutter-pane:nth-child(3),
+.page-transition-curtain.is-fallback-opening .glass-shutter-pane:nth-child(5) { animation-delay: .15s !important; }
+@keyframes loaderPaneFallback { to { transform: perspective(1000px) rotateY(72deg) scaleX(0); opacity: 0; } }
+.page-transition-curtain.is-fallback-fading { opacity: 0; pointer-events: none; transition: opacity .35s ease-out !important; }
+
+@media (max-width: 600px) {
+  .glass-loader-core { padding: 2.15rem 1.3rem; border-radius: 20px; }
+  .glass-optical-ring { width: 290px; height: 290px; margin: -145px 0 0 -145px; }
+  .glass-core-badge { font-size: .55rem; letter-spacing: .12em; }
+  .loader-percent-giant { font-size: 2.2rem; }
+  .loader-telemetry { font-size: .55rem; letter-spacing: .08em; }
+  .site-background-shade { background: linear-gradient(90deg,rgba(3,8,14,.66),rgba(3,8,14,.50)),linear-gradient(180deg,rgba(3,8,14,.32),rgba(3,8,14,.50)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-background-video { display: none !important; }
+  body.site-effects-clean { background: #03080e !important; }
+  body.site-effects-clean .site-scan-line { animation: none !important; opacity: .22; transform: none; }
+}
+
+
+/* Study Hub is intentionally solid and distraction-free: no background video. */
+html.study-solid-bg,
+body.study-page.study-solid-bg {
+  background: #f4f7fa !important;
+  background-color: #f4f7fa !important;
+  background-image: none !important;
+  color-scheme: light !important;
+}
+body.study-page.study-solid-bg .site-background-video,
+body.study-page.study-solid-bg .site-background-shade { display: none !important; }
+body.study-page.study-solid-bg .site-nav {
+  background: rgba(6,17,29,.96) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+body.study-page.study-solid-bg .study-hero {
+  background: #06111d !important;
+  background-color: #06111d !important;
+}
+body.study-page.study-solid-bg .study-layout,
+body.study-page.study-solid-bg .study-main {
+  background: #f4f7fa !important;
+  background-color: #f4f7fa !important;
+  background-image: none !important;
+}
+body.study-page.study-solid-bg .study-toolbar-wrap,
+body.study-page.study-solid-bg .study-local-nav,
+body.study-page.study-solid-bg .study-services {
+  background: #fff !important;
+  background-color: #fff !important;
+  background-image: none !important;
+}
+body.study-page.study-solid-bg .study-sidebar { background: #0a1726 !important; }
+body.study-page.study-solid-bg .source-library {
+  background: #eef3f7 !important;
+  background-color: #eef3f7 !important;
+  background-image: none !important;
+}

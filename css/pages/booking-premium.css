@@ -1,0 +1,41 @@
+/* Booking-page premium visual treatment, aligned with the homepage bento cards. */
+.booking-hero { background: radial-gradient(ellipse at 80% 40%, rgba(95,227,255,.10), transparent 35%), radial-gradient(ellipse at 20% 82%, rgba(255,184,0,.07), transparent 32%), #050b12; }
+.booking-hero::after { display: none !important; } /* the shared site-scan-line remains the only hero scan animation */
+.booking-hero-grid { grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: clamp(30px,5vw,72px); }
+.booking-hero h1 { max-width: 820px; font: 800 clamp(2.8rem,5.5vw,5.8rem)/.98 "Space Grotesk", Inter, sans-serif; letter-spacing: -.055em; }
+.booking-hero h1 span { background: linear-gradient(100deg,#5fe3ff 0%,#8ee8fa 42%,#ffb800 100%); -webkit-background-clip:text; background-clip:text; color:transparent !important; }
+.booking-hero p { max-width: 680px; color: #a8bdc9; }
+.booking-visual-card { width:100%; max-width: 510px; margin: 8px auto 0; padding: 12px; border:1px solid rgba(148,195,220,.18); border-radius:22px; background:linear-gradient(145deg,rgba(13,31,46,.9),rgba(4,12,20,.92)); box-shadow:0 28px 90px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.04); }
+.booking-visual-topline { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:7px 7px 13px; color:#7894a4; font:800 .58rem/1.3 "Space Grotesk",sans-serif; letter-spacing:.12em; }
+.booking-status { display:inline-flex; align-items:center; gap:7px; color:#8fe6c2; white-space:nowrap; }
+.booking-status i { width:6px;height:6px;border-radius:50%; background:#54d889; box-shadow:0 0 12px rgba(84,216,137,.55); }
+.booking-visual-image { position:relative; overflow:hidden; aspect-ratio: 1.18 / 1; border-radius:15px; border:1px solid rgba(95,227,255,.13); background:#06111d; }
+.booking-visual-image img { display:block; width:100%;height:100%;object-fit:cover;filter:saturate(.84) contrast(1.05); }
+.booking-visual-vignette { position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,10,17,.03) 32%,rgba(3,10,17,.84) 100%),linear-gradient(90deg,rgba(3,10,17,.17),transparent 50%,rgba(3,10,17,.10));pointer-events:none; }
+.booking-visual-tag { position:absolute;left:16px;bottom:18px;max-width:calc(100% - 32px);padding:8px 10px;border:1px solid rgba(95,227,255,.26);border-radius:8px;background:rgba(5,16,27,.72);backdrop-filter:blur(10px);color:#d9f5fb;font:800 .59rem/1.35 "Space Grotesk",sans-serif;letter-spacing:.075em; }
+.booking-visual-coordinate { position:absolute;top:14px;right:14px;padding:6px 8px;border-radius:6px;background:rgba(5,16,27,.72);color:#83cde0;font:700 .58rem "Space Mono",monospace; }
+.booking-visual-bottom { display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 8px 5px; }
+.booking-visual-kicker { display:block;color:#698898;font:800 .55rem/1.2 "Space Grotesk",sans-serif;letter-spacing:.14em; }
+.booking-visual-bottom strong { display:block;margin-top:6px;color:#eaf6fb;font:750 clamp(.78rem,1.4vw,.95rem)/1.25 "Space Grotesk",sans-serif; }
+.booking-visual-index { color:#5fe3ff;font:800 .68rem "Space Mono",monospace;white-space:nowrap; }
+.booking-visual-index i { color:#6c8492;font-style:normal; }
+.booking-section { position:relative; }
+.booking-intro h2 { letter-spacing:-.04em; }
+.booking-card { backdrop-filter:blur(14px); }
+.booking-info-card { box-shadow:0 14px 36px rgba(0,0,0,.12); }
+@media(max-width:900px) { .booking-hero-grid { grid-template-columns:1fr; } .booking-visual-card { max-width:620px; } .booking-hero-grid > div:first-child { max-width:760px; } }
+@media(max-width:560px) { .booking-visual-card { padding:8px; border-radius:17px; } .booking-visual-image { aspect-ratio:1 / 1; } .booking-visual-tag { font-size:.52rem; } .booking-visual-topline { font-size:.52rem; } }
+@media(prefers-reduced-motion:reduce) { .booking-visual-card,.booking-visual-image img { transition:none !important; } }
+
+/* Booking restores the original animated LiDAR canvas and radar instead of a static promo tile. */
+body.has-floating-bg .booking-hero { background: transparent !important; }
+body.has-floating-bg .booking-hero > .container { position: relative; z-index: 2; }
+body.has-floating-bg .booking-radar { z-index: 2; }
+body.has-floating-bg .booking-radar .radar-ring,
+body.has-floating-bg .booking-radar .radar-core { will-change: opacity, transform, box-shadow; }
+body.has-floating-bg .page-transition-curtain .glass-optical-ring { animation: spinOpticalRing 14s linear infinite !important; }
+body.has-floating-bg .page-transition-curtain .glass-loader-core::before { animation: glassSpecularSweep 2.2s cubic-bezier(.16,1,.3,1) infinite !important; }
+@media (prefers-reduced-motion: reduce) {
+  body.has-floating-bg .booking-radar .radar-ring,
+  body.has-floating-bg .booking-radar .radar-core { animation: none !important; }
+}
