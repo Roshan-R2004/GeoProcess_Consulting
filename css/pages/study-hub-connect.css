@@ -1,0 +1,100 @@
+/* Study Hub — connected experience (Learn ⇄ Source Library ⇄ Advanced Reference) */
+html { scroll-behavior: smooth; }
+#top, #source-library, #advanced-technical-reference, [id^="advanced-reference-"] { scroll-margin-top: 150px; }
+
+/* ---- sticky switcher ---- */
+html body .hub-bar { position: sticky; top: 78px; z-index: 900; padding: 10px 0 0 !important;
+  background: rgba(9,11,14,.86) !important; backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid var(--border-grid, rgba(148,163,184,.15)) !important; }
+.hub-bar-inner { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding-bottom: 10px; }
+.hub-switch { display: inline-flex; gap: 6px; padding: 5px; border-radius: 14px;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12); }
+.hub-tab { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 10px;
+  color: #94a3b8 !important; text-decoration: none !important; transition: background .25s, color .25s, box-shadow .25s; }
+.hub-tab-num { font: 600 .68rem/1 'IBM Plex Mono', monospace; letter-spacing: .08em; color: #64748b; }
+.hub-tab-text { display: grid; line-height: 1.15; }
+.hub-tab b { font: 700 .86rem 'Space Grotesk', sans-serif; color: inherit; }
+.hub-tab small { font: 400 .66rem 'IBM Plex Mono', monospace; color: #64748b; margin-top: 2px; }
+.hub-tab:hover { color: #f8fafc !important; background: rgba(255,255,255,.06); }
+.hub-tab.is-active { color: #05080c !important; background: #00f0ff; box-shadow: 0 0 22px rgba(0,240,255,.35); }
+.hub-tab.is-active .hub-tab-num, .hub-tab.is-active small { color: rgba(5,8,12,.88) !important; }
+.hub-topics { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+.hub-topics a { padding: 6px 11px; border-radius: 999px; font: 500 .72rem 'IBM Plex Mono', monospace;
+  letter-spacing: .04em; color: #94a3b8 !important; text-decoration: none !important; border: 1px solid transparent; transition: .2s; }
+.hub-topics a:hover { color: #00f0ff !important; border-color: rgba(0,240,255,.3); background: rgba(0,240,255,.08); }
+.hub-progress { height: 2px; background: rgba(255,255,255,.06); }
+.hub-progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#00f0ff,#ffb800); transition: width .15s linear; }
+
+/* ---- bridge card ---- */
+.hub-bridge { padding: 56px 0 10px; background: transparent; }
+.hub-bridge-card { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: center;
+  padding: 34px; border-radius: 22px; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(19,25,34,.7)); backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(255,255,255,.14); border-top-color: rgba(255,255,255,.34);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.35), 0 28px 60px -16px rgba(0,0,0,.6); }
+.hub-bridge-card::before { content:''; position:absolute; inset:0 0 auto 0; height:3px; background: linear-gradient(90deg,#00f0ff,#ffb800,transparent); }
+.hub-bridge-kicker { font: 600 .72rem 'IBM Plex Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: #00f0ff; }
+.hub-bridge h2 { margin: 10px 0 10px; font: 700 clamp(1.4rem,2.6vw,2rem)/1.15 'Space Grotesk', sans-serif; color: #f8fafc; letter-spacing: -.02em; }
+.hub-bridge p { margin: 0; color: #94a3b8; font-size: .9rem; }
+.hub-bridge-actions { display: flex; flex-direction: column; gap: 10px; }
+.hub-bridge-actions .study-btn { justify-content: center; text-align: center; }
+
+/* ---- advanced section: dark glass instead of the old light page ---- */
+html body .legacy-reference-integration { background: transparent !important; padding-top: 40px; }
+.hub-crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px;
+  font: 500 .74rem 'IBM Plex Mono', monospace; color: #64748b; }
+.hub-crumbs a { color: #94a3b8 !important; text-decoration: none; }
+.hub-crumbs a:hover { color: #00f0ff !important; }
+.hub-crumbs b { color: #f8fafc; font-weight: 600; }
+.hub-chip { display: inline-block; padding: 6px 12px; border-radius: 999px; font: 500 .74rem 'IBM Plex Mono', monospace;
+  color: #00f0ff !important; text-decoration: none !important; background: rgba(0,240,255,.1); border: 1px solid rgba(0,240,255,.3); transition: .2s; }
+.hub-chip:hover { background: #00f0ff; color: #05080c !important; }
+
+/* ---- pager ---- */
+.hub-pager { padding: 28px 0 60px; }
+.hub-pager-inner { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.hub-pager-link { display: grid; gap: 4px; padding: 18px 20px; border-radius: 16px; text-decoration: none !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(19,25,34,.65)); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,.12); border-top-color: rgba(255,255,255,.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 14px 30px -12px rgba(0,0,0,.55); transition: .25s; }
+.hub-pager-link small { font: 400 .7rem 'IBM Plex Mono', monospace; color: #64748b; }
+.hub-pager-link b { font: 700 1rem 'Space Grotesk', sans-serif; color: #f8fafc; }
+.hub-pager-link:hover { border-color: rgba(0,240,255,.5); transform: translateY(-3px); box-shadow: 0 18px 36px -10px rgba(0,0,0,.6), 0 0 28px rgba(0,240,255,.15); }
+.hub-pager-next { text-align: right; } .hub-pager-top { text-align: center; }
+
+/* section arrival flash so the jump feels connected */
+.hub-arrived { animation: hubArrive 1.2s ease-out; }
+@keyframes hubArrive { 0% { box-shadow: 0 0 0 0 rgba(0,240,255,.6); } 100% { box-shadow: 0 0 0 28px rgba(0,240,255,0); } }
+
+@media (max-width: 900px) {
+  html body .hub-bar { top: 70px; }
+  .hub-bar-inner { gap: 10px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .hub-bar-inner::-webkit-scrollbar { display: none; }
+  .hub-switch, .hub-topics { flex-shrink: 0; }
+  .hub-topics { margin-left: 0; flex-wrap: nowrap; }
+  .hub-tab { padding: 8px 12px; } .hub-tab-num { display: none; }
+  .hub-bridge-card { grid-template-columns: 1fr; padding: 22px; }
+  .hub-pager-inner { grid-template-columns: 1fr; }
+  .hub-pager-next, .hub-pager-top { text-align: left; }
+  #top, #source-library, #advanced-technical-reference, [id^="advanced-reference-"] { scroll-margin-top: 130px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .hub-arrived { animation: none; } }
+
+/* section headers (library + advanced) as glass panels with breathing room */
+html body .source-library-head {
+  padding: 30px 28px !important; border-radius: 20px !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.07), rgba(19,25,34,.7)) !important;
+  border: 1px solid rgba(255,255,255,.12) !important; border-top-color: rgba(255,255,255,.3) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 20px 44px -16px rgba(0,0,0,.55) !important;
+}
+.source-library-head .hub-crumbs { justify-content: center; }
+
+/* stack: site nav → hub switcher → chapter search (search only shows in the Learn area) */
+html body .study-toolbar-wrap {
+  top: 156px !important; z-index: 890 !important;
+  background: rgba(9,11,14,.92) !important; border-bottom: 1px solid rgba(148,163,184,.15) !important;
+  backdrop-filter: blur(16px); transition: opacity .25s ease, transform .25s ease;
+}
+html body.hub-not-learn .study-toolbar-wrap { opacity: 0; pointer-events: none; transform: translateY(-12px); }
+@media (max-width: 900px) { html body .study-toolbar-wrap { top: 134px !important; } }

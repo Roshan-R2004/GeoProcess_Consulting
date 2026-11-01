@@ -40,3 +40,36 @@
   position: relative;
   z-index: 3;
 }
+
+/* ==========================================================================
+   Entrance reveal (see js/text-animations.js)
+   Words stay hidden only while the heading is waiting to scroll into view.
+   The class is added by JS, so with JS off or reduced motion on, text is visible.
+   ========================================================================== */
+.gp-reveal-pending .gp-letter-word {
+  opacity: 0;
+}
+
+/* ==========================================================================
+   Re-enable heading motion on pages using body.site-effects-clean.
+   That stylesheet applies a blanket `transition/animation: none` and
+   `main *:hover { transform: none }` (all !important), which silently disabled
+   the letter-hover effect. These selectors are more specific, so they win.
+   ========================================================================== */
+body.site-effects-clean .gp-letter-hover-heading .gp-heading-char {
+  transition: transform 200ms cubic-bezier(.2, .7, .2, 1), color 200ms ease !important;
+}
+
+body.site-effects-clean .gp-letter-hover-heading .gp-heading-char:hover {
+  transform: translateY(-5px) !important;
+  color: #ff0076 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.site-effects-clean .gp-letter-hover-heading .gp-heading-char {
+    transition: color 120ms ease !important;
+  }
+  body.site-effects-clean .gp-letter-hover-heading .gp-heading-char:hover {
+    transform: none !important;
+  }
+}

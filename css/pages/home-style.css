@@ -1,0 +1,535 @@
+/* ==========================================================================
+   GeoProcess — Home-page visual style applied to all inner pages
+   Source of truth: index.html (index-geoprocess-reference-middle.css + overrides)
+   Styles only: no LiDAR canvas / cursor / loader animation is added here.
+   Load LAST on every inner page.
+   ========================================================================== */
+
+/* 1. Tokens (identical to the homepage) -------------------------------- */
+:root {
+  --bg-carbon: #090b0e;
+  --bg-obsidian: #0d1117;
+  --surface-slate: rgba(19, 25, 34, 0.68);
+  --surface-slate-solid: #131922;
+  --surface-elevated: #1c2430;
+  --border-grid: rgba(148, 163, 184, 0.15);
+  --border-highlight: rgba(0, 240, 255, 0.42);
+  --gis-cyan: #00f0ff;
+  --gis-cyan-dim: rgba(0, 240, 255, 0.12);
+  --infra-amber: #ffb800;
+  --infra-amber-dim: rgba(255, 184, 0, 0.12);
+  --signal-emerald: #10b981;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+
+  /* remap legacy inner-page tokens onto the homepage palette */
+  --gp-bg: #090b0e;
+  --gp-bg-2: #0d1117;
+  --gp-panel: rgba(19, 25, 34, 0.74);
+  --gp-panel-2: #131922;
+  --gp-ink: #f8fafc;
+  --gp-text: #f8fafc;
+  --gp-muted: #94a3b8;
+  --gp-line: rgba(148, 163, 184, 0.15);
+  --gp-line-strong: rgba(148, 163, 184, 0.28);
+  --gp-accent: #00f0ff;
+  --gp-accent-2: #00f0ff;
+  --gp-cyan: #00f0ff;
+  --gp-blue: #00f0ff;
+  --gp-blue-bright: #00f0ff;
+  --gp-green: #10b981;
+  --orange: #00f0ff;
+  --orange-2: #00f0ff;
+}
+
+/* 2. Base page --------------------------------------------------------- */
+html { background-color: var(--bg-carbon) !important; color: var(--text-primary); }
+html body {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-mono) !important;
+  line-height: 1.65;
+}
+html body::before { display: none !important; }
+html body::after { opacity: .012 !important; }
+::selection { background: var(--gis-cyan); color: var(--bg-carbon); }
+html body main { background: transparent !important; position: relative; z-index: 2; }
+html body main > section { background: transparent !important; }
+
+/* 3. Typography -------------------------------------------------------- */
+html body h1, html body h2, html body h3, html body h4, html body .section-title {
+  font-family: var(--font-heading) !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -.025em !important;
+}
+html body h1 { font-weight: 700 !important; line-height: 1.06 !important;
+  font-size: clamp(2.4rem, 4.6vw, 4.35rem); letter-spacing: -.03em !important; }
+html body h2, html body .section-title { font-weight: 700 !important; line-height: 1.1 !important; }
+html body h1 span, html body h2 span, html body h1 em, html body h2 em { color: var(--gis-cyan) !important; }
+html body p, html body li, html body .lead, html body .section-subtitle,
+html body .service-lead, html body .service-detail-intro {
+  font-family: var(--font-mono) !important;
+  color: var(--text-secondary) !important;
+}
+html body main a:not(.btn):not([class*="btn-"]):not(.nav-cta) { color: var(--gis-cyan); }
+
+/* 4. Eyebrows / kickers -> homepage eyebrow-badge ---------------------- */
+html body .eyebrow, html body .vintage-kicker, html body .fancy-kicker,
+html body .study-eyebrow, html body .eyebrow-green {
+  display: inline-flex !important; align-items: center; gap: .6rem;
+  padding: .4rem .9rem !important;
+  background: var(--gis-cyan-dim) !important;
+  border: 1px solid rgba(0,240,255,.3) !important;
+  color: var(--gis-cyan) !important;
+  font-family: var(--font-mono) !important;
+  font-size: .74rem !important; letter-spacing: .12em !important;
+  text-transform: uppercase; border-radius: 999px !important;
+  width: fit-content; margin-bottom: 1.25rem;
+}
+html body .fancy-kicker-accent { color: var(--infra-amber) !important;
+  border-color: rgba(255,184,0,.3) !important; background: var(--infra-amber-dim) !important; }
+
+/* small index labels -> bento-tag look */
+html body .tag, html body .badge, html body .story-tag, html body .video-tag,
+html body .project-badge, html body .visual-chip, html body .orb-chip,
+html body .service-card-kicker, html body .service-knowledge-index,
+html body .cap-no, html body .service-number, html body .project-index,
+html body .video-number, html body .step-kicker, html body .archive-no {
+  font-family: var(--font-mono) !important;
+  color: var(--gis-cyan) !important;
+  letter-spacing: .08em !important; text-transform: uppercase;
+}
+html body .tag, html body .badge, html body .story-tag, html body .video-tag,
+html body .project-badge, html body .visual-chip, html body .orb-chip {
+  display: inline-block; padding: .25rem .65rem; font-size: .68rem !important;
+  border-radius: 4px !important; background: var(--surface-elevated) !important;
+  border: 1px solid rgba(0,240,255,.22) !important;
+}
+
+/* 5. Buttons ----------------------------------------------------------- */
+html body .btn, html body .study-btn, html body .booking-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 0 !important; padding: .85rem 1.5rem !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-mono) !important; font-size: .82rem !important;
+  font-weight: 600 !important; letter-spacing: .06em !important;
+  text-transform: uppercase; text-decoration: none !important;
+  transition: transform .2s cubic-bezier(.23,1,.32,1), box-shadow .25s ease, border-color .25s ease, color .25s ease !important;
+}
+html body .btn-primary, html body .study-btn-primary, html body .booking-submit {
+  background: var(--gis-cyan) !important; color: #05080c !important;
+  border: none !important; box-shadow: 0 0 24px rgba(0,240,255,.28) !important;
+}
+html body .btn-primary:hover, html body .study-btn-primary:hover, html body .booking-submit:hover {
+  background: var(--gis-cyan) !important; color: #05080c !important;
+  box-shadow: 0 0 36px rgba(0,240,255,.55) !important; transform: translateY(-2px) !important;
+}
+html body .btn-ghost, html body .btn-outline, html body .study-btn-ghost, html body .study-contact-btn {
+  background: rgba(28,36,48,.65) !important; backdrop-filter: blur(10px);
+  color: var(--text-primary) !important; border: 1px solid var(--border-grid) !important;
+}
+html body .btn-ghost:hover, html body .btn-outline:hover, html body .study-btn-ghost:hover,
+html body .study-contact-btn:hover {
+  border-color: var(--gis-cyan) !important; color: var(--gis-cyan) !important;
+  background: rgba(28,36,48,.65) !important; transform: translateY(-2px) !important;
+}
+
+/* 6. Glass cards -> homepage bento-card -------------------------------- */
+html body .cap, html body .pipe, html body .diff, html body .service-detail-card,
+html body .service-knowledge-card, html body .service-gallery-card, html body .service-card-new,
+html body .project-card-fancy, html body .video-card-fancy, html body .booking-card,
+html body .booking-info-card, html body .contact-panel, html body .contact-method,
+html body .enquiry-panel, html body .case-item, html body .scope-item, html body .outcome,
+html body .point, html body .note-point, html body .workflow-step, html body .booking-step,
+html body .risk, html body .project-stat, html body .story, html body .flagship,
+html body .closing, html body .fancy-cta, html body .projects-cta, html body .contact-final,
+html body .contact-faq, html body .editorial-callout, html body .service-knowledge-callout,
+html body .quote, html body .hero-proof, html body .study-services-card, html body .study-sidebar,
+html body .source-book, html body .source-library, html body .faq details, html body details.faq-item {
+  background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(19,25,34,.74) 100%) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--border-grid) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12) !important;
+  border-radius: var(--radius-lg) !important;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease !important;
+}
+html body .cap:hover, html body .pipe:hover, html body .diff:hover, html body .service-detail-card:hover,
+html body .service-knowledge-card:hover, html body .service-gallery-card:hover,
+html body .service-card-new:hover, html body .project-card-fancy:hover, html body .video-card-fancy:hover,
+html body .booking-info-card:hover, html body .contact-method:hover, html body .case-item:hover,
+html body .scope-item:hover, html body .outcome:hover, html body .workflow-step:hover,
+html body .project-stat:hover, html body .story:hover, html body .source-book:hover {
+  border-color: var(--border-highlight) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 20px 40px rgba(0,0,0,.55) !important;
+}
+/* hero-style cards get the stronger glass + top accent line */
+html body .closing, html body .fancy-cta, html body .projects-cta, html body .contact-final,
+html body .diff.featured, html body .flagship, html body .booking-card, html body .contact-panel,
+html body .enquiry-panel {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,.06) 0%, rgba(19,25,34,.72) 100%) !important;
+  border-color: rgba(255,255,255,.14) !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.18), 0 25px 60px rgba(0,0,0,.5) !important;
+}
+html body .closing::before, html body .fancy-cta::before, html body .projects-cta::before,
+html body .contact-final::before, html body .diff.featured::before, html body .flagship::before,
+html body .booking-card::before, html body .contact-panel::before, html body .enquiry-panel::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; z-index: 1;
+  background: linear-gradient(90deg, var(--gis-cyan), var(--infra-amber), transparent);
+}
+html body .cap h3, html body .pipe h3, html body .diff h3, html body .service-detail-card h3,
+html body .service-knowledge-card h3, html body .project-card-fancy h3, html body .video-card-fancy h3,
+html body .service-card-new h3, html body .story h3, html body .booking-info-card h3 {
+  font-family: var(--font-heading) !important; color: var(--text-primary) !important;
+  font-size: 1.3rem; line-height: 1.2;
+}
+html body .cap p, html body .pipe p, html body .diff p, html body .service-detail-card p,
+html body .service-knowledge-card p, html body .project-card-fancy p, html body .video-card-fancy p,
+html body .service-card-new p, html body .story p { font-size: .88rem; color: var(--text-secondary) !important; }
+html body .num, html body .step-number, html body .side-num, html body .project-stat strong,
+html body .project-stat b { font-family: var(--font-heading) !important; color: var(--gis-cyan) !important; }
+
+/* media frames */
+html body .image-wrap, html body .service-gallery-image, html body .video-frame,
+html body .story-media, html body .project-visual, html body .flagship-image {
+  border-radius: var(--radius-md) !important; border: 1px solid var(--border-grid) !important; overflow: hidden;
+}
+html body .image-wrap img, html body .service-gallery-image img, html body .story-media img,
+html body .flagship-image img { transition: transform .6s cubic-bezier(.22,1,.36,1); }
+html body .project-card-fancy:hover img, html body .service-gallery-card:hover img,
+html body .story:hover img { transform: scale(1.07); }
+html body figcaption span { color: var(--gis-cyan) !important; font-family: var(--font-mono) !important; }
+html body figcaption strong { color: var(--text-primary) !important; font-family: var(--font-heading) !important; }
+
+/* lists / chips / notes */
+html body .service-detail-list li, html body .service-detail-chips span, html body .service-pills span,
+html body .hero-pills span, html body .hero-tags span, html body .service-related-links a,
+html body .project-filter button, html body .project-filter a {
+  background: rgba(19,25,34,.7) !important; border: 1px solid var(--border-grid) !important;
+  color: var(--text-primary) !important; font-family: var(--font-mono) !important;
+}
+html body .service-detail-list li::before { color: var(--gis-cyan) !important; }
+html body .service-related-links a:hover, html body .project-filter button:hover,
+html body .project-filter .active, html body .project-filter button.active {
+  border-color: var(--gis-cyan) !important; color: var(--gis-cyan) !important;
+}
+html body .service-detail-note, html body .editorial-note, html body .fancy-note,
+html body .contact-note, html body .form-help { color: var(--text-muted) !important; }
+html body .quote, html body .editorial-callout, html body .service-knowledge-callout {
+  border-left: 3px solid var(--infra-amber) !important; color: var(--text-primary) !important;
+}
+html body .service-knowledge-callout strong { color: var(--infra-amber) !important; }
+
+/* 7. Hero / section rhythm -------------------------------------------- */
+html body .service-detail-hero, html body .about-hero, html body .services-hero,
+html body .projects-hero, html body .contact-hero, html body .booking-hero,
+html body .fancy-hero, html body .study-hero {
+  background: transparent !important; border-bottom: 1px solid var(--border-grid) !important;
+}
+html body .service-detail-hero h1, html body .service-detail-hero h1 span {
+  font-family: var(--font-heading) !important; letter-spacing: -.03em !important; line-height: 1.06;
+}
+html body .service-detail-hero h1 span { color: var(--gis-cyan) !important; }
+html body .service-detail-section, html body .service-knowledge-section,
+html body .service-detail-showcase, html body .section {
+  border-bottom: 1px solid rgba(148,163,184,.08) !important; background: transparent !important;
+}
+html body .service-detail-section .section-title, html body .section-title {
+  font-family: var(--font-heading) !important; color: var(--text-primary) !important;
+  font-weight: 700 !important; letter-spacing: -.02em !important;
+}
+
+/* 8. Forms (booking / contact) ---------------------------------------- */
+html body input, html body select, html body textarea,
+html body .form-input, html body .form-select, html body .form-textarea,
+html body .booking-input, html body .field input, html body .field select, html body .field textarea {
+  background: var(--bg-carbon) !important; border: 1px solid var(--border-grid) !important;
+  color: var(--text-primary) !important; border-radius: 8px !important;
+  font-family: var(--font-mono) !important;
+}
+html body input:focus, html body select:focus, html body textarea:focus {
+  outline: none !important; border-color: var(--gis-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0,240,255,.14) !important;
+}
+html body label, html body .form-group label, html body .field label {
+  color: var(--text-secondary) !important; font-family: var(--font-mono) !important; font-size: .78rem;
+}
+html body ::placeholder { color: var(--text-muted) !important; }
+html body .time-slots button, html body .time-slot { 
+  background: var(--bg-carbon) !important; border: 1px solid var(--border-grid) !important;
+  color: var(--text-primary) !important; border-radius: 8px !important; font-family: var(--font-mono) !important; }
+html body .time-slots button:hover, html body .selected-slot, html body .time-slot.selected {
+  border-color: var(--gis-cyan) !important; color: var(--gis-cyan) !important; background: var(--gis-cyan-dim) !important; }
+
+/* 9. Study Hub --------------------------------------------------------- */
+html body .study-toolbar, html body .study-local-nav, html body .source-library-head {
+  background: rgba(13,17,23,.92) !important; border-color: var(--border-grid) !important;
+  backdrop-filter: blur(18px);
+}
+html body .study-progress-fill { background: linear-gradient(90deg, var(--gis-cyan), var(--infra-amber)) !important; }
+html body .source-side-link { color: var(--text-secondary) !important; font-family: var(--font-mono) !important; }
+html body .source-side-link:hover, html body .source-side-link.active { color: var(--gis-cyan) !important; }
+html body .source-book-kicker, html body .source-book-meta { color: var(--gis-cyan) !important; font-family: var(--font-mono) !important; }
+html body .source-list-item, html body .source-text, html body .source-paragraph { font-family: var(--font-mono) !important; }
+html body .source-2-heading, html body .source-3-heading { font-family: var(--font-heading) !important; color: var(--text-primary) !important; }
+
+/* 10. Navigation + footer (homepage treatment) ------------------------- */
+html body .site-nav { background: rgba(9,11,14,.82) !important; border-bottom: 1px solid var(--border-grid) !important; }
+html body .site-nav .brand-name {
+  font-family: "Manrope", system-ui, sans-serif !important; font-weight: 800 !important;
+  font-size: 1.05rem !important; line-height: 1.05 !important; letter-spacing: -.03em !important; color: #f5fffb !important;
+}
+html body .site-nav .brand-sub {
+  font-family: "Space Mono", monospace !important; color: var(--gis-cyan) !important;
+  font-size: .57rem !important; letter-spacing: .08em !important; text-transform: uppercase !important; margin-top: 4px !important;
+}
+html body .site-nav .nav-list a { font-family: "Manrope", system-ui, sans-serif !important; }
+html body .nav-list a:hover, html body .nav-list a.active { color: #fff !important; background: var(--gis-cyan-dim) !important; }
+html body .nav-list a:not(.nav-cta)::after { background: var(--gis-cyan) !important; box-shadow: 0 0 12px rgba(0,240,255,.65) !important; }
+html body .nav-cta {
+  background: var(--gis-cyan) !important; color: #05080c !important; border-radius: var(--radius-md) !important;
+  box-shadow: 0 0 24px rgba(0,240,255,.28) !important; border: none !important;
+}
+html body .nav-cta:hover { background: var(--gis-cyan) !important; box-shadow: 0 0 36px rgba(0,240,255,.55) !important; }
+html body .email-menu, html body .contact-mail-menu, html body .nav-service-submenu {
+  background: rgba(13,17,23,.97) !important; border: 1px solid var(--border-grid) !important;
+}
+html body .email-menu::before { background: linear-gradient(90deg, var(--gis-cyan), var(--infra-amber)) !important; }
+
+html body .site-footer {
+  padding: 70px 0 0 !important; background: #03080e !important;
+  border-top: 1px solid var(--border-grid) !important; color: #c4d3dc !important;
+}
+html body .site-footer .container { width: min(1260px, calc(100% - 48px)) !important; }
+html body .site-footer .footer-grid {
+  display: grid !important; grid-template-columns: 1.5fr 1fr 1fr !important;
+  gap: 55px !important; padding-bottom: 55px !important; max-width: none !important; margin: 0 auto !important;
+}
+html body .site-footer .footer-title {
+  font-family: "Space Grotesk", sans-serif !important; font-size: .74rem !important; font-weight: 900 !important;
+  letter-spacing: .12em !important; text-transform: uppercase !important; color: #fff !important; margin-bottom: 18px !important;
+}
+html body .site-footer .footer-brand .footer-title { margin: 0 !important; }
+html body .site-footer .footer-list { list-style: none !important; margin: 0 !important; padding: 0 !important;
+  display: grid !important; gap: 10px !important; color: #9fb1c0 !important; font-size: .9rem !important; }
+html body .site-footer .footer-list a { color: #91a8b6 !important; text-decoration: none !important; }
+html body .site-footer .footer-list a:hover { color: var(--gis-cyan) !important; }
+html body .site-footer .footer-intro { color: #9fb1c0 !important; font-family: var(--font-mono) !important; }
+html body .site-footer .footer-bottom {
+  border-top: 1px solid var(--border-grid) !important; padding: 22px !important; text-align: center !important;
+  color: #637887 !important; font-size: .74rem !important;
+}
+html body .back-top { background: var(--surface-elevated) !important; border: 1px solid var(--border-grid) !important; color: var(--gis-cyan) !important; }
+html body .brand-mark .pulse { fill: #ff6a2b; }
+
+@media (max-width: 1024px) { html body .site-footer .footer-grid { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 680px) {
+  html body .site-footer .footer-grid { grid-template-columns: 1fr !important; gap: 35px !important; }
+  html body .site-footer { padding-top: 55px !important; }
+}
+
+/* 11. Fixes after visual check ---------------------------------------- */
+/* solid white headings with cyan accent spans (no inherited gradient text) */
+html body h1, html body h2, html body h3, html body .hero-copy h1, html body .service-detail-hero h1 {
+  background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important;
+  -webkit-text-fill-color: currentColor !important; color: var(--text-primary) !important; text-shadow: none;
+}
+html body h1 span, html body h2 span, html body h1 em, html body h2 em, html body .service-detail-hero h1 span {
+  -webkit-text-fill-color: var(--gis-cyan) !important; color: var(--gis-cyan) !important;
+}
+/* background video: keep the site's original video + shade (not overridden) */
+html body h1 span, html body h2 span, html body .hero h1 span, html body .about-hero h1 span,
+html body .services-hero h1 span, html body .projects-hero h1 span, html body .contact-hero h1 span,
+html body .study-hero h1 span, html body .booking-hero h1 span {
+  background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important;
+}
+
+/* animation-injected word/letter wrappers must inherit, not be treated as accent spans */
+html body h1 .gp-letter-word, html body h2 .gp-letter-word, html body h3 .gp-letter-word,
+html body h1 .gp-heading-char, html body h2 .gp-heading-char, html body h3 .gp-heading-char {
+  color: inherit !important; -webkit-text-fill-color: inherit !important;
+  background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important;
+}
+
+/* higher-specificity version so hero accent rules cannot recolor every animated word/letter */
+html body .gp-letter-hover-heading span.gp-letter-word,
+html body .gp-letter-hover-heading span.gp-heading-char,
+html body .gp-letter-hover-heading span span.gp-letter-word,
+html body .gp-letter-hover-heading span span.gp-heading-char {
+  color: inherit !important; -webkit-text-fill-color: inherit !important;
+  background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important;
+}
+
+/* nav CTA stays solid cyan even when it is the active page */
+html body .nav-list a.nav-cta, html body .nav-list a.nav-cta.active, html body .nav-list a.nav-cta:hover {
+  background: var(--gis-cyan) !important; color: #05080c !important;
+}
+/* booking / contact fields: carbon fill like the homepage form */
+html body #booking-form input, html body #booking-form select, html body #booking-form textarea,
+html body form .field input, html body form .field select, html body form .field textarea,
+html body .booking-input, html body .form-group input, html body .form-group select, html body .form-group textarea {
+  background: var(--bg-carbon) !important; border: 1px solid var(--border-grid) !important;
+  color: var(--text-primary) !important; border-radius: 8px !important;
+}
+html body .booking-zone-summary > *, html body .selected-slot {
+  background: var(--bg-carbon) !important; border: 1px solid var(--border-grid) !important; border-radius: var(--radius-md) !important;
+}
+
+/* ==========================================================================
+   12. 3D GLASS CARDS (all cards)
+   ========================================================================== */
+html body :is(.cap, .pipe, .diff, .service-detail-card, .service-knowledge-card, .service-gallery-card,
+  .service-card-new, .project-card-fancy, .video-card-fancy, .booking-card, .booking-info-card,
+  .contact-panel, .contact-method, .enquiry-panel, .case-item, .scope-item, .outcome, .point,
+  .note-point, .workflow-step, .booking-step, .risk, .project-stat, .story, .flagship, .closing,
+  .fancy-cta, .projects-cta, .contact-final, .contact-faq, .editorial-callout,
+  .service-knowledge-callout, .quote, .hero-proof, .study-services-card, .source-book,
+  .source-library, .faq details, details.faq-item) {
+  background-image:
+    radial-gradient(420px circle at var(--mx, 18%) var(--my, 0%), rgba(255,255,255,.16), transparent 55%),
+    linear-gradient(145deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.03) 38%, rgba(0,240,255,.05) 100%) !important;
+  background-color: rgba(19,25,34,.62) !important;
+  backdrop-filter: blur(22px) saturate(180%) brightness(1.05) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.05) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  border-top-color: rgba(255,255,255,.34) !important;     /* lit top edge = glass thickness */
+  border-left-color: rgba(255,255,255,.22) !important;
+  border-bottom-color: rgba(0,240,255,.12) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.38),                /* specular top highlight */
+    inset 0 -2px 6px rgba(0,0,0,.35),                     /* bottom bevel */
+    inset 0 0 28px rgba(0,240,255,.05),                   /* inner glow */
+    0 2px 4px rgba(0,0,0,.35),
+    0 18px 36px -8px rgba(0,0,0,.55),                     /* depth */
+    0 40px 70px -24px rgba(0,0,0,.6) !important;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+html body :is(.cap, .pipe, .diff, .service-detail-card, .service-knowledge-card, .service-gallery-card,
+  .service-card-new, .project-card-fancy, .video-card-fancy, .booking-info-card, .contact-method,
+  .case-item, .scope-item, .outcome, .workflow-step, .project-stat, .story, .source-book):hover {
+  border-color: rgba(0,240,255,.45) !important;
+  border-top-color: rgba(255,255,255,.5) !important;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,.5),
+    inset 0 -2px 6px rgba(0,0,0,.35),
+    inset 0 0 36px rgba(0,240,255,.10),
+    0 4px 8px rgba(0,0,0,.4),
+    0 28px 48px -10px rgba(0,0,0,.65),
+    0 0 34px rgba(0,240,255,.14) !important;
+}
+/* pointer-driven tilt (set by js/glass-3d.js) */
+html body .gp-glass-tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0) !important;
+  transition: transform .12s ease-out, box-shadow .3s ease, border-color .3s ease !important;
+}
+html body .gp-glass-rest {
+  transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease !important;
+}
+/* pop inner content forward for parallax depth */
+html body .gp-glass-tilt > * { transform: translateZ(18px); }
+
+@media (prefers-reduced-motion: reduce) {
+  html body .gp-glass-tilt { transform: none !important; }
+  html body .gp-glass-tilt > * { transform: none; }
+}
+
+/* ==========================================================================
+   13. MOBILE
+   ========================================================================== */
+html, body { max-width: 100%; overflow-x: clip !important; }
+img, video, svg, canvas, iframe { max-width: 100%; }
+.site-scan-line { max-width: 100vw; overflow: hidden; }
+table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+pre, code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+@media (max-width: 1050px) {
+  html body .site-nav { background: rgba(9,11,14,.97) !important; backdrop-filter: none !important; }
+  html body .site-nav nav.open, html body .site-nav .nav-list.open {
+    background: #0d1117 !important;
+  }
+  html body .site-nav .nav-list.open {
+    max-height: calc(100vh - 90px); max-height: calc(100dvh - 90px); overflow-y: auto; -webkit-overflow-scrolling: touch;
+    border-bottom: 1px solid var(--border-grid);
+  }
+  html body .nav-toggle { min-width: 44px; min-height: 44px; color: var(--text-primary) !important; }
+  html body .nav-list a, html body .nav-service-toggle { min-height: 44px; display: flex; align-items: center; }
+}
+
+@media (max-width: 820px) {
+  html body .container { width: calc(100% - 32px) !important; }
+  html body h1 { font-size: clamp(2rem, 9vw, 2.9rem) !important; line-height: 1.08 !important; }
+  html body h2, html body .section-title { font-size: clamp(1.55rem, 6.6vw, 2.15rem) !important; }
+  html body .service-detail-hero, html body .about-hero, html body .services-hero,
+  html body .projects-hero, html body .contact-hero, html body .booking-hero, html body .fancy-hero {
+    padding-top: 44px !important; padding-bottom: 44px !important; min-height: 0 !important;
+  }
+  html body .service-detail-section, html body .service-knowledge-section,
+  html body .service-detail-showcase, html body .section { padding-top: 44px !important; padding-bottom: 44px !important; }
+
+  /* collapse every multi-column layout to a single column */
+  html body :is(.hero-grid, .service-detail-hero-layout, .services-hero-grid, .project-hero-grid,
+    .contact-hero-grid, .booking-hero-grid, .fancy-hero-grid, .contact-grid, .contact-main,
+    .booking-container, .booking-info-grid, .service-detail-grid, .service-knowledge-grid,
+    .service-knowledge-heading, .service-showcase-heading, .service-detail-gallery, .service-detail-list,
+    .cap-grid, .pipeline-grid, .difference, .workflow-grid, .risk-grid, .case-list, .scope-list,
+    .outcomes, .project-grid-fancy, .project-stats, .video-grid-fancy, .form-grid, #booking-form,
+    .study-layout, .service-grid, .note-points, .two, .three) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  html body .field-wide, html body .full { grid-column: auto !important; }
+  html body :is(.cap, .pipe, .diff, .service-detail-card, .service-knowledge-card, .booking-card,
+    .contact-panel, .enquiry-panel, .story, .closing, .fancy-cta, .projects-cta, .contact-final) {
+    padding: 20px !important; border-radius: 16px !important;
+  }
+  /* decorative hero visuals must not overflow or push content */
+  html body :is(.hero-visual, .project-visual, .video-orb, .radar) { max-width: 100%; overflow: hidden; margin-inline: auto; }
+  html body .service-detail-hero-layout > figure, html body .service-detail-hero-layout > aside { max-width: 100%; }
+
+  html body .actions, html body .service-detail-cta, html body .hero-cta-group, html body .contact-actions {
+    flex-direction: column; align-items: stretch !important;
+  }
+  html body .actions .btn, html body .service-detail-cta .btn, html body .contact-actions .btn,
+  html body .contact-actions > * { width: 100%; justify-content: center; min-height: 48px; }
+  html body .btn { min-height: 48px !important; }
+
+  /* iOS: inputs >=16px to stop zoom-on-focus; comfortable touch targets */
+  html body input, html body select, html body textarea { font-size: 16px !important; min-height: 48px; }
+  html body textarea { min-height: 120px; }
+  html body .time-slots { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+
+  /* long strings (emails, URLs, study content) wrap instead of overflowing */
+  html body main, html body .site-footer { overflow-wrap: anywhere; }
+  html body .study-layout, html body .study-main, html body .source-book { min-width: 0; max-width: 100%; }
+  html body .study-sidebar { position: static !important; width: 100% !important; max-height: none !important; }
+  html body .study-toolbar { flex-wrap: wrap; gap: 8px; }
+
+  /* lighter glass on phones (performance) */
+  html body :is(.cap, .pipe, .diff, .service-detail-card, .service-knowledge-card, .service-gallery-card,
+    .service-card-new, .project-card-fancy, .video-card-fancy, .booking-card, .booking-info-card,
+    .contact-panel, .contact-method, .enquiry-panel, .story, .closing) {
+    backdrop-filter: blur(12px) saturate(160%) !important; -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  html body .site-footer { position: relative; z-index: 3; background: #03080e !important; }
+  html body .site-footer .footer-bottom {
+    display: flex !important; flex-direction: column; gap: 6px; align-items: center; padding: 20px 16px !important;
+  }
+  html body .back-top { right: 14px !important; bottom: 84px !important; left: auto !important; width: 44px; height: 44px; z-index: 900; }
+  html body main { padding-bottom: 24px; }
+}
+
+html body .site-background-shade {
+  background: linear-gradient(90deg, rgba(9,11,14,.62), rgba(9,11,14,.42) 52%, rgba(9,11,14,.64)),
+              linear-gradient(180deg, rgba(9,11,14,.24), rgba(9,11,14,.46)) !important;
+}
+html body .site-background-video { opacity: 1 !important; }

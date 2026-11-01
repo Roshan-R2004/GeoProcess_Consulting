@@ -1,0 +1,21 @@
+/* Merged legacy technical reference — uses the existing Study Hub visual language. */
+.legacy-reference-integration { background: #eef3f7; }
+.legacy-reference-integration .source-library-head { margin-bottom: 34px; }
+.legacy-reference-integration .legacy-reference-books { margin-top: 24px; }
+.legacy-reference-integration .source-book-head h3 { line-height: 1.25; }
+.legacy-reference-integration .editorial-callout {
+  margin: 18px 24px 6px; padding: 16px 18px; border-left: 4px solid var(--gp-green, #ff6a2b);
+  border-radius: 10px; background: #fff7f2; color: #34495b; line-height: 1.7;
+}
+.legacy-reference-integration .spec-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: .93rem; }
+.legacy-reference-integration .spec-table th, .legacy-reference-integration .spec-table td {
+  border: 1px solid #d9e3ea; padding: 10px 12px; text-align: left; vertical-align: top;
+}
+.legacy-reference-integration .spec-table th { background: #edf3f7; color: #173149; }
+.legacy-reference-integration .source-page-body { overflow-wrap: anywhere; }
+.legacy-reference-integration .source-page-body code { overflow-wrap: anywhere; }
+@media (max-width: 720px) {
+  .legacy-reference-integration { padding-top: 56px; padding-bottom: 64px; }
+  .legacy-reference-integration .editorial-callout { margin-left: 12px; margin-right: 12px; }
+  .legacy-reference-integration .spec-table { display: block; overflow-x: auto; }
+}
