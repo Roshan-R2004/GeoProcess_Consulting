@@ -308,6 +308,14 @@
     return state.technicalPromise;
   };
 
+  const hayCache = new WeakMap();
+  const getHay = (obj, build) => {
+    let h = hayCache.get(obj);
+    if (h === undefined) { h = normalize(build()); hayCache.set(obj, h); }
+    return h;
+  };
+  const queryCache = new Map();
+
   const searchTechnicalBank = async (query) => {
     const data = await loadTechnicalBank();
     const items = Array.isArray(data.items) ? data.items : [];
@@ -315,7 +323,7 @@
     const qTokens = [...new Set(tokenize(q))];
     return items
       .map((item) => {
-        const hay = normalize(`${item.category} ${item.question} ${item.answer}`);
+        const hay = getHay(item, () => `${item.category} ${item.question} ${item.answer}`);
         let score = 0;
         if (hay.includes(q) && q.length > 8) score += 20;
         qTokens.forEach((token) => { if (token.length > 2 && hay.includes(token)) score += 1; });
@@ -341,7 +349,7 @@
     const q = expandedQuery(query);
     const qTokens = [...new Set(tokenize(q))];
     if (!qTokens.length) return 0;
-    const hay = normalize(`${title} ${text}`);
+    const hay = getHay(scoreText.__obj || {}, () => `${title} ${text}`);
     let score = 0;
     qTokens.forEach((token) => {
       if (hay.includes(token)) score += 1;
@@ -358,11 +366,11 @@
     const data = await loadKnowledge();
     const results = [];
     (data.sitePages || []).forEach((page) => {
-      const score = scoreText(query, page.title, page.text);
+      scoreText.__obj = page; const score = scoreText(query, page.title, page.text);
       if (score > 0) results.push({ type: 'site', title: page.title, text: page.text, score });
     });
     (data.studySections || []).forEach((section) => {
-      const score = scoreText(query, section.title, section.text);
+      scoreText.__obj = section; const score = scoreText(query, section.title, section.text);
       if (score > 0) results.push({ type: 'study', title: section.title, text: section.text, score });
     });
     results.sort((a, b) => b.score - a.score);
@@ -416,20 +424,36 @@
   };
 
   const askWorker = async (message) => {
+    const key = normalize(message);
+    if (queryCache.has(key)) return queryCache.get(key);
     const technicalMatches = await searchTechnicalBank(message);
+    // Strong local match -> answer instantly, no network round-trip
+    if (technicalMatches[0] && technicalMatches[0].score >= 20) {
+      queryCache.set(key, technicalMatches[0].answer);
+      return technicalMatches[0].answer;
+    }
     if (!WORKER_URL) {
       return technicalMatches[0]?.answer || fallbackAnswer(message);
     }
 
     const workerMessage = await buildWorkerMessage(message);
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: workerMessage, history: state.messages.slice(-8) })
-    });
-    if (!response.ok) throw new Error(`AI request failed: ${response.status}`);
-    const data = await response.json();
-    return data.reply || technicalMatches[0]?.answer || fallbackAnswer(message);
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: workerMessage, history: state.messages.slice(-4) }),
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error(`AI request failed: ${response.status}`);
+      const data = await response.json();
+      const reply = data.reply || technicalMatches[0]?.answer || fallbackAnswer(message);
+      if (data.reply) queryCache.set(key, reply);
+      return reply;
+    } finally {
+      clearTimeout(timer);
+    }
   };
 
   const sendMessage = async (message) => {
@@ -578,4 +602,22 @@
     render();
     loadTechnicalBank();
   });
+})();
+
+/* Performance: preload knowledge + warm the worker connection while the page is idle */
+(function () {
+  const warm = () => {
+    try {
+      const cfg = window.GEOPROCESS_AI || {};
+      if (cfg.knowledgeUrl) fetch(cfg.knowledgeUrl, { cache: 'force-cache' }).catch(() => {});
+      if (cfg.technicalKnowledgeUrl) fetch(cfg.technicalKnowledgeUrl, { cache: 'force-cache' }).catch(() => {});
+      if (cfg.workerUrl) {
+        const l = document.createElement('link');
+        l.rel = 'preconnect'; l.href = new URL(cfg.workerUrl).origin; l.crossOrigin = 'anonymous';
+        document.head.appendChild(l);
+      }
+    } catch (e) {}
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 2500 });
+  else setTimeout(warm, 1500);
 })();
