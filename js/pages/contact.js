@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   const email =
-    "contact@geoprocessconsulting.site";
+    "contact@geoprocessconsulting.in";
 
   const subject =
     "Project Enquiry - GeoProcess Consulting";
